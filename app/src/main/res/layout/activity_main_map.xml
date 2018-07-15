@@ -7,5 +7,123 @@
     tools:context=".MainMapActivity">
 
 
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        />
+
+
+    <RelativeLayout
+        android:background="@drawable/map_titlebanner_bg"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <RelativeLayout
+            android:background="@drawable/map_titlebanner_bg"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:src="@mipmap/back"
+                android:padding="15dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:text="我的农田"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/farmlist"
+                android:src="@mipmap/farmlist"
+                android:padding="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/weather_time"
+                android:text="实时天气 "
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+
+            <TextView
+                android:id="@+id/weather_info"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/weather_button"
+                android:text="未来几天天气"
+                android:textColor="#ffffff"
+                android:gravity="center_vertical"
+                android:layout_toRightOf="@+id/weather_time"
+                android:background="@drawable/button_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/lifeInfo"
+                android:text="长势\n信息"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:background="@drawable/button_circle_bg"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/groundInfo"
+                android:text="土壤\n湿度"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:background="@drawable/button_circle_bg"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
 
 </RelativeLayout>

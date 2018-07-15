@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.login)
     void dologin() {
         // open login page
+        Intent intent = new Intent();
+        intent.setClass(this, MainMapActivity.class);
+        startActivity(intent);
 
     }
 
