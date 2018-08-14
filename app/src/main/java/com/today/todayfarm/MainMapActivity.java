@@ -17,6 +17,10 @@ import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.GroundOverlay;
+import com.amap.api.maps2d.model.GroundOverlayOptions;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.weather.LocalWeatherForecastResult;
@@ -92,6 +96,29 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
 
         getWeatherInfo("青岛市");
 
+
+        testaddOverlayToMap();
+
+    }
+
+
+
+    /**
+     * 往地图上添加一个groundoverlay覆盖物
+     */
+    private void testaddOverlayToMap() {
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(40.3383525435886,
+                106.3838672323), 18));//
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(new LatLng(40.3333525435886, 106.3788672323))
+                .include(new LatLng(40.3406619155568, 106.388435294325)).build();
+
+       GroundOverlay groundoverlay = aMap.addGroundOverlay(new GroundOverlayOptions()
+                .anchor(0.5f, 0.5f)
+                .transparency(0.1f)
+                .image(BitmapDescriptorFactory
+                        .fromResource(R.drawable.testoverlayimg))
+                .positionFromBounds(bounds));
     }
 
 

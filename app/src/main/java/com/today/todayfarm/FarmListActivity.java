@@ -1,5 +1,6 @@
 package com.today.todayfarm;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +10,20 @@ import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FarmListActivity extends AppCompatActivity {
 
     @OnClick(R.id.back)void back(){
-        this.finish();
+        FarmListActivity.this.finish();
+    }
+
+    @OnClick(R.id.add) void addfield(){
+        Intent intent = new Intent();
+        intent.setClass(FarmListActivity.this,AddNewFieldActivity.class);
+        FarmListActivity.this.startActivity(intent);
+
     }
 
     @BindView(R.id.farmlist)RecyclerView recyclerView;
@@ -25,6 +34,7 @@ public class FarmListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farm_list);
+        ButterKnife.bind(this);
 
         springView = findViewById(R.id.springview);
 

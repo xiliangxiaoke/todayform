@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".AddNewFieldActivity">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,16 +17,19 @@
             android:layout_width="60dp"
             android:layout_height="60dp"/>
         <TextView
-            android:text="注册"
+            android:text="增加新农田"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+
+
     </RelativeLayout>
 
+
     <EditText
-        android:id="@+id/inputUserName"
-        android:hint="输入用户名"
+        android:id="@+id/fieldname"
+        android:hint="农田名称"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="80dp"
@@ -33,56 +37,49 @@
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/inputPassWord"
-        android:hint="输入密码"
+        android:id="@+id/farmname"
+        android:hint="农场名称"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_below="@id/inputUserName"
+        android:layout_below="@id/fieldname"
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/inputPassWordAgain"
-        android:hint="再次输入密码"
+        android:id="@+id/cropname"
+        android:hint="种植作物"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_below="@id/inputPassWord"
+        android:layout_below="@id/farmname"
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:layout_below="@id/inputPassWordAgain"
-        android:text="密码至少为6个字母或数字"
-        android:textSize="8dp"
-        android:textColor="#dab1b0b0"
-        tools:layout_editor_absoluteX="88dp"
-        tools:layout_editor_absoluteY="249dp" />
 
-    <EditText
-        android:id="@+id/inputkey"
-        android:hint="输入key"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_below="@id/textView5"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
+
+
 
     <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/drawfield"
+        android:text="绘制农田"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        android:text="立即加入我们"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="410dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map"
+        android:visibility="invisible"
+        android:layout_margin="20dp"
+        android:layout_below="@id/cropname"
+        android:layout_above="@id/drawfield"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        />
 
 </RelativeLayout>
