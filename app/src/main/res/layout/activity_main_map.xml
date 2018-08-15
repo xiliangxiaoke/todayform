@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:id="@+id/farmlist"
+                android:id="@+id/fieldlist"
                 android:src="@mipmap/farmlist"
                 android:padding="15dp"
                 android:layout_alignParentRight="true"

@@ -69,9 +69,12 @@ public class RegisterActivity extends AppCompatActivity {
                     if (response.body().code==200){
                         MyApplication.token = response.body().data.getToken();
                         Log.d("calleee",""+response.body().data.getToken());
+                        RegisterActivity.this.finish();
                         Intent intent = new Intent();
                         intent.setClass(RegisterActivity.this, MainMapActivity.class);
                         startActivity(intent);
+                    }else {
+                        ToastUtil.show(RegisterActivity.this,"注册失败");
                     }
                 }
 
@@ -79,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResultObj<User>> call, Throwable t) {
-                ToastUtil.show(RegisterActivity.this,"登陆失败");
+                ToastUtil.show(RegisterActivity.this,"注册失败");
             }
         });
     }

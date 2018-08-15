@@ -16,7 +16,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"/>
         <TextView
-            android:text="农田列表"
+            android:text="农场列表"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -31,16 +31,13 @@
             android:layout_height="60dp"/>
     </RelativeLayout>
 
-    <com.liaoinstan.springview.widget.SpringView
-        android:id="@+id/springview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        >
+
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/farmlist"
+            android:layout_marginTop="60dp"
+            android:id="@+id/fieldlist"
+            android:background="#d9f1f9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.liaoinstan.springview.widget.SpringView>
+
 
 </RelativeLayout>

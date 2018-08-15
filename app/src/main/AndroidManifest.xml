@@ -55,7 +55,9 @@
         <activity android:name=".WeatherSearchActivity" />
         <activity android:name=".FarmListActivity" />
         <activity android:name=".AddNewFieldActivity" />
-        <activity android:name=".DrawNewFieldActivity"></activity>
+        <activity android:name=".DrawNewFieldActivity" />
+        <activity android:name=".FieldListActivity" />
+        <activity android:name=".AddFarmActivity"></activity>
     </application>
 
 </manifest>

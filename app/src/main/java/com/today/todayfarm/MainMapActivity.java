@@ -21,7 +21,6 @@ import com.amap.api.maps2d.model.GroundOverlay;
 import com.amap.api.maps2d.model.GroundOverlayOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.LatLngBounds;
-import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;
@@ -52,9 +51,9 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
         startActivity(intent);
     }
 
-    @OnClick(R.id.farmlist) void showFarmlist(){
+    @OnClick(R.id.fieldlist) void showFieldlist(){
         Intent intent = new Intent();
-        intent.setClass(this,FarmListActivity.class);
+        intent.setClass(this,FieldListActivity.class);
         startActivity(intent);
     }
 

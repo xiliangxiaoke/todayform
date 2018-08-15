@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddNewFieldActivity">
-
+    tools:context=".AddFarmActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"/>
         <TextView
-            android:text="增加新农田"
+            android:text="增加新农场"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -26,10 +25,9 @@
 
     </RelativeLayout>
 
-
     <EditText
-        android:id="@+id/fieldname"
-        android:hint="农田名称"
+        android:id="@+id/farmname"
+        android:hint="农场名称"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="80dp"
@@ -37,21 +35,8 @@
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/farmname"
-        android:hint="农场名称"
-        android:inputType="none"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_below="@id/fieldname"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-
-    <EditText
-        android:id="@+id/cropname"
-        android:hint="种植作物"
+        android:id="@+id/farmaddress"
+        android:hint="农场地址"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_below="@id/farmname"
@@ -59,38 +44,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-
     <Button
-        android:id="@+id/selectFarm"
-        android:text="选择农场"
-        android:layout_alignRight="@id/farmname"
-        android:layout_alignBottom="@id/farmname"
-        android:background="@drawable/button_selector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-
-    <Button
-        android:id="@+id/drawfield"
-        android:text="绘制农田"
+        android:id="@+id/addfarm"
+        android:text="创建农场"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:background="@drawable/button_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-
-    <com.amap.api.maps2d.MapView
-        android:id="@+id/map"
-        android:visibility="invisible"
-        android:layout_margin="20dp"
-        android:layout_below="@id/cropname"
-        android:layout_above="@id/drawfield"
-        android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
-        />
 
 </RelativeLayout>

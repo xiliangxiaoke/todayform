@@ -38,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.inputPassWord)
     EditText inputPassWord;
 
+    @OnClick(R.id.forget)
+    void forget(){
+        Intent intent = new Intent();
+        intent.setClass(this,ForgetPasswordActivity.class);
+        startActivity(intent);
+    }
+
 
 
     @OnClick(R.id.register) void doRegister() {
