@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditFieldinfoActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/back"
+            android:src="@mipmap/back"
+            android:padding="15dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+        <TextView
+            android:text="编辑农田信息"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <!--添加上传影像参数-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="440dp">
+                <ImageView
+                    android:id="@+id/selectpic"
+                    android:src="@mipmap/upload"
+                    android:padding="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp" />
+                <RadioGroup
+                    android:id="@+id/radiogroup"
+                    android:layout_marginTop="200dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <RadioButton
+                        android:id="@+id/radiogrowth"
+                        android:text="长势图"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/radiohumid"
+                        android:text="湿度图"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/left"
+                    android:hint="left:输入最小经度"
+                    android:layout_below="@id/radiogroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <EditText
+                    android:id="@+id/bottom"
+                    android:hint="bottom:输入最小纬度"
+                    android:layout_below="@id/left"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <EditText
+                    android:id="@+id/right"
+                    android:hint="right:输入最大经度"
+                    android:layout_below="@id/bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <EditText
+                    android:id="@+id/top"
+                    android:hint="top:输入最大纬度"
+                    android:layout_below="@id/right"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+
+            </RelativeLayout>
+            <Button
+                android:id="@+id/uptmapimg"
+                android:text="上传影像"
+
+                android:background="@drawable/button_register_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/addgrowthdata"
+                android:text="上传长势数据"
+                android:layout_below="@id/uptmapimg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_register_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/addhumiddata"
+                android:text="上传湿度数据"
+                android:layout_below="@id/addgrowthdata"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_register_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

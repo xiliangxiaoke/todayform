@@ -67,6 +67,7 @@
     <EditText
         android:id="@+id/inputkey"
         android:hint="输入key"
+        android:visibility="invisible"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_below="@id/textView5"

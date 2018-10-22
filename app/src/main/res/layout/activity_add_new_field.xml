@@ -66,31 +66,62 @@
         android:text="选择农场"
         android:layout_alignRight="@id/farmname"
         android:layout_alignBottom="@id/farmname"
-        android:background="@drawable/button_selector"
+        android:background="@drawable/button_register_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
 
     <Button
-        android:id="@+id/drawfield"
-        android:text="绘制农田"
+        android:id="@+id/save"
+        android:text="保存"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/button_selector"
+        android:background="@drawable/button_register_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
     <com.amap.api.maps2d.MapView
         android:id="@+id/map"
-        android:visibility="invisible"
-        android:layout_margin="20dp"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="60dp"
         android:layout_below="@id/cropname"
-        android:layout_above="@id/drawfield"
+        android:layout_above="@id/save"
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         />
+
+    <View
+        android:id="@+id/addpolygon"
+        android:layout_below="@id/cropname"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
+    <View
+        android:id="@+id/addgrowthimg"
+        android:visibility="invisible"
+        android:layout_below="@id/addpolygon"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
+    <View
+        android:id="@+id/addhumidimg"
+        android:visibility="invisible"
+        android:layout_below="@id/addgrowthimg"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
 
 </RelativeLayout>

@@ -20,6 +20,7 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.dom.CustomGeometry;
 import com.today.todayfarm.dom.Custompoint;
 import com.today.todayfarm.dom.FarmInfo;
+import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.restapi.Doapi;
 import com.today.todayfarm.util.ToastUtil;
@@ -40,7 +41,9 @@ public class AddNewFieldActivity extends Activity {
     public static FarmInfo farmInfo = null;
     int requestcode = 11;
 
-    boolean insavemode = false;
+    FieldInfo fieldInfo = null;
+
+
 
     @BindView(R.id.fieldname)
     EditText fieldnameET;
@@ -56,12 +59,29 @@ public class AddNewFieldActivity extends Activity {
         this.startActivityForResult(intent,requestcode);
     }
 
+    @OnClick(R.id.addpolygon)
+    void addpolygon(){
+        Intent intent = new Intent();
+        intent.setClass(this , DrawNewFieldActivity.class);
+        this.startActivityForResult(intent,requestcode);
+    }
+
+    @OnClick(R.id.addgrowthimg)
+    void addgrowthimg(){
+
+    }
+
+    @OnClick(R.id.addhumidimg)
+    void addhumidimg(){
+
+    }
+
     @BindView(R.id.map)
     MapView mapView;
 
-    @OnClick(R.id.drawfield) void drawfield(){
+    @OnClick(R.id.save) void drawfield(){
 
-        if(insavemode){
+        if (fieldInfo==null){
             //保存农田
             String fieldname = fieldnameET.getText().toString();
             String farmname = farmnameET.getText().toString();
@@ -114,12 +134,14 @@ public class AddNewFieldActivity extends Activity {
                     ToastUtil.show(AddNewFieldActivity.this,"保存失败");
                 }
             });
+        }else{
+            //更新数据
 
-        }else {
-            Intent intent = new Intent();
-            intent.setClass(this , DrawNewFieldActivity.class);
-            this.startActivityForResult(intent,requestcode);
         }
+
+
+
+
 
     }
 
@@ -140,8 +162,8 @@ public class AddNewFieldActivity extends Activity {
 
     }
 
-    @BindView(R.id.drawfield)
-    Button drawbtn;
+    @BindView(R.id.save)
+    Button save;
 
     AMap aMap;
 
@@ -169,9 +191,9 @@ public class AddNewFieldActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (polygon!=null){
-            insavemode = true;
-            drawbtn.setText("保存");
-            mapView.setVisibility(View.VISIBLE);
+
+
+
             double minlng,maxlng,minlat,maxlat;
             minlat = polygon.getPoints().get(0).latitude;
             maxlat = polygon.getPoints().get(0).latitude;

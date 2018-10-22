@@ -1,7 +1,9 @@
 package com.today.todayfarm.dom;
 
+import java.util.List;
+
 public class FieldInfo {
-	
+
 	int fieldid;
 	int farmid;
 	String name;
@@ -10,14 +12,17 @@ public class FieldInfo {
 	String boundry;
 	int rmGrowthImgId;
 	int rmHumidImgId;
-	
+
 	//实时影像图片地址
 	String growthImgPath;
 	String humidImgPath;
-	
-	
-	
-	
+
+	public List<HumidInfo> humidInfo;
+	public List<GrowthInfo> growthInfo;
+
+
+
+
 	public String getGrowthImgPath() {
 		return growthImgPath;
 	}
@@ -78,7 +83,7 @@ public class FieldInfo {
 	public void setRmGrowthImgId(int rmGrowthImgId) {
 		this.rmGrowthImgId = rmGrowthImgId;
 	}
-	
-	
-	
+
+
+
 }

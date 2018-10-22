@@ -9,4 +9,8 @@
     <string name="report_time">发布时间</string>
 
 
+    <!-- mapbox  -->
+    <string name="mapbox_access_token">pk.eyJ1IjoieGlsaWFuZ3hpYW9rZSIsImEiOiJjam5penI3OTUwdTRyM3dxdHY2eXR0eGEyIn0.1c_ZjGpk6s6oasRSahw1UA</string>
+
+
 </resources>

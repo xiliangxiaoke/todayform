@@ -1,8 +1,12 @@
 package com.today.todayfarm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -17,21 +21,40 @@ import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
-import com.amap.api.maps2d.model.GroundOverlay;
 import com.amap.api.maps2d.model.GroundOverlayOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.LatLngBounds;
+import com.amap.api.maps2d.model.Polygon;
+import com.amap.api.maps2d.model.PolygonOptions;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.gson.Gson;
+import com.today.todayfarm.application.MyApplication;
+import com.today.todayfarm.dom.CustomGeometry;
+import com.today.todayfarm.dom.Custompoint;
+import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.GrowthInfo;
+import com.today.todayfarm.dom.HumidInfo;
+import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.restapi.Doapi;
 import com.today.todayfarm.util.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainMapActivity extends AppCompatActivity implements WeatherSearch.OnWeatherSearchListener,LocationSource,
         AMapLocationListener {
@@ -40,6 +63,24 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
 
     @BindView(R.id.weather_info)TextView weatherInfo;
     @BindView(R.id.map)MapView mapView;
+
+    @BindView(R.id.lifeInfo) TextView lifeInfo;
+    @BindView(R.id.groundInfo) TextView groundInfo;
+    public static final int SHOW_INFO_TYPE_LIFE = 1;
+    public static final int SHOW_INFO_TYPE_GROUND = 2;
+    private int mShowInfoType = SHOW_INFO_TYPE_LIFE;
+    private List<FieldInfo> mFieldInfoList = new ArrayList<>();
+
+    @OnClick(R.id.lifeInfo) void onLifeInfoClick() {
+        mShowInfoType = SHOW_INFO_TYPE_LIFE;
+        bindInfo();
+    }
+
+    @OnClick(R.id.groundInfo) void onGroundInfoClick() {
+        mShowInfoType = SHOW_INFO_TYPE_GROUND;
+        bindInfo();
+    }
+
     @OnClick(R.id.back) void back(){
         this.finish();
     }
@@ -57,6 +98,8 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
         startActivity(intent);
     }
 
+    public static int selectFieldid = -1;
+
 
     AMap aMap;
 
@@ -70,6 +113,8 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
     private TextView mLocationErrText;
 
     String cityname = "青岛市";
+
+    private List<Polygon> polygons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,34 +135,190 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
 
 
 
+        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                //地图点击事件
+            }
+        });
 
         setUpMap();
 
         getWeatherInfo("青岛市");
 
 
-        testaddOverlayToMap();
+//        testaddOverlayToMap();
 
     }
 
+    private void updateFieldInfo(){
+        Call<ResultObj<FieldInfo>> call = Doapi.instance().getFields(MyApplication.token);
+        call.enqueue(new Callback<ResultObj<FieldInfo>>() {
+            @Override
+            public void onResponse(Call<ResultObj<FieldInfo>> call, Response<ResultObj<FieldInfo>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().getCode()==200){
+                        List<FieldInfo> list = response.body().getList();
+
+                        mFieldInfoList.clear();
+                        mFieldInfoList.addAll(list);
+
+                        // 在地图 上显示
+                        aMap.clear();
+                        polygons.clear();
+                        Polygon selectPolygon = null;
+
+                        for (int i=0;i<list.size();i++){
+                            PolygonOptions polygonOptions = new PolygonOptions();
+
+                            Gson gson = new Gson();
+                            CustomGeometry geometry = gson.fromJson(list.get(i).getBoundry(), CustomGeometry.class) ;
+                            if (geometry!=null){
+                                for (int j=0;j<geometry.getCoordinates().size();j++){
+                                    Custompoint cp = geometry.getCoordinates().get(j);
+                                    polygonOptions.add(new LatLng(cp.getX(),cp.getY()));
+                                }
+                            }
+                            polygonOptions.strokeWidth(1) // 多边形的边框
+
+                                    .strokeColor(Color.GREEN) // 边框颜色
+                                    .fillColor(Color.parseColor("#55ffffff"));   // 多边形的填充色
+
+                            Polygon polygon = aMap.addPolygon(polygonOptions);
+                            polygons.add(polygon);
+
+                            if (list.get(i).getFieldid() == selectFieldid){
+                                selectPolygon = polygon;
+                            }
+
+                            //显示影像overlay
+//                            String humidpath = list.get(i).getHumidImgPath();
+//                            if (humidpath!=null && humidpath.length()>0){
+//                                LatLngBounds bounds = new LatLngBounds.Builder()
+//                                        .include(new LatLng(31.3333525435886, 108))
+//                                        .include(new LatLng(38.3406619155568, 117.388435294325)).build();
+//
+//                                GroundOverlay groundoverlay = aMap.addGroundOverlay(new GroundOverlayOptions()
+//                                        .anchor(0.5f, 0.5f)
+//                                        .transparency(0.1f)
+//                                        .image(BitmapDescriptorFactory
+//                                                .fromPath(humidpath))
+//                                        .positionFromBounds(bounds));
+//                            }
+
+
+                        }
+                        if (polygons.size()>0){
+                            if (selectPolygon!=null){
+
+                                reCameraMap(selectPolygon);
+
+                            }else{
+                                reCameraMap(polygons.get(0));
+                            }
+                        }
+
+
+                        bindInfo();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<FieldInfo>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void reCameraMap(Polygon polygon) {
+
+        //地图定位到农田范围
+        double minlng,maxlng,minlat,maxlat;
+        minlat = polygon.getPoints().get(0).latitude;
+        maxlat = polygon.getPoints().get(0).latitude;
+        minlng = polygon.getPoints().get(0).longitude;
+        maxlng = polygon.getPoints().get(0).longitude;
+
+        for (int i=0;i<polygon.getPoints().size();i++){
+            LatLng ll = polygon.getPoints().get(i);
+            if(ll.latitude<minlat) minlat = ll.latitude;
+            if(ll.latitude>maxlat) maxlat = ll.latitude;
+            if(ll.longitude<minlng) minlng = ll.longitude;
+            if(ll.longitude>maxlng) maxlng = ll.longitude;
+        }
+
+
+        LatLngBounds llb = new LatLngBounds.Builder()
+                .include(new LatLng(minlat,minlng))
+                .include(new LatLng(maxlat,maxlng)).build();
+
+        aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(llb,20));
+    }
 
 
     /**
      * 往地图上添加一个groundoverlay覆盖物
      */
-    private void testaddOverlayToMap() {
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(40.3383525435886,
-                106.3838672323), 18));//
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(new LatLng(40.3333525435886, 106.3788672323))
-                .include(new LatLng(40.3406619155568, 106.388435294325)).build();
+    private void addHumidToMap(final HumidInfo humidInfo) {
+        if (humidInfo == null) return;
 
-       GroundOverlay groundoverlay = aMap.addGroundOverlay(new GroundOverlayOptions()
-                .anchor(0.5f, 0.5f)
-                .transparency(0.1f)
-                .image(BitmapDescriptorFactory
-                        .fromResource(R.drawable.testoverlayimg))
-                .positionFromBounds(bounds));
+        addInfoToMap("http://47.92.108.255:8081/image/" + humidInfo.getPath(),
+                humidInfo.getEbottom(),
+                humidInfo.getEleft(),
+                humidInfo.getEtop(),
+                humidInfo.getEright());
+    }
+
+    private void addGrowthToMap(final GrowthInfo growthInfo) {
+        if (growthInfo == null) return;;
+
+        addInfoToMap("http://47.92.108.255:8081/image/" + growthInfo.getPath(),
+                growthInfo.getEbottom(),
+                growthInfo.getEleft(),
+                growthInfo.getEtop(),
+                growthInfo.getEright());
+    }
+
+    private void addInfoToMap(String imgPath, final double bottom, final double left, final double top, final double right) {
+        Glide.with(this)
+                .asBitmap()
+                .load(imgPath)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+
+                        LatLngBounds bounds = new LatLngBounds.Builder()
+                                .include(new LatLng(bottom, left))
+                                .include(new LatLng(top, right)).build();
+
+                        aMap.addGroundOverlay(new GroundOverlayOptions()
+                                .anchor(0.5f, 0.5f)
+                                .image(BitmapDescriptorFactory.fromBitmap(resource))
+                                .positionFromBounds(bounds));
+                    }
+                });
+    }
+
+    private void bindInfo() {
+        if (mShowInfoType == SHOW_INFO_TYPE_GROUND) {
+            for (FieldInfo info : mFieldInfoList) {
+                if (info.humidInfo != null) {
+                    for (HumidInfo humidInfo : info.humidInfo) {
+                        addHumidToMap(humidInfo);
+                    }
+                }
+            }
+        } else if (mShowInfoType == SHOW_INFO_TYPE_LIFE) {
+            for (FieldInfo info : mFieldInfoList) {
+                if (info.growthInfo != null) {
+                    for (GrowthInfo growthInfo : info.growthInfo) {
+                        addGrowthToMap(growthInfo);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -160,6 +361,8 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
         super.onResume();
 
         mapView.onResume();
+
+        updateFieldInfo();
     }
 
     @Override
@@ -255,6 +458,7 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            mLocationOption.setOnceLocation(true);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，

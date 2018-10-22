@@ -40,7 +40,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="80dp"
 
-        android:background="@drawable/button_selector"
+        android:background="@drawable/button_register_selector"
         android:layout_width="60dp"
         android:layout_height="60dp" />
 
@@ -51,7 +51,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="160dp"
 
-        android:background="@drawable/button_selector"
+        android:background="@drawable/button_register_selector"
         android:layout_width="60dp"
         android:layout_height="60dp" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="36dp"
-                android:background="@drawable/button_selector"
+                android:background="@drawable/button_register_selector"
                 android:textColor="#ffffff"
                 android:text="打点" />
 
@@ -88,7 +88,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="36dp"
-                android:background="@drawable/button_selector"
+                android:background="@drawable/button_register_selector"
                 android:textColor="#ffffff"
                 android:text="完成" />
 

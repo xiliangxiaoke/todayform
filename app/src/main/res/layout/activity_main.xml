@@ -4,96 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/index"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:background="#99ffffff"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 
-    <EditText
-        android:id="@+id/inputUserName"
-        android:hint="输入用户名"
 
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="120dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/inputPassWord"
-        android:hint="输入密码"
 
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_below="@id/inputUserName"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/forget"
-        android:text="忘记密码?"
-        android:gravity="center"
-        android:textColor="#0e810c"
-        android:layout_below="@id/inputPassWord"
-        android:layout_alignParentRight="true"
-        android:paddingRight="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp" />
 
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView">
-        <RelativeLayout
-            android:layout_weight="1"
+        android:divider="@drawable/spacer_medium"
+        android:showDividers="middle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/bannerViewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"/>
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
             <Button
                 android:id="@+id/register"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="36dp"
-                android:background="@drawable/button_selector"
+                android:layout_weight="1"
+                android:background="@drawable/button_register_selector"
                 android:textColor="#ffffff"
                 android:text="注册" />
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+
             <Button
                 android:id="@+id/login"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="36dp"
-                android:background="@drawable/button_selector"
+                android:layout_weight="1"
+                android:background="@drawable/button_login_selector"
                 android:textColor="#ffffff"
                 android:text="登陆" />
 
-        </RelativeLayout>
+
 
 
 

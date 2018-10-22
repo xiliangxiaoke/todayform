@@ -67,9 +67,10 @@ public class DrawNewFieldActivity extends Activity {
 
 
 
-        polygonOptions.strokeWidth(2) // 多边形的边框
+        polygonOptions.strokeWidth(1) // 多边形的边框
+
                 .strokeColor(Color.GREEN) // 边框颜色
-                .fillColor(Color.GREEN);   // 多边形的填充色
+                .fillColor(Color.parseColor("#ffffff00"));   // 多边形的填充色
         polygon = aMap.addPolygon(polygonOptions);
 
     }

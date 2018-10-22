@@ -12,6 +12,9 @@ import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
 import com.today.todayfarm.restapi.Doapi;
 import com.today.todayfarm.util.ToastUtil;
+import com.today.todayfarm.util.md5util;
+
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         String username = inputUserName.getText().toString();
         String pw = inputPassWord.getText().toString();
         String pwagain = inputPassWordAgain.getText().toString();
-        String key = inputkey.getText().toString();
+        String key = "quningning";//inputkey.getText().toString();
         if (username==null || "".equals(username)){
             ToastUtil.show(this,"请输入用户名！");
         }
@@ -56,11 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
         if (! pw.equals(pwagain)){
             ToastUtil.show(this,"两次输入的密码不一致！");
         }
-        if (key==null || "".equals(key)){
-            ToastUtil.show(this,"请输入key！");
-        }
+//        if (key==null || "".equals(key)){
+//            ToastUtil.show(this,"请输入key！");
+//        }
 
-        Call<ResultObj<User>> call =  Doapi.instance().register(username,pw,key);
+        Call<ResultObj<User>> call =  Doapi.instance().register(
+                username,
+                md5util.md5(pw),
+                key);
         call.enqueue(new Callback<ResultObj<User>>() {
             @Override
             public void onResponse(Call<ResultObj<User>> call, Response<ResultObj<User>> response) {

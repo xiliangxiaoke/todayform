@@ -89,7 +89,7 @@ public interface MyApiService {
     @PUT("uploadFieldSateliteImg")
     Call<ResultObj<Object>> uploadFieldSateliteImg(
             @Header("usertoken")String usertoken,
-            @Part MultipartBody.Part part,
+            @Part("uploadFile\"; filename=\"test.jpg\"") RequestBody part,
             @Query("description") String description,
             @Query("fieldid")String fieldid,
             @Query("type")String type,

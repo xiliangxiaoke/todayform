@@ -1,8 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
+
+
+    <!--***************启动页Theme***************-->
+
+
+    <style name="Theme.Splash" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/splash_pic</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 
 </resources>

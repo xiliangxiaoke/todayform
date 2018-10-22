@@ -9,47 +9,38 @@ public class GrowthInfo {
 	int growthtime;
 	int fieldid;
 	String path;
-	String eleft;
-	String ebottom;
-	String eright;
-	String etop;
-	
-	
-	
-	public GrowthInfo(int growthid, int growthtime, int fieldid, String path, String eleft, String ebottom,
-			String eright, String etop) {
-		super();
-		this.growthid = growthid;
-		this.growthtime = growthtime;
-		this.fieldid = fieldid;
-		this.path = path;
-		this.eleft = eleft;
-		this.ebottom = ebottom;
-		this.eright = eright;
-		this.etop = etop;
+	double eleft;
+	double ebottom;
+	double eright;
+	double etop;
+
+
+
+
+	public GrowthInfo() {
 	}
-	public String getEleft() {
+	public double getEleft() {
 		return eleft;
 	}
-	public void setEleft(String eleft) {
+	public void setEleft(double eleft) {
 		this.eleft = eleft;
 	}
-	public String getEbottom() {
+	public double getEbottom() {
 		return ebottom;
 	}
-	public void setEbottom(String ebottom) {
+	public void setEbottom(double ebottom) {
 		this.ebottom = ebottom;
 	}
-	public String getEright() {
+	public double getEright() {
 		return eright;
 	}
-	public void setEright(String eright) {
+	public void setEright(double eright) {
 		this.eright = eright;
 	}
-	public String getEtop() {
+	public double getEtop() {
 		return etop;
 	}
-	public void setEtop(String etop) {
+	public void setEtop(double etop) {
 		this.etop = etop;
 	}
 	public int getGrowthid() {
@@ -76,5 +67,5 @@ public class GrowthInfo {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
 }
