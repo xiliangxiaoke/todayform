@@ -1,7 +1,9 @@
 package com.today.todayfarm;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
@@ -13,13 +15,22 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
+import com.today.todayfarm.pages.main.MainPageGalleryPagerAdapter;
+import com.today.todayfarm.pages.main.ext.ScaleCircleNavigator;
+import com.today.todayfarm.pages.regist.RegistActivity;
 import com.today.todayfarm.restapi.Doapi;
 import com.today.todayfarm.restapi.MyApiService;
 import com.today.todayfarm.util.ToastUtil;
 import com.today.todayfarm.util.md5util;
 
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
+
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,15 +49,29 @@ public class MainActivity extends BaseActivity {
     Button login;
 
 
+    @BindView(R.id.bannerViewPager)
+    ViewPager mViewPager;
+    @BindView(R.id.magic_indicator)
+    MagicIndicator indicator;
+
+    Integer[] ress = new Integer[]{
+            R.mipmap.splash1,
+            R.mipmap.splash2,
+            R.mipmap.splash3,
+            R.mipmap.splash4
+    };
+
+    private List<Integer> datalist = Arrays.asList(ress);
 
 
+    private MainPageGalleryPagerAdapter mPagerAdapter = new MainPageGalleryPagerAdapter(datalist);
 
 
 
     @OnClick(R.id.register) void doRegister() {
         //open register page
         Intent intent = new Intent();
-        intent.setClass(this,RegisterActivity.class);
+        intent.setClass(this,RegistActivity.class);
         startActivity(intent);
 
     }
@@ -100,12 +125,33 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
 
 
+        mViewPager.setAdapter(mPagerAdapter);
 
+        initMagicIndicator();
+
+
+
+
+    }
+
+    private void initMagicIndicator() {
+        ScaleCircleNavigator circleNavigator = new ScaleCircleNavigator(this);
+        circleNavigator.setCircleCount(ress.length);
+        circleNavigator.setNormalCircleColor(Color.LTGRAY);
+        circleNavigator.setSelectedCircleColor(Color.DKGRAY);
+        circleNavigator.setCircleClickListener(new ScaleCircleNavigator.OnCircleClickListener() {
+            @Override
+            public void onClick(int index) {
+                mViewPager.setCurrentItem(index);
+            }
+        });
+        indicator.setNavigator(circleNavigator);
+        ViewPagerHelper.bind(indicator,mViewPager);
     }
 }

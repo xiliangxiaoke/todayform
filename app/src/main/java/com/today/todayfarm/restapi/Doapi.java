@@ -23,7 +23,7 @@ public class Doapi {
     public static MyApiService instance(){
         if(_service == null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://47.92.108.255:8081/todayserver/")
+                    .baseUrl("http://59.110.14.23:8070/jrnq/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             _service = retrofit.create(MyApiService.class);

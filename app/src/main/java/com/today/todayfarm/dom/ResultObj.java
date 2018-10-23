@@ -12,7 +12,7 @@ public class ResultObj<T> {
 	
 	public int code = -1;
 	public String msg;
-	public T data;
+	public T object;
 	public List<T> list;
 	
 	public List<T> getList() {
@@ -33,13 +33,12 @@ public class ResultObj<T> {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public T getData() {
-		return data;
-	}
-	public void setData(T data) {
-		this.data = data;
-	}
-	
-	
 
+	public T getObject() {
+		return object;
+	}
+
+	public void setObject(T object) {
+		this.object = object;
+	}
 }

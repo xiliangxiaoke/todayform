@@ -3,6 +3,7 @@ package com.today.todayfarm.restapi;
 import com.today.todayfarm.dom.FarmInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.GrowthDataInfo;
+import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
 
@@ -10,6 +11,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -20,12 +22,18 @@ import retrofit2.http.Query;
 public interface MyApiService {
 
 
-    @POST("register")
-    Call<ResultObj<User>> register(
-            @Query("username") String username,
-            @Query("passwordmd5") String passwordmd5,
-            @Query("key") String key
+    /**
+     * 请求发送手机验证码
+     * @param phone
+     * @return
+     */
+    @GET("app/static/sendRandomCode")
+    Call<ResultObj<PhoneCode>> sendRandomCode(
+            @Query("phone") String phone
     );
+
+
+    //--------------------old
 
     @POST("editUserInfo")
     Call<ResultObj<Object>> editUserInfo(

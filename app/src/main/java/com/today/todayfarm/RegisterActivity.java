@@ -63,34 +63,34 @@ public class RegisterActivity extends AppCompatActivity {
 //            ToastUtil.show(this,"请输入key！");
 //        }
 
-        Call<ResultObj<User>> call =  Doapi.instance().register(
-                username,
-                md5util.md5(pw),
-                key);
-        call.enqueue(new Callback<ResultObj<User>>() {
-            @Override
-            public void onResponse(Call<ResultObj<User>> call, Response<ResultObj<User>> response) {
-//                Log.d("call",""+response.body().data.getToken());
-                if (response.isSuccessful()){
-                    if (response.body().code==200){
-                        MyApplication.token = response.body().data.getToken();
-                        Log.d("calleee",""+response.body().data.getToken());
-                        RegisterActivity.this.finish();
-                        Intent intent = new Intent();
-                        intent.setClass(RegisterActivity.this, MainMapActivity.class);
-                        startActivity(intent);
-                    }else {
-                        ToastUtil.show(RegisterActivity.this,"注册失败");
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<User>> call, Throwable t) {
-                ToastUtil.show(RegisterActivity.this,"注册失败");
-            }
-        });
+//        Call<ResultObj<User>> call =  Doapi.instance().register(
+//                username,
+//                md5util.md5(pw),
+//                key);
+//        call.enqueue(new Callback<ResultObj<User>>() {
+//            @Override
+//            public void onResponse(Call<ResultObj<User>> call, Response<ResultObj<User>> response) {
+////                Log.d("call",""+response.body().data.getToken());
+//                if (response.isSuccessful()){
+//                    if (response.body().code==200){
+//                        MyApplication.token = response.body().data.getToken();
+//                        Log.d("calleee",""+response.body().data.getToken());
+//                        RegisterActivity.this.finish();
+//                        Intent intent = new Intent();
+//                        intent.setClass(RegisterActivity.this, MainMapActivity.class);
+//                        startActivity(intent);
+//                    }else {
+//                        ToastUtil.show(RegisterActivity.this,"注册失败");
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResultObj<User>> call, Throwable t) {
+//                ToastUtil.show(RegisterActivity.this,"注册失败");
+//            }
+//        });
     }
 
     @Override
