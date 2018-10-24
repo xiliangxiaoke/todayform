@@ -6,6 +6,7 @@ import android.util.Log;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mapbox.mapboxsdk.Mapbox;
 //import com.tencent.smtt.sdk.QbSdk;
+import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 
 public class MyApplication extends MultiDexApplication {
@@ -17,6 +18,8 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+
+        Hawk.init(this).build();
 
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 
@@ -39,7 +42,7 @@ public class MyApplication extends MultiDexApplication {
 
 
         // mapbox access token
-        Mapbox.getInstance(getApplicationContext(),getString(R.string.mapbox_access_token));
+//        Mapbox.getInstance(getApplicationContext(),getString(R.string.mapbox_access_token));
 
 
     }
