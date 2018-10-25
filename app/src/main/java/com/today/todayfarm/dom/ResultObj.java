@@ -9,12 +9,41 @@ import java.util.List;
  * @param <T>
  */
 public class ResultObj<T> {
-	
+
+	/**
+	 * 服务器返回 的状态
+	 * code:0 数据正常返回，1：调用接口返回失败，-1：非法的token，这时候建议调到登录页面
+	 */
 	public int code = -1;
 	public String msg;
 	public T object;
 	public List<T> list;
-	
+
+	/**
+	 * token
+	 */
+	public String token;
+	/**
+	 * boolean 是否是实名认证
+	 */
+	public String auth;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
+
 	public List<T> getList() {
 		return list;
 	}

@@ -32,6 +32,12 @@ public interface MyApiService {
             @Query("phone") String phone
     );
 
+    @GET("app/static/login")
+    Call<ResultObj<Object>> login(
+            @Query("phone") String phone,
+            @Query("code") String code
+    );
+
 
     //--------------------old
 
@@ -46,11 +52,7 @@ public interface MyApiService {
 
     );
 
-    @POST("login")
-    Call<ResultObj<User>> login(
-            @Query("username") String username,
-            @Query("passwordmd5")String passwordmd5
-    );
+
 
     @POST("changePw")
     Call<ResultObj<Object>> changePw(

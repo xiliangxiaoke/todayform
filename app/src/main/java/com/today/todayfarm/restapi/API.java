@@ -35,4 +35,23 @@ public class API {
             }
         });
     }
+
+    public static void login(String phone,String code,ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance().login(phone,code);
+        call.enqueue(new Callback<ResultObj<Object>>() {
+            @Override
+            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
+                if(response.isSuccessful()){
+                    callBack.onResponse(response.body());
+                }else {
+                    callBack.onError(RESPONSE_NOT_SUCCESS);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
+                callBack.onError(RESPONSE_ON_FAILURE);
+            }
+        });
+    }
 }

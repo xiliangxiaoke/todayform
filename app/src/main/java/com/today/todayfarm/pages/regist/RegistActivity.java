@@ -1,11 +1,14 @@
 package com.today.todayfarm.pages.regist;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.InputType;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.orhanobut.hawk.Hawk;
@@ -14,6 +17,7 @@ import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.pages.tabs.TabActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.PhoneUtil;
@@ -27,6 +31,9 @@ public class RegistActivity extends BaseActivity {
 
     @BindView(R.id.close)
     ImageView btnclose;
+
+    @BindView(R.id.tvgetcode)
+    TextView tvgetcode;
 
     @OnClick(R.id.close)
     void closepage(){
@@ -69,6 +76,7 @@ public class RegistActivity extends BaseActivity {
                     Log.d("my","get code failed");
                 }
             });
+            doCount(60*1000);
         }else {
             // 提示手机号不正确
             new SweetAlertDialog(this)
@@ -78,6 +86,47 @@ public class RegistActivity extends BaseActivity {
         }
 
 
+    }
+
+    @OnClick(R.id.btregist)
+    public void regist(){
+        // 登陆
+        String phone = etphone.getText().toString();
+        String code = etcode.getText().toString();
+        if(phone==null || phone.length()==0){
+            new SweetAlertDialog(this)
+                    .setTitleText("请输入正确手机号")
+                    .setConfirmText("我知道了")
+                    .show();
+            return;
+        }
+
+        if (code == null || code.length()==0){
+            new SweetAlertDialog(this)
+                    .setTitleText("请输入验证码")
+                    .setConfirmText("我知道了")
+                    .show();
+            return;
+        }
+
+        API.login(phone, code, new ApiCallBack<Object>() {
+            @Override
+            public void onResponse(ResultObj<Object> resultObj) {
+                // login success !!
+                //保存token
+                Hawk.put(HawkKey.TOKEN,resultObj.token);
+                Intent intent = new Intent();
+                intent.setClass(RegistActivity.this, TabActivity.class);
+                RegistActivity.this.startActivity(intent);
+            }
+
+            @Override
+            public void onError(int code) {
+                new SweetAlertDialog(RegistActivity.this)
+                        .setTitleText("登录失败")
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -97,9 +146,35 @@ public class RegistActivity extends BaseActivity {
                 etphone.setText(pc.getPhonenum());
             }
             // 检测验证码请求失效倒计时 60秒判断
+            long now = System.currentTimeMillis();
+            long past = pc.getCreateTimestamp();
+            if(now-past<60*1000){
+                //进行倒计时
+                doCount(now-past);
+            }
 
         }
 
 
+    }
+
+    /**
+     * 倒计时
+     * @param millisecond
+     */
+    private void doCount(long millisecond){
+        CountDownTimer timer = new CountDownTimer(millisecond,1000) {
+            @Override
+            public void onTick(long l) {
+                tvgetcode.setEnabled(false);
+                tvgetcode.setText("请等待("+l/1000+")");
+            }
+
+            @Override
+            public void onFinish() {
+                tvgetcode.setEnabled(true);
+                tvgetcode.setText("获取验证码");
+            }
+        }.start();
     }
 }
