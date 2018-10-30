@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- title -->
+    <RelativeLayout
+        android:background="#259b24"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:text="保存农田"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/close"
+            android:textColor="#ffffff"
+            android:text="@string/icon_exit"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+        <TextView
+            android:id="@+id/save"
+            android:textColor="#ffffff"
+            android:text="@string/icon_yes"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:textSize="18dp"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+    </RelativeLayout>
+    
+    
+    <!-- MAP-->
+    <WebView
+        android:id="@+id/map"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+    <!--输入农田名称-->
+    <EditText
+        android:id="@+id/editfarmname"
+        android:hint="请输入农田名称"
+        android:layout_below="@id/map"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <!--输入当前种植作物-->
+    <EditText
+        android:id="@+id/editcropname"
+        android:hint="请输入当前种植作物"
+        android:layout_below="@id/editfarmname"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+</RelativeLayout>

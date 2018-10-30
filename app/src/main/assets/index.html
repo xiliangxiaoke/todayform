@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="./leaflet/leaflet.css" />
     <script src="./leaflet/leaflet.js"></script>
     <script src="./leaflet/chinaMapProvider.js"></script>
+    <script src="./leaflet/Path.Drag.js"></script>
+    <script src="./leaflet/Leaflet.Editable.js"></script>
+    <script src="./leaflet/turf.min.js"></script>
+
     <title>Title</title>
 </head>
 <style>
@@ -22,16 +26,168 @@
 
 <div id="map"></div>
 
+<button onclick="test()">Copy Text</button>
+<button onclick="test1()">Copy Text</button>
+<button onclick="test2()">Copy Text</button>
 </body>
 
 <script>
+
+    var farmlanddraw = null; // 用来存储绘制的农田
+    var drawtype = "circle"; // circle polygon
+
     var map = L.map('map', {
         center: [31.59, 120.29],
-        zoom: 12
+        zoom: 12,
+        attributionControl: false,
+        editable: true
     });
 
+    map.zoomControl.setPosition('topright');
+
+// 添加天地图
     L.tileLayer.chinaProvider('TianDiTu.Satellite.Map',{maxZoom:18,minZoom:5}).addTo(map);
     L.tileLayer.chinaProvider('TianDiTu.Satellite.Annotion',{maxZoom:18,minZoom:5}).addTo(map);
+
+
+
+    //几何绘制编辑控件
+    L.EditControl = L.Control.extend({
+
+        options: {
+            position: 'topleft',
+            callback: null,
+            kind: '',
+            html: ''
+        },
+
+        onAdd: function (map) {
+            var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                link = L.DomUtil.create('a', '', container);
+
+            link.href = '#';
+            link.title = 'Create a new ' + this.options.kind;
+            link.innerHTML = this.options.html;
+            L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                      .on(link, 'click', function () {
+                        window.LAYER = this.options.callback.call(map.editTools);
+                      }, this);
+
+            return container;
+        }
+
+    });
+
+
+
+
+
+    // android 调用js的方法入口
+    /***
+        1 定位 {type:"location",params:{longitude:117,latitude:36}}
+        2 绘制 {type:"draw",params:{action:"drawcircle|drawpolygon|getgeojson"}}
+    */
+    function callJS(paraminfo){
+
+        try{
+            var paramobj = JSON.parse(paraminfo);
+            // METHOD 定位地图位置
+            if ("location" == paramobj.type) {
+                map.panTo(paramobj.params);
+            }else if("draw" == paramobj.type){
+                doDraw(paramobj.params.action)
+            }
+        }catch(e){
+            var param = {
+                    type:"error",
+                    value:""+e
+
+                };
+            androidjs.call(JSON.stringify(param));
+        }
+
+    };
+
+    // 进行绘制操作
+    /**
+        drawcircle 绘制圆形
+        drawpolygon 绘制多边形
+        getgeojson 获取绘制结果
+    */
+    function doDraw(action){
+        if("drawcircle" == action){
+            drawtype = "circle";
+            if(farmlanddraw){
+                farmlanddraw.remove();
+            }
+            map.editTools.stopDrawing();
+            farmlanddraw = map.editTools.startCircle();
+        }else if("drawpolygon" == action){
+            drawtype = "polygon";
+            if(farmlanddraw){
+                farmlanddraw.remove();
+            }
+            map.editTools.stopDrawing();
+            farmlanddraw = map.editTools.startPolygon();
+        }else if("getgeojson" == action){
+            if(farmlanddraw){
+
+                // js 调用android 传到前台 区分circle和polygon的结构  Geojson不直接支持circle，所以在外面又包了一层
+                var geovalue;
+                var area;
+                if(drawtype == "circle"){
+                    geovalue = {
+                        geotype:"circle",
+                        center: [farmlanddraw.getLatLng().lng,farmlanddraw.getLatLng().lat],
+                        radius:farmlanddraw.getRadius()
+                    };
+                    area = getCircleArea(farmlanddraw.getRadius());
+                }else if(drawtype == "polygon"){
+                    geovalue = {
+                        geotype:"polygon",
+                        geojson:farmlanddraw.toGeoJSON()
+                    }
+                    area = turf.area(farmlanddraw.toGeoJSON().geometry);
+                }
+
+                var param = {
+                    type:"returngeojson",
+                    value:""+JSON.stringify(geovalue),
+                    farmarea:area
+                }
+                androidjs.call(JSON.stringify(param));
+            }
+        }
+    }
+
+
+    function getCircleArea(r){
+        return r*r*Math.PI;
+    }
+
+
+
+//--------------------------test
+
+    function test(){
+
+        var param = '{"type":"draw","params":{"action":"drawcircle"}}';
+        callJS(param);
+    }
+
+    function test1(){
+
+        var param = '{"type":"draw","params":{"action":"drawpolygon"}}';
+        callJS(param);
+    }
+
+    function test2(){
+
+        var param = '{"type":"draw","params":{"action":"getgeojson"}}';
+        callJS(param);
+    }
+
+    
 </script>
 
 </html>

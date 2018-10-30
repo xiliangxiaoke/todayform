@@ -1,4 +1,4 @@
-package com.today.todayfarm.pages.regist;
+package com.today.todayfarm.pages.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class RegistActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.close)
     ImageView btnclose;
@@ -89,8 +89,8 @@ public class RegistActivity extends BaseActivity {
     }
 
     @OnClick(R.id.btregist)
-    public void regist(){
-        // 注册
+    public void login(){
+        // 登陆
         String phone = etphone.getText().toString();
         String code = etcode.getText().toString();
         if(phone==null || phone.length()==0){
@@ -109,7 +109,7 @@ public class RegistActivity extends BaseActivity {
             return;
         }
 
-        API.registerUser(phone, code, new ApiCallBack<Object>() {
+        API.login(phone, code, new ApiCallBack<Object>() {
             @Override
             public void onResponse(ResultObj<Object> resultObj) {
                 if (resultObj.getCode()==0){
@@ -117,11 +117,11 @@ public class RegistActivity extends BaseActivity {
                     //保存token
                     Hawk.put(HawkKey.TOKEN,resultObj.token);
                     Intent intent = new Intent();
-                    intent.setClass(RegistActivity.this, TabActivity.class);
-                    RegistActivity.this.startActivity(intent);
+                    intent.setClass(LoginActivity.this, TabActivity.class);
+                    LoginActivity.this.startActivity(intent);
                 }else {
-                    new SweetAlertDialog(RegistActivity.this)
-                            .setTitleText("注册失败")
+                    new SweetAlertDialog(LoginActivity.this)
+                            .setTitleText("登录失败")
                             .setContentText(resultObj.getMsg())
                             .show();
                 }
@@ -130,8 +130,8 @@ public class RegistActivity extends BaseActivity {
 
             @Override
             public void onError(int code) {
-                new SweetAlertDialog(RegistActivity.this)
-                        .setTitleText("注册失败")
+                new SweetAlertDialog(LoginActivity.this)
+                        .setTitleText("登录失败")
                         .show();
             }
         });
@@ -140,7 +140,7 @@ public class RegistActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regist);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
         //限制输入手机号

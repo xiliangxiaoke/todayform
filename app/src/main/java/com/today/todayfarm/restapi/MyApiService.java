@@ -32,10 +32,44 @@ public interface MyApiService {
             @Query("phone") String phone
     );
 
+    /**
+     * 注册用户
+     * @param phone
+     * @param code
+     * @return
+     */
+    @GET("app/static/registerUser")
+    Call<ResultObj<Object>>  registerUser(
+            @Query("phone") String phone,
+            @Query("code") String code
+    );
+
+    /**
+     * 登陆
+     * @param phone
+     * @param code
+     * @return
+     */
     @GET("app/static/login")
     Call<ResultObj<Object>> login(
             @Query("phone") String phone,
             @Query("code") String code
+    );
+
+    @GET("app/field/saveOrUpdate")
+    Call<ResultObj<Object>> saveOrUpdate(
+        @Query("token") String token,
+        @Query("fieldName") String fieldName,
+        @Query("fieldArea") Double fieldArea,
+        @Query("fieldBoundary") String fieldBoundary,
+        @Query("cropName") String cropName
+    );
+
+    @GET("app/field/findMyFields")
+    Call<ResultObj<FieldInfo>> findMyFields(
+            @Query("token") String token,
+            @Query("currentPage") int currentpage,
+            @Query("pageSize") int pageSize
     );
 
 

@@ -164,62 +164,62 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
                         mFieldInfoList.addAll(list);
 
                         // 在地图 上显示
-                        aMap.clear();
-                        polygons.clear();
-                        Polygon selectPolygon = null;
-
-                        for (int i=0;i<list.size();i++){
-                            PolygonOptions polygonOptions = new PolygonOptions();
-
-                            Gson gson = new Gson();
-                            CustomGeometry geometry = gson.fromJson(list.get(i).getBoundry(), CustomGeometry.class) ;
-                            if (geometry!=null){
-                                for (int j=0;j<geometry.getCoordinates().size();j++){
-                                    Custompoint cp = geometry.getCoordinates().get(j);
-                                    polygonOptions.add(new LatLng(cp.getX(),cp.getY()));
-                                }
-                            }
-                            polygonOptions.strokeWidth(1) // 多边形的边框
-
-                                    .strokeColor(Color.GREEN) // 边框颜色
-                                    .fillColor(Color.parseColor("#55ffffff"));   // 多边形的填充色
-
-                            Polygon polygon = aMap.addPolygon(polygonOptions);
-                            polygons.add(polygon);
-
-                            if (list.get(i).getFieldid() == selectFieldid){
-                                selectPolygon = polygon;
-                            }
-
-                            //显示影像overlay
-//                            String humidpath = list.get(i).getHumidImgPath();
-//                            if (humidpath!=null && humidpath.length()>0){
-//                                LatLngBounds bounds = new LatLngBounds.Builder()
-//                                        .include(new LatLng(31.3333525435886, 108))
-//                                        .include(new LatLng(38.3406619155568, 117.388435294325)).build();
+//                        aMap.clear();
+//                        polygons.clear();
+//                        Polygon selectPolygon = null;
 //
-//                                GroundOverlay groundoverlay = aMap.addGroundOverlay(new GroundOverlayOptions()
-//                                        .anchor(0.5f, 0.5f)
-//                                        .transparency(0.1f)
-//                                        .image(BitmapDescriptorFactory
-//                                                .fromPath(humidpath))
-//                                        .positionFromBounds(bounds));
+//                        for (int i=0;i<list.size();i++){
+//                            PolygonOptions polygonOptions = new PolygonOptions();
+//
+//                            Gson gson = new Gson();
+//                            CustomGeometry geometry = gson.fromJson(list.get(i).getBoundry(), CustomGeometry.class) ;
+//                            if (geometry!=null){
+//                                for (int j=0;j<geometry.getCoordinates().size();j++){
+//                                    Custompoint cp = geometry.getCoordinates().get(j);
+//                                    polygonOptions.add(new LatLng(cp.getX(),cp.getY()));
+//                                }
 //                            }
-
-
-                        }
-                        if (polygons.size()>0){
-                            if (selectPolygon!=null){
-
-                                reCameraMap(selectPolygon);
-
-                            }else{
-                                reCameraMap(polygons.get(0));
-                            }
-                        }
-
-
-                        bindInfo();
+//                            polygonOptions.strokeWidth(1) // 多边形的边框
+//
+//                                    .strokeColor(Color.GREEN) // 边框颜色
+//                                    .fillColor(Color.parseColor("#55ffffff"));   // 多边形的填充色
+//
+//                            Polygon polygon = aMap.addPolygon(polygonOptions);
+//                            polygons.add(polygon);
+//
+//                            if (list.get(i).getFieldid() == selectFieldid){
+//                                selectPolygon = polygon;
+//                            }
+//
+//                            //显示影像overlay
+////                            String humidpath = list.get(i).getHumidImgPath();
+////                            if (humidpath!=null && humidpath.length()>0){
+////                                LatLngBounds bounds = new LatLngBounds.Builder()
+////                                        .include(new LatLng(31.3333525435886, 108))
+////                                        .include(new LatLng(38.3406619155568, 117.388435294325)).build();
+////
+////                                GroundOverlay groundoverlay = aMap.addGroundOverlay(new GroundOverlayOptions()
+////                                        .anchor(0.5f, 0.5f)
+////                                        .transparency(0.1f)
+////                                        .image(BitmapDescriptorFactory
+////                                                .fromPath(humidpath))
+////                                        .positionFromBounds(bounds));
+////                            }
+//
+//
+//                        }
+//                        if (polygons.size()>0){
+//                            if (selectPolygon!=null){
+//
+//                                reCameraMap(selectPolygon);
+//
+//                            }else{
+//                                reCameraMap(polygons.get(0));
+//                            }
+//                        }
+//
+//
+//                        bindInfo();
 
                     }
                 }
@@ -302,23 +302,23 @@ public class MainMapActivity extends AppCompatActivity implements WeatherSearch.
     }
 
     private void bindInfo() {
-        if (mShowInfoType == SHOW_INFO_TYPE_GROUND) {
-            for (FieldInfo info : mFieldInfoList) {
-                if (info.humidInfo != null) {
-                    for (HumidInfo humidInfo : info.humidInfo) {
-                        addHumidToMap(humidInfo);
-                    }
-                }
-            }
-        } else if (mShowInfoType == SHOW_INFO_TYPE_LIFE) {
-            for (FieldInfo info : mFieldInfoList) {
-                if (info.growthInfo != null) {
-                    for (GrowthInfo growthInfo : info.growthInfo) {
-                        addGrowthToMap(growthInfo);
-                    }
-                }
-            }
-        }
+//        if (mShowInfoType == SHOW_INFO_TYPE_GROUND) {
+//            for (FieldInfo info : mFieldInfoList) {
+//                if (info.humidInfo != null) {
+//                    for (HumidInfo humidInfo : info.humidInfo) {
+//                        addHumidToMap(humidInfo);
+//                    }
+//                }
+//            }
+//        } else if (mShowInfoType == SHOW_INFO_TYPE_LIFE) {
+//            for (FieldInfo info : mFieldInfoList) {
+//                if (info.growthInfo != null) {
+//                    for (GrowthInfo growthInfo : info.growthInfo) {
+//                        addGrowthToMap(growthInfo);
+//                    }
+//                }
+//            }
+//        }
     }
 
 

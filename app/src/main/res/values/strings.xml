@@ -9,8 +9,24 @@
     <string name="report_time">发布时间</string>
 
 
+    <!--font awesome icon-->
+    <string name="icon_mainpage">&#xf015;</string>
+    <string name="icon_farmland">&#xf009;</string>
+    <string name="icon_suggestion">&#xf06c;</string>
+    <string name="icon_farmwork">&#xf21a;</string>
+    <string name="icon_setting">&#xf013;</string>
+    <string name="icon_menu">&#xf0c9;</string>
+    <string name="icon_add">&#xf067;</string>
+    <string name="icon_txt_exit">&#xf00d; 退出</string>
+    <string name="icon_change_shape_circle">&#xf111;</string>
+    <string name="icon_change_shape_polygon">&#xf0c8;</string>
+    <string name="icon_txt_drawback">&#xf112; 撤销</string>
+    <string name="icon_exit" >&#xf00d;</string>
+    <string name="icon_yes" >&#xf00c;</string>
+
     <!-- mapbox  -->
     <string name="mapbox_access_token">pk.eyJ1IjoieGlsaWFuZ3hpYW9rZSIsImEiOiJjam5penI3OTUwdTRyM3dxdHY2eXR0eGEyIn0.1c_ZjGpk6s6oasRSahw1UA</string>
+
 
 
 </resources>

@@ -9,9 +9,9 @@ import android.webkit.WebView;
 //import com.tencent.smtt.sdk.WebSettings;
 //import com.tencent.smtt.sdk.WebView;
 
-import com.mapbox.mapboxsdk.maps.MapView;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+//import com.mapbox.mapboxsdk.maps.MapView;
+//import com.mapbox.mapboxsdk.maps.MapboxMap;
+//import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +22,7 @@ public class WebMapActivity extends Activity {
 //    WebView tbsWebView;
 
 //    @BindView(R.id.mapView)
-    MapView mapView;
+//    MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,55 +41,55 @@ public class WebMapActivity extends Activity {
 
 
         //-----mapbox
-        mapView = (MapView) findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(MapboxMap mapboxMap) {
-                // Customize map with markers , polylines, etc.
-            }
-        });
+//        mapView = (MapView) findViewById(R.id.mapView);
+//        mapView.onCreate(savedInstanceState);
+//        mapView.getMapAsync(new OnMapReadyCallback() {
+//            @Override
+//            public void onMapReady(MapboxMap mapboxMap) {
+//                // Customize map with markers , polylines, etc.
+//            }
+//        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mapView.onStart();
+//        mapView.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume();
+//        mapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
+//        mapView.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mapView.onPause();
+//        mapView.onPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
+//        mapView.onSaveInstanceState(outState);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+//        mapView.onLowMemory();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
+//        mapView.onDestroy();
     }
 }

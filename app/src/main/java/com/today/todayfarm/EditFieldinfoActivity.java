@@ -55,42 +55,42 @@ public class EditFieldinfoActivity extends Activity {
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         //上传图片
-        Call<ResultObj<Object>> call = Doapi.instance().uploadFieldSateliteImg(
-                MyApplication.token,
-                requestBody,
-                "desctiption",
-                fieldInfo.getFieldid()+"",
-                type,
-                new Date().getTime()+"",
-                left.getText().toString(),
-                bottom.getText().toString(),
-                right.getText().toString(),
-                top.getText().toString()
-
-
-
-        );
-
-
-        call.enqueue(new Callback<ResultObj<Object>>() {
-            @Override
-            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
-                if (response.isSuccessful()){
-                    if (response.body().getCode()==200){
-                        ToastUtil.show(EditFieldinfoActivity.this,"上传成功");
-                    }else{
-                        Log.d("SHANGCHUAN:","fault:"+response.body().getCode());
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
-
-                Log.d("SHANGCHUAN:","fault:"+t.toString());
-            }
-        });
+//        Call<ResultObj<Object>> call = Doapi.instance().uploadFieldSateliteImg(
+//                MyApplication.token,
+//                requestBody,
+//                "desctiption",
+//                fieldInfo.getFieldid()+"",
+//                type,
+//                new Date().getTime()+"",
+//                left.getText().toString(),
+//                bottom.getText().toString(),
+//                right.getText().toString(),
+//                top.getText().toString()
+//
+//
+//
+//        );
+//
+//
+//        call.enqueue(new Callback<ResultObj<Object>>() {
+//            @Override
+//            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
+//                if (response.isSuccessful()){
+//                    if (response.body().getCode()==200){
+//                        ToastUtil.show(EditFieldinfoActivity.this,"上传成功");
+//                    }else{
+//                        Log.d("SHANGCHUAN:","fault:"+response.body().getCode());
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
+//
+//                Log.d("SHANGCHUAN:","fault:"+t.toString());
+//            }
+//        });
     }
 
     @OnClick(R.id.addgrowthdata)

@@ -11,13 +11,17 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
+import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
+import com.today.todayfarm.pages.login.LoginActivity;
 import com.today.todayfarm.pages.main.MainPageGalleryPagerAdapter;
 import com.today.todayfarm.pages.main.ext.ScaleCircleNavigator;
 import com.today.todayfarm.pages.regist.RegistActivity;
+import com.today.todayfarm.pages.tabs.TabActivity;
 import com.today.todayfarm.restapi.Doapi;
 import com.today.todayfarm.restapi.MyApiService;
 import com.today.todayfarm.util.ToastUtil;
@@ -79,46 +83,9 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.login)
     void dologin()  {
 
-//        Log.d("dologin","username: "+username);
-//        if(username==null || "".equals(username)){
-//            ToastUtil.show(MainActivity.this,"请输入用户名！");
-//            return;
-//        }
-//        if(password==null || "".equals(password)){
-//            ToastUtil.show(MainActivity.this,"请输入密码！");
-//            return;
-//        }
-//
-//
-//
-//        Call<ResultObj<User>> call =  Doapi.instance().login(username,
-//                md5util.md5(password) );
-//        call.enqueue(new Callback<ResultObj<User>>() {
-//            @Override
-//            public void onResponse(Call<ResultObj<User>> call, Response<ResultObj<User>> response) {
-////                Log.d("call",""+response.body().data.getToken());
-//                if (response.isSuccessful()){
-//                    if (response.body().code==200){
-//                        MyApplication.token = response.body().data.getToken();
-//                        Intent intent = new Intent();
-//                        intent.setClass(MainActivity.this, MainMapActivity.class);
-//                        startActivity(intent);
-//                    }else{
-//                        ToastUtil.show(MainActivity.this,"登陆失败");
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultObj<User>> call, Throwable t) {
-//                ToastUtil.show(MainActivity.this,"登陆失败");
-//            }
-//        });
-
-//        Intent intent = new Intent();
-//        intent.setClass(this, MainMapActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent();
+        intent.setClass(this,LoginActivity.class);
+        startActivity(intent);
 
     }
 
@@ -128,6 +95,14 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        //先看看有没有登陆token，有就直接进入主界面
+        String token = Hawk.get(HawkKey.TOKEN);
+        if (token !=null && token.length()>0){
+            Intent intent = new Intent();
+            intent.setClass(this, TabActivity.class);
+            this.startActivity(intent);
+        }
 
 
 

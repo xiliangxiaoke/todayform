@@ -15,6 +15,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
         }
     }
     lintOptions {
@@ -49,7 +53,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     //SpringView core library (only include DefaultHeader/Footer)
-    implementation 'com.liaoinstan.springview:library:1.5.0'
+
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'cn.finalteam.rxgalleryfinal:library:1.0.9'
@@ -64,11 +68,14 @@ dependencies {
 
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
 
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.6.1'
+//    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.6.1'
 
     //  beautiful dialog  https://github.com/Cazaea/SweetAlertDialog
     implementation 'com.github.cazaea:sweet-alert-dialog:1.0.0'
 
     // 持久化存储一些变量 https://github.com/orhanobut/hawk
     implementation "com.orhanobut:hawk:2.0.1"
+
+
+    implementation 'com.liaoinstan.springview:library:1.5.1'
 }

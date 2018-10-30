@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- title -->
+    <RelativeLayout
+        android:background="#259b24"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:text="首页"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/menu"
+            android:textColor="#ffffff"
+            android:text="@string/icon_menu"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+    </RelativeLayout>
+
+
+    <!--地图 -->
+    <WebView
+        android:id="@+id/map"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!--定位按钮-->
+    <ImageView
+        android:id="@+id/geolocation"
+        android:src="@mipmap/geolocation"
+        android:background="@drawable/geolocation_button_bg"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:padding="5dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+</RelativeLayout>

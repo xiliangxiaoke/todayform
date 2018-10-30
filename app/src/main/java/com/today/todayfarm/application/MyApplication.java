@@ -1,10 +1,11 @@
 package com.today.todayfarm.application;
 
+import android.graphics.Typeface;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.mapbox.mapboxsdk.Mapbox;
+//import com.mapbox.mapboxsdk.Mapbox;
 //import com.tencent.smtt.sdk.QbSdk;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
@@ -12,6 +13,7 @@ import com.today.todayfarm.R;
 public class MyApplication extends MultiDexApplication {
 
     public static String token = null;
+    public static Typeface iconTypeFace = null;
 
 
     @Override
@@ -20,6 +22,8 @@ public class MyApplication extends MultiDexApplication {
         Fresco.initialize(this);
 
         Hawk.init(this).build();
+
+        iconTypeFace = Typeface.createFromAsset(getAssets(),"font/fontawesome-webfont.ttf");
 
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 

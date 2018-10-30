@@ -124,24 +124,24 @@ public class FieldListActivity extends Activity {
 
             final FieldInfo info = list.get(position);
 
-            holder.fieldname.setText(info.getName());
-            holder.locationmap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MainMapActivity.selectFieldid = info.getFieldid();
-                    FieldListActivity.this.finish();
-                }
-            });
-            holder.editfield.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    EditFieldinfoActivity.fieldInfo = info;
-                    Intent intent = new Intent();
-                    intent.setClass(FieldListActivity.this,EditFieldinfoActivity.class);
-                    FieldListActivity.this.startActivity(intent);
-                }
-            });
+//            holder.fieldname.setText(info.getName());
+//            holder.locationmap.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    MainMapActivity.selectFieldid = info.getFieldid();
+//                    FieldListActivity.this.finish();
+//                }
+//            });
+//            holder.editfield.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    EditFieldinfoActivity.fieldInfo = info;
+//                    Intent intent = new Intent();
+//                    intent.setClass(FieldListActivity.this,EditFieldinfoActivity.class);
+//                    FieldListActivity.this.startActivity(intent);
+//                }
+//            });
 
         }
 
