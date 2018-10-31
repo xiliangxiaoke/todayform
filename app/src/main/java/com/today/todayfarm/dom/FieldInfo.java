@@ -11,9 +11,17 @@ public class FieldInfo {
 	String fieldBoundary;
 	String userId;
 	String fieldcrop;
+	String fullName;
 
+	public String getFullName() {
+		return fullName;
+	}
 
-    public String getFieldcrop() {
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getFieldcrop() {
         return fieldcrop;
     }
 

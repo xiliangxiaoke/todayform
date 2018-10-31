@@ -28,6 +28,27 @@ public class ResultObj<T> {
 	 */
 	public String auth;
 
+	public PropInfo prop;
+
+	public String all;// 总数量
+
+
+	public String getAll() {
+		return all;
+	}
+
+	public void setAll(String all) {
+		this.all = all;
+	}
+
+	public PropInfo getProp() {
+		return prop;
+	}
+
+	public void setProp(PropInfo prop) {
+		this.prop = prop;
+	}
+
 	public String getToken() {
 		return token;
 	}

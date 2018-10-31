@@ -41,8 +41,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,10 +83,11 @@
         <activity android:name=".pages.regist.RegistActivity" />
         <activity android:name=".pages.tabs.TabActivity" />
         <activity android:name=".pages.login.LoginActivity" />
-        <activity android:name=".pages.AddFarmMap.AddFarm2MapActivity"
-            android:launchMode="singleTask"
-            />
-        <activity android:name=".pages.createFarm.CreateFarmActivity"></activity>
+        <activity
+            android:name=".pages.AddFarmMap.AddFarm2MapActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".pages.createFarm.CreateFarmActivity" />
+        <activity android:name=".pages.pagedetail.FarmDetailActivity"></activity>
     </application>
 
 </manifest>

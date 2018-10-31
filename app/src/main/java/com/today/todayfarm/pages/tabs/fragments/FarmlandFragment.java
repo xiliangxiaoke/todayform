@@ -39,6 +39,7 @@ public class FarmlandFragment extends Fragment {
     private Button btaddfarm;
     private SpringView springView;
     private RecyclerView recyclerView;
+    TextView staticInfo;
     int pageidx = 1;
     int pagesize = 10;
     RecyclerviewAdapter adapter = null;
@@ -54,6 +55,7 @@ public class FarmlandFragment extends Fragment {
         btaddfarm.setTypeface(MyApplication.iconTypeFace);
         springView= view.findViewById(R.id.springview);
         recyclerView= view.findViewById(R.id.recyclerView);
+        staticInfo = view.findViewById(R.id.staticinfo);
 
         springView.setHeader(new DefaultHeader(this.getActivity()));
         springView.setFooter(new DefaultFooter(this.getActivity()));
@@ -100,6 +102,17 @@ public class FarmlandFragment extends Fragment {
                                 pageidx++;
                                 adapter.notifyDataSetChanged();
                             }
+                            double area=0;
+                            if (resultObj.getProp() != null && resultObj.getProp().getTotalArea() != null && resultObj.getProp().getTotalArea().length() > 0) {
+                                try {
+                                    area = Double.parseDouble(resultObj.getProp().getTotalArea())/666.666;
+                                } catch (Exception e) {
+                                }
+
+
+                            }
+                            DecimalFormat df = new DecimalFormat("#.00");
+                            staticInfo.setText("已添加"+resultObj.getAll()+"块农田，总面积"+df.format(area)+"亩");
                         }
                         springView.onFinishFreshAndLoad();
                     }
@@ -143,7 +156,7 @@ public class FarmlandFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull Viewholder holder, int position) {
             FieldInfo info = data.get(position);
-            holder.owner.setText("who的农田");
+            holder.owner.setText(info.getFullName()+"的农田");
             holder.fieldname.setText(info.getFieldName());
             double fieldarea =0;
             try {
