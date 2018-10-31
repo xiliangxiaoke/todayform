@@ -42,6 +42,7 @@ public class FarmlandFragment extends Fragment {
     TextView staticInfo;
     int pageidx = 1;
     int pagesize = 10;
+    int total = 0;
     RecyclerviewAdapter adapter = null;
     List<FieldInfo> listData = new ArrayList<>();
     @Nullable
@@ -89,6 +90,10 @@ public class FarmlandFragment extends Fragment {
     }
 
     private void requestFieldlist() {
+        if (total<(pageidx-1)*pagesize){
+            springView.onFinishFreshAndLoad();
+            return;
+        }
         API.findMyFields(
                 Hawk.get(HawkKey.TOKEN),
                 pageidx,
@@ -113,6 +118,10 @@ public class FarmlandFragment extends Fragment {
                             }
                             DecimalFormat df = new DecimalFormat("#.00");
                             staticInfo.setText("已添加"+resultObj.getAll()+"块农田，总面积"+df.format(area)+"亩");
+                            try {
+                                total = Integer.parseInt(resultObj.getAll()) ;
+                            } catch (Exception e) {
+                            }
                         }
                         springView.onFinishFreshAndLoad();
                     }
