@@ -11,7 +11,7 @@ public class FieldInfo {
 	String fieldBoundary;
 	String userId;
 	String fieldcrop;
-	String fullName;
+	String fullName; // 农田主的名字
 
 	public String getFullName() {
 		return fullName;

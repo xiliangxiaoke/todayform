@@ -24,6 +24,7 @@ import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.AddFarmMap.AddFarm2MapActivity;
+import com.today.todayfarm.pages.pagedetail.FarmDetailActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 
@@ -182,6 +183,17 @@ public class FarmlandFragment extends Fragment {
             }
 
             holder.areacrop.setText(df.format(fieldarea)+"亩 " +cropname);
+
+            holder.panel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String fieldid = info.getFieldId();
+                    Intent intent = new Intent();
+                    intent.setClass(FarmlandFragment.this.getContext(), FarmDetailActivity.class);
+                    intent.putExtra("fieldid", fieldid);
+                    FarmlandFragment.this.getContext().startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -190,6 +202,8 @@ public class FarmlandFragment extends Fragment {
         }
 
         public class Viewholder extends RecyclerView.ViewHolder{
+
+            View panel;
 
             TextView owner;
             TextView fieldname;
@@ -200,6 +214,7 @@ public class FarmlandFragment extends Fragment {
                 owner = itemView.findViewById(R.id.fieldowner);
                 fieldname = itemView.findViewById(R.id.fieldname);
                 areacrop = itemView.findViewById(R.id.areacrop);
+                panel = itemView.findViewById(R.id.panel);
 
             }
         }

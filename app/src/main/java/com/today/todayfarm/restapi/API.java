@@ -134,4 +134,24 @@ public class API {
             }
         });
     }
+
+    public static void getFieldById(String token, String fieldId,ApiCallBack<FieldInfo> callBack) {
+        Call<ResultObj<FieldInfo>> call = Doapi.instance().getFieldById(token, fieldId);
+        call.enqueue(new Callback<ResultObj<FieldInfo>>() {
+            @Override
+            public void onResponse(Call<ResultObj<FieldInfo>> call, Response<ResultObj<FieldInfo>> response) {
+                if (response.isSuccessful()) {
+                    callBack.onResponse(response.body());
+                } else {
+                    callBack.onError(RESPONSE_NOT_SUCCESS);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<FieldInfo>> call, Throwable t) {
+                callBack.onError(RESPONSE_ON_FAILURE);
+            }
+        });
+
+    }
 }

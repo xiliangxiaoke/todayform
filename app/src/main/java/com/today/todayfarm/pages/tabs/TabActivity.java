@@ -75,6 +75,7 @@ public class TabActivity extends BaseActivity {
             int index = Hawk.get(HawkKey.MAIN_PAGE_INDEX_TO_SHOW);
             fragmentContainerHelper.handlePageSelected(index,false);
             switchPages(index);
+            Hawk.put(HawkKey.MAIN_PAGE_INDEX_TO_SHOW,0);
         }
 
     }

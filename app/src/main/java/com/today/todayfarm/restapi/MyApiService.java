@@ -56,6 +56,15 @@ public interface MyApiService {
             @Query("code") String code
     );
 
+    /**
+     * 创建或更新农田
+     * @param token
+     * @param fieldName
+     * @param fieldArea
+     * @param fieldBoundary
+     * @param cropName
+     * @return
+     */
     @GET("app/field/saveOrUpdate")
     Call<ResultObj<Object>> saveOrUpdate(
         @Query("token") String token,
@@ -65,6 +74,14 @@ public interface MyApiService {
         @Query("cropName") String cropName
     );
 
+
+    /**
+     * 获取农田列表
+     * @param token
+     * @param currentpage
+     * @param pageSize
+     * @return
+     */
     @GET("app/field/findMyFields")
     Call<ResultObj<FieldInfo>> findMyFields(
             @Query("token") String token,
@@ -72,8 +89,17 @@ public interface MyApiService {
             @Query("pageSize") int pageSize
     );
 
+    /**
+     * 获取农田详细信息
+     * @return
+     */
+    @GET("app/field/getById")
+    Call<ResultObj<FieldInfo>> getFieldById(
+            @Query("token") String token,
+            @Query("fieldId")String fieldId
+    );
 
-    //--------------------old
+    //-------------------------------------------------------------------old
 
     @POST("editUserInfo")
     Call<ResultObj<Object>> editUserInfo(

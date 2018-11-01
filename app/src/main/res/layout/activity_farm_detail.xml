@@ -3,7 +3,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
     </RelativeLayout>
 
     <ScrollView
-
+        android:layout_marginTop="@dimen/titleheight"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -46,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--MAP-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
@@ -58,6 +59,7 @@
             <TextView
                 android:id="@+id/farmname"
                 android:text="农田"
+                android:textSize="30sp"
                 android:textColor="#000000"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
@@ -66,7 +68,7 @@
 
             <TextView
                 android:id="@+id/farmarea"
-
+                android:text="0"
                 android:textColor="#848484"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
@@ -74,11 +76,192 @@
                 android:layout_height="50dp" />
 
             <!--农事记录-->
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/farmthingpanel"
+                app:cardElevation="5dp"
+                app:contentPadding="0dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
 
-            </RelativeLayout>
+
+                    android:background="@drawable/panel_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="162dp">
+                    <TextView
+                        android:text="农事记录"
+                        android:textSize="20sp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+                        <TextView
+                            android:id="@+id/farmthing"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/farmthingdate"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <TextView
+                        android:id="@+id/showallfarmthing"
+                        android:text="查看所有农事记录"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+
+            <!--注记-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/farmdiarypanel"
+                app:cardElevation="5dp"
+                app:contentPadding="0dp"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+
+
+                    android:background="@drawable/panel_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="212dp">
+                    <TextView
+                        android:text="注记"
+                        android:textSize="20sp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <ImageView
+                            android:id="@+id/farmdiarypic"
+                            android:padding="10dp"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp" />
+                        <TextView
+                            android:id="@+id/farmdiarytitle"
+                            android:layout_marginLeft="140dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/farmdiarydate"
+                            android:layout_marginLeft="140dp"
+                            android:layout_marginTop="70dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <TextView
+                        android:id="@+id/showallfarmdiary"
+                        android:text="查看所有注记"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+
+            <!--作物-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/farmcroppanel"
+                app:cardElevation="5dp"
+                app:contentPadding="0dp"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+
+
+                    android:background="@drawable/panel_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="162dp">
+                    <TextView
+                        android:text="作物"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+
+                        <ImageView
+                            android:id="@+id/farmcroppic"
+                            android:padding="10dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:id="@+id/farmcroptype"
+                            android:layout_marginLeft="70dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/farmcropdate"
+                            android:layout_marginRight="100dp"
+
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <TextView
+                        android:id="@+id/showallfarmcrop"
+                        android:text="查看历史作物"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
