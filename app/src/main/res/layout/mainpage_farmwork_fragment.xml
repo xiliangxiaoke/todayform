@@ -10,7 +10,7 @@
         android:layout_height="@dimen/titleheight">
 
         <TextView
-            android:text="农事"
+            android:text="农事记录"
             android:textColor="#ffffff"
             android:gravity="center"
             android:layout_centerInParent="true"
@@ -27,5 +27,24 @@
             android:layout_height="@dimen/titleheight" />
 
     </RelativeLayout>
+
+
+
+
+
+
+
+    <!--  添加农事-->
+    <Button
+        android:id="@+id/addfarmthing"
+        android:text="@string/icon_add"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/add_btn_bg"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
 </RelativeLayout>

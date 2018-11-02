@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#259b24"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:text="选择农事"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--return-->
+        <TextView
+            android:id="@+id/back"
+            android:gravity="center"
+            android:text="@string/icon_back"
+            android:textColor="#ffffff"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--整地-->
+        <TextView
+            android:id="@+id/zhengdi"
+            android:text="整地"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+        <View
+            android:background="#cfcfcf"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <!--播种-->
+        <TextView
+            android:id="@+id/bozhong"
+            android:text="播种"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+        <View
+            android:background="#cfcfcf"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <!--施肥-->
+        <TextView
+            android:id="@+id/shifei"
+            android:text="施肥"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+        <View
+            android:background="#cfcfcf"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <!--灌溉-->
+        <TextView
+            android:id="@+id/guangai"
+            android:text="灌溉"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+        <View
+            android:background="#cfcfcf"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <!--植保-->
+        <TextView
+            android:id="@+id/zhibao"
+            android:text="植保"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+        <View
+            android:background="#cfcfcf"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <!--收割-->
+        <TextView
+            android:id="@+id/shouge"
+            android:text="收割"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+        <View
+            android:background="#cfcfcf"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

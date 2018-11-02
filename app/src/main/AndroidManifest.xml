@@ -87,7 +87,14 @@
             android:name=".pages.AddFarmMap.AddFarm2MapActivity"
             android:launchMode="singleTask" />
         <activity android:name=".pages.createFarm.CreateFarmActivity" />
-        <activity android:name=".pages.pagedetail.FarmDetailActivity"></activity>
+        <activity android:name=".pages.pagedetail.FarmDetailActivity" />
+        <activity android:name=".pages.selectfarmthing.SelectFarmThingActivity" />
+        <activity android:name=".pages.EditFarmThing.EditFarmthingZhengdiActivity" />
+        <activity android:name=".pages.EditFarmThing.EditFarmthingBozhongActivity" />
+        <activity android:name=".pages.EditFarmThing.EditFarmthingShifeiActivity" />
+        <activity android:name=".pages.EditFarmThing.EditFarmthingGuangaiActivity" />
+        <activity android:name=".pages.EditFarmThing.EditFarmthingZhibaoActivity" />
+        <activity android:name=".pages.EditFarmThing.EditFarmthingShougeActivity"></activity>
     </application>
 
 </manifest>
