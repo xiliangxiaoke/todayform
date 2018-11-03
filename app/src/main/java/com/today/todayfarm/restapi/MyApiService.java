@@ -2,6 +2,7 @@ package com.today.todayfarm.restapi;
 
 import com.today.todayfarm.dom.FarmInfo;
 import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.GrowthDataInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
@@ -98,6 +99,27 @@ public interface MyApiService {
             @Query("token") String token,
             @Query("fieldId")String fieldId
     );
+
+
+    /**
+     * 获取所有 农事列表
+     * @param token
+     * @param currentpage
+     * @param pageSize
+     * @return
+     */
+    @GET("app/AllActivity/findMyFiledsAllActivity")
+    Call<ResultObj<FieldThingInfo>> findMyFieldsAllActivity(
+            @Query("token") String token,
+            @Query("currentPage") int currentpage,
+            @Query("pageSize") int pageSize
+    );
+
+
+
+
+
+
 
     //-------------------------------------------------------------------old
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/field_item_bg"
+    android:id="@+id/panel"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <TextView
+        android:id="@+id/farm_thing_status"
+        android:textSize="20sp"
+        android:background="#fafafa"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <View
+        android:background="@drawable/devide_line_gridient"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="5px"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_height="160dp">
+
+        <TextView
+            android:id="@+id/farmthingtype"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/farmthingstarttime"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/farmthingendtime"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

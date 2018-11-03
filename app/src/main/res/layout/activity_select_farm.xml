@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <!-- title -->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
     <RelativeLayout
-        android:background="#259b24"
         android:layout_width="match_parent"
+        android:background="#259b24"
         android:layout_height="@dimen/titleheight">
 
         <TextView
-            android:text="农事记录"
+            android:text="选择农田"
             android:textColor="#ffffff"
-            android:gravity="center"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
+        <!--return-->
         <TextView
-            android:id="@+id/menu"
-            android:textColor="#ffffff"
-            android:text="@string/icon_menu"
+            android:id="@+id/back"
             android:gravity="center"
-            android:textSize="18dp"
+            android:text="@string/icon_back"
+            android:textColor="#ffffff"
             android:layout_width="@dimen/titleheight"
             android:layout_height="@dimen/titleheight" />
 
-    </RelativeLayout>
 
+
+    </RelativeLayout>
 
 
 
@@ -45,22 +47,5 @@
 
     </com.liaoinstan.springview.widget.SpringView>
 
-
-
-
-
-
-    <!--  添加农事-->
-    <Button
-        android:id="@+id/addfarmthing"
-        android:text="@string/icon_add"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/add_btn_bg"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
 
 </RelativeLayout>

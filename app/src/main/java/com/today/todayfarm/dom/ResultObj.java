@@ -32,6 +32,16 @@ public class ResultObj<T> {
 
 	public String all;// 总数量
 
+	public String totalPage;
+
+
+	public String getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(String totalPage) {
+		this.totalPage = totalPage;
+	}
 
 	public String getAll() {
 		return all;

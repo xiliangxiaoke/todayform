@@ -1,6 +1,7 @@
 package com.today.todayfarm.restapi;
 
 import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
 
@@ -153,5 +154,24 @@ public class API {
             }
         });
 
+    }
+
+    public static void findMyFieldsAllActivity(String token, int currentpage, int pagesize,ApiCallBack<FieldThingInfo> callBack) {
+        Call<ResultObj<FieldThingInfo>> call = Doapi.instance().findMyFieldsAllActivity(token, currentpage,pagesize);
+        call.enqueue(new Callback<ResultObj<FieldThingInfo>>() {
+            @Override
+            public void onResponse(Call<ResultObj<FieldThingInfo>> call, Response<ResultObj<FieldThingInfo>> response) {
+                if (response.isSuccessful()) {
+                    callBack.onResponse(response.body());
+                } else {
+                    callBack.onError(RESPONSE_NOT_SUCCESS);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<FieldThingInfo>> call, Throwable t) {
+                callBack.onError(RESPONSE_ON_FAILURE);
+            }
+        });
     }
 }

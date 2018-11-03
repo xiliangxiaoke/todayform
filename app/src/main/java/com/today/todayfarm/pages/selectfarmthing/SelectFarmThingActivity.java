@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingGuangaiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShifeiActivity;
@@ -29,33 +30,49 @@ public class SelectFarmThingActivity extends Activity {
 
     @OnClick(R.id.zhengdi)
     public void zhengdi() {
-        this.startActivity(new Intent(this, EditFarmthingZhengdiActivity.class));
+        Intent intent = new Intent(this, EditFarmthingZhengdiActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
     }
 
     @OnClick(R.id.bozhong)
     public void bozhong() {
-        this.startActivity(new Intent(this, EditFarmthingBozhongActivity.class));
+        Intent intent = new Intent(this, EditFarmthingBozhongActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
     }
 
     @OnClick(R.id.shifei)
     public void shifei() {
-        this.startActivity(new Intent(this, EditFarmthingShifeiActivity.class));
+        Intent intent = new Intent(this, EditFarmthingShifeiActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
     }
 
     @OnClick(R.id.guangai)
     public void guangai() {
-        this.startActivity(new Intent(this, EditFarmthingGuangaiActivity.class));
+        Intent intent = new Intent(this, EditFarmthingGuangaiActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
     }
 
     @OnClick(R.id.zhibao)
     public void zhibao() {
-        this.startActivity(new Intent(this, EditFarmthingZhibaoActivity.class));
+        Intent intent = new Intent(this, EditFarmthingZhibaoActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
     }
 
     @OnClick(R.id.shouge)
     public void shouge() {
-        this.startActivity(new Intent(this, EditFarmthingShougeActivity.class));
+        Intent intent = new Intent(this, EditFarmthingShougeActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
     }
+
+
+
+    String fieldid;
 
 
     @Override
@@ -63,5 +80,10 @@ public class SelectFarmThingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_farm_thing);
         ButterKnife.bind(this);
+
+        back.setTypeface(MyApplication.iconTypeFace);
+
+        Intent intent = getIntent();
+        fieldid = intent.getStringExtra("fieldid");
     }
 }
