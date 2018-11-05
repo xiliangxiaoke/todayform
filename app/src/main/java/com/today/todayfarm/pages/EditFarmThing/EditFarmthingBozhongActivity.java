@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
+import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.dom.CropInfo;
+import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.restapi.API;
+import com.today.todayfarm.restapi.ApiCallBack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +42,8 @@ public class EditFarmthingBozhongActivity extends Activity {
 
     }
 
+    String fieldid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,7 @@ public class EditFarmthingBozhongActivity extends Activity {
         back.setTypeface(MyApplication.iconTypeFace);
         edit.setTypeface(MyApplication.iconTypeFace);
 
+        fieldid = getIntent().getStringExtra("fieldid");
 
         compatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -64,5 +73,20 @@ public class EditFarmthingBozhongActivity extends Activity {
 
     private void getCroplist() {
 
+        API.findCropInfosByFieldId(
+                Hawk.get(HawkKey.TOKEN), fieldid,
+                new ApiCallBack<CropInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<CropInfo> resultObj) {
+                        // TODO: 获取作物列表 加载到spinner
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+
+        );
     }
 }

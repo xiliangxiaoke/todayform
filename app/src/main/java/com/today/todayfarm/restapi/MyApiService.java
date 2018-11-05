@@ -1,5 +1,6 @@
 package com.today.todayfarm.restapi;
 
+import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FarmInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
@@ -117,6 +118,11 @@ public interface MyApiService {
 
 
 
+    @GET("app/cropInfo/findCropInfosByFieldId")
+    Call<ResultObj<CropInfo>> findCropInfosByFieldId(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId
+    );
 
 
 

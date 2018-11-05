@@ -95,7 +95,9 @@
         <activity android:name=".pages.EditFarmThing.EditFarmthingGuangaiActivity" />
         <activity android:name=".pages.EditFarmThing.EditFarmthingZhibaoActivity" />
         <activity android:name=".pages.EditFarmThing.EditFarmthingShougeActivity" />
-        <activity android:name=".pages.selectfarm.SelectFarmActivity"></activity>
+        <activity android:name=".pages.selectfarm.SelectFarmActivity" />
+        <activity android:name=".AddNewCrop.AddNewCropActivity" />
+        <activity android:name=".CropList.CropListActivity"></activity>
     </application>
 
 </manifest>

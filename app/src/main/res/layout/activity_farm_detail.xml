@@ -208,10 +208,19 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/nocroptip"
+                    android:text="+添加新作物"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+
                 <LinearLayout
                     android:orientation="vertical"
-
-
+                    android:id="@+id/cropdatapanel"
+                    android:visibility="gone"
                     android:background="@drawable/panel_bg"
                     android:layout_width="match_parent"
                     android:layout_height="162dp">

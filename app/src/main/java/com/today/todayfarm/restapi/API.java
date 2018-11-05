@@ -1,5 +1,6 @@
 package com.today.todayfarm.restapi;
 
+import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.PhoneCode;
@@ -170,6 +171,25 @@ public class API {
 
             @Override
             public void onFailure(Call<ResultObj<FieldThingInfo>> call, Throwable t) {
+                callBack.onError(RESPONSE_ON_FAILURE);
+            }
+        });
+    }
+
+    public static void findCropInfosByFieldId(String token, String fieldid, ApiCallBack<CropInfo> callBack){
+        Call<ResultObj<CropInfo>> call = Doapi.instance().findCropInfosByFieldId(token, fieldid);
+        call.enqueue(new Callback<ResultObj<CropInfo>>() {
+            @Override
+            public void onResponse(Call<ResultObj<CropInfo>> call, Response<ResultObj<CropInfo>> response) {
+                if (response.isSuccessful()) {
+                    callBack.onResponse(response.body());
+                } else {
+                    callBack.onError(RESPONSE_NOT_SUCCESS);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<CropInfo>> call, Throwable t) {
                 callBack.onError(RESPONSE_ON_FAILURE);
             }
         });
