@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,7 +35,7 @@
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/springview"
         android:layout_marginTop="@dimen/titleheight"
-        android:layout_marginBottom="40dp"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

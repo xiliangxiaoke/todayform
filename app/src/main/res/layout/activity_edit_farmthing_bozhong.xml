@@ -60,12 +60,14 @@
                 android:paddingLeft="10dp"
                 android:text="-" />
             <!--crop-->
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/cropSpinner"
+            <TextView
+                android:id="@+id/cropInfo"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
 
-                android:spinnerMode="dialog" />
+                />
 
             <!--品种名称-->
             <RelativeLayout
@@ -102,6 +104,7 @@
                 <EditText
                     android:id="@+id/seednumberperunit"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/form_key_width" />
@@ -150,6 +153,7 @@
                 <EditText
                     android:id="@+id/bozhonglinedividersize"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/form_key_width" />
@@ -178,6 +182,7 @@
                 <EditText
                     android:id="@+id/bozhongunitdevidersize"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/form_key_width" />
@@ -206,6 +211,7 @@
                 <EditText
                     android:id="@+id/unitseednumber"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/form_key_width" />
@@ -267,15 +273,22 @@
                 <TextView
                     android:id="@+id/bozhongstarttime"
                     android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="@dimen/form_key_width" />
 
                 <TextView
+                    android:id="@+id/selectstarttime"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical|right"
                     android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_login_bg"
+                    android:layout_marginRight="10dp"
                     android:text="选择" />
 
                 <TextView
@@ -288,6 +301,8 @@
 
                 <TextView
                     android:id="@+id/bozhongendtime"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="@dimen/form_key_width"
@@ -295,12 +310,16 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-
-                    android:layout_height="60dp"
+                    android:id="@+id/selectendtime"
+                    android:background="@drawable/button_login_bg"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="70dp"
                     android:gravity="center_vertical|right"
                     android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginRight="10dp"
+
                     android:text="选择" />
             </RelativeLayout>
 
@@ -319,6 +338,7 @@
                 <EditText
                     android:id="@+id/bozhongdeepth"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/form_key_width" />
@@ -347,6 +367,7 @@
                 <EditText
                     android:id="@+id/pricepermu"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="@dimen/form_key_width" />
@@ -370,6 +391,7 @@
                 <EditText
                     android:id="@+id/priceall"
                     android:background="@null"
+                    android:inputType="number|numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="@dimen/form_key_width"

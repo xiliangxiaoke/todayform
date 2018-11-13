@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
@@ -63,6 +65,9 @@ public class FarmworkFragment extends Fragment {
         adapter = new RecyclerviewAdapter(FarmworkFragment.this.getActivity(), listData);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setAdapter(adapter);
+
+        springView.setHeader(new DefaultHeader(FarmworkFragment.this.getActivity()));
+        springView.setFooter(new DefaultFooter(FarmworkFragment.this.getActivity()));
 
 
         springView.setListener(new SpringView.OnFreshListener() {
@@ -160,9 +165,9 @@ public class FarmworkFragment extends Fragment {
             FieldThingInfo info = data.get(position);
 
             holder.farmthingstatus.setText(info.getStatus());
-            holder.farmthingtype.setText(info.getType());
-            holder.farmthingstarttime.setText(info.getStartDate());
-            holder.farmthingendtime.setText(info.getEndDate());
+            holder.farmthingtype.setText(info.getFieldName()+":"+info.getType());
+            holder.farmthingstarttime.setText("开始日期："+info.getStartDate());
+            holder.farmthingendtime.setText("完成日期："+info.getEndDate());
 
             holder.panel.setOnClickListener(new View.OnClickListener() {
                 @Override

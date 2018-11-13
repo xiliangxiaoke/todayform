@@ -6,11 +6,19 @@ package com.today.todayfarm.dom;
 public class FieldThingInfo {
     //{"id":2,"startDate":"2018年10月10日","status":"已完成","endDate":"2018年10月10日","type":"施肥"}
     String id;
+    String fieldName;
     String startDate;
     String status;
     String endDate;
     String type;
 
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
     public String getId() {
         return id;

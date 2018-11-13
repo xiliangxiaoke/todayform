@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.AddNewCrop.AddNewCropActivity;
-import com.today.todayfarm.CropList.CropListActivity;
+import com.today.todayfarm.pages.CropList.CropListActivity;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;

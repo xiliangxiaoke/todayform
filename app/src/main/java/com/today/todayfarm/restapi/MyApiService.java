@@ -117,13 +117,80 @@ public interface MyApiService {
     );
 
 
-
+    /**
+     * 获取农田作物列表
+     * @param token
+     * @param fieldId
+     * @return
+     */
     @GET("app/cropInfo/findCropInfosByFieldId")
     Call<ResultObj<CropInfo>> findCropInfosByFieldId(
             @Query("token") String token,
             @Query("fieldId") String fieldId
     );
 
+
+    /**
+     * 添加农作物
+     * @param token
+     * @param fieldId
+     * @param cropName
+     * @param plantYear
+     * @return
+     */
+    @GET("app/cropInfo/saveOrUpdate")
+    Call<ResultObj<Object>> saveOrUpdateCropInfo(
+      @Query("token") String token,
+      @Query("fieldId") String fieldId,
+      @Query("cropName") String cropName,
+      @Query("plantYear") String plantYear
+    );
+
+
+    /**
+     *
+     * @param token
+     * @param fieldId
+     * @param sowingActivityId 播种记录ID
+     * @param cropId
+     * @param seedName 品种名称
+     * @param quantityPreAcer 亩播数量
+     * @param sowingType 播种方法
+     * @param rowDistance 播种行距
+     * @param columnDistance 株距
+     * @param reservedSeedingQuantity 保苗株数
+     * @param sowingTractor 车头
+     * @param sowingMechanical 机械
+     * @param sowingStartTime 开始时间 yyyy-MM-dd
+     * @param sowingEndTime 结束时间 yyyy-MM-dd
+     * @param sowingDepth 深度
+     * @param sowingPerAcre 每亩价格
+     * @param totalCost 总费用
+     * @param sowingNote 备注
+     * @return
+     */
+    @GET("app/SowingActivity/saveOrUpdate")
+    Call<ResultObj<Object>> sowingSaveOrUpdate(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("sowingActivityId") String sowingActivityId,
+            @Query("cropId") String cropId,
+            @Query("seedName") String seedName,
+            @Query("quantityPreAcer") String quantityPreAcer,
+            @Query("sowingType") String sowingType,
+            @Query("rowDistance") String rowDistance,
+            @Query("columnDistance") String columnDistance,
+            @Query("reservedSeedingQuantity") String reservedSeedingQuantity,
+            @Query("sowingTractor") String sowingTractor,
+            @Query("sowingMechanical") String sowingMechanical,
+            @Query("sowingStartTime") String sowingStartTime,
+            @Query("sowingEndTime") String sowingEndTime,
+            @Query("sowingDepth") String sowingDepth,
+            @Query("sowingPerAcre")String sowingPerAcre,
+            @Query("totalCost") String totalCost,
+            @Query("sowingNote") String sowingNote
+
+    );
 
 
 

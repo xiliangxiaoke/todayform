@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#259b24"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:text="选择作物"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--return-->
+        <TextView
+            android:id="@+id/back"
+            android:gravity="center"
+            android:text="@string/icon_back"
+            android:textColor="#ffffff"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/farminfo"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+    <TextView
+        android:id="@+id/addCrop"
+        android:gravity="center"
+        android:text="+  添加作物"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:background="#9e9d9d"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+    <com.liaoinstan.springview.widget.SpringView
+        android:id="@+id/springview"
+        android:layout_below="@id/farminfo"
+        android:layout_above="@id/addCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.liaoinstan.springview.widget.SpringView>
+
+
+
+    <!-- 无作物提示 -->
+    <RelativeLayout
+        android:id="@+id/nocroptip"
+        android:visibility="gone"
+        android:layout_below="@id/farminfo"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="该农田尚未添加作物！"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="+ 添加作物"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

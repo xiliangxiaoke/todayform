@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -165,8 +166,9 @@ public class SelectFarmActivity extends Activity {
                 public void onClick(View view) {
                     // 进入 选择农事类型页面
                     Intent intent = new Intent(SelectFarmActivity.this, SelectFarmThingActivity.class);
-                    intent.putExtra("fieldid",info.getFieldId());
+                    intent.putExtra("fieldinfo_json",new Gson().toJson(info));
                     SelectFarmActivity.this.startActivity(intent);
+                    SelectFarmActivity.this.finish();
                 }
             });
         }

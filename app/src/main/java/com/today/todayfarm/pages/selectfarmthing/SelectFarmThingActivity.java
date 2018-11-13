@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
@@ -31,48 +32,55 @@ public class SelectFarmThingActivity extends Activity {
     @OnClick(R.id.zhengdi)
     public void zhengdi() {
         Intent intent = new Intent(this, EditFarmthingZhengdiActivity.class);
-        intent.putExtra("fieldid",fieldid);
+        intent.putExtra("fieldinfo_json",fieldinfo_json);
         this.startActivity(intent);
+        this.finish();
     }
 
     @OnClick(R.id.bozhong)
     public void bozhong() {
         Intent intent = new Intent(this, EditFarmthingBozhongActivity.class);
-        intent.putExtra("fieldid",fieldid);
+        intent.putExtra("fieldinfo_json",fieldinfo_json);
         this.startActivity(intent);
+        this.finish();
     }
 
     @OnClick(R.id.shifei)
     public void shifei() {
         Intent intent = new Intent(this, EditFarmthingShifeiActivity.class);
-        intent.putExtra("fieldid",fieldid);
+        intent.putExtra("fieldinfo_json",fieldinfo_json);
         this.startActivity(intent);
+        this.finish();
     }
 
     @OnClick(R.id.guangai)
     public void guangai() {
         Intent intent = new Intent(this, EditFarmthingGuangaiActivity.class);
-        intent.putExtra("fieldid",fieldid);
+        intent.putExtra("fieldinfo_json",fieldinfo_json);
         this.startActivity(intent);
+        this.finish();
     }
 
     @OnClick(R.id.zhibao)
     public void zhibao() {
         Intent intent = new Intent(this, EditFarmthingZhibaoActivity.class);
-        intent.putExtra("fieldid",fieldid);
+        intent.putExtra("fieldinfo_json",fieldinfo_json);
         this.startActivity(intent);
+        this.finish();
     }
 
     @OnClick(R.id.shouge)
     public void shouge() {
         Intent intent = new Intent(this, EditFarmthingShougeActivity.class);
-        intent.putExtra("fieldid",fieldid);
+        intent.putExtra("fieldinfo_json",fieldinfo_json);
         this.startActivity(intent);
+        this.finish();
     }
 
 
 
     String fieldid;
+    String fieldinfo_json;
 
 
     @Override
@@ -84,6 +92,6 @@ public class SelectFarmThingActivity extends Activity {
         back.setTypeface(MyApplication.iconTypeFace);
 
         Intent intent = getIntent();
-        fieldid = intent.getStringExtra("fieldid");
+        fieldinfo_json = intent.getStringExtra("fieldinfo_json");
     }
 }

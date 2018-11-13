@@ -1,12 +1,10 @@
-package com.today.todayfarm.CropList;
+package com.today.todayfarm.pages.CropList;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.google.gson.Gson;
 import com.today.todayfarm.R;
 import com.today.todayfarm.dom.CropInfo;
-import com.today.todayfarm.dom.ResultObj;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,6 +9,7 @@ import com.today.todayfarm.dom.ResultObj;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 public class API {
     public static int RESPONSE_NOT_SUCCESS = 88001;
@@ -190,6 +191,82 @@ public class API {
 
             @Override
             public void onFailure(Call<ResultObj<CropInfo>> call, Throwable t) {
+                callBack.onError(RESPONSE_ON_FAILURE);
+            }
+        });
+    }
+
+    public static void saveOrUpdateCropInfo(String token, String fieldid, String cropname, String plantyear, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance().saveOrUpdateCropInfo(token,fieldid,cropname,plantyear);
+        call.enqueue(new Callback<ResultObj<Object>>() {
+            @Override
+            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
+                if (response.isSuccessful()) {
+                    callBack.onResponse(response.body());
+                } else {
+                    callBack.onError(RESPONSE_NOT_SUCCESS);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
+                callBack.onError(RESPONSE_ON_FAILURE);
+            }
+        });
+    }
+
+    public static void sowingSaveOrUpdate(
+             String token,
+             String fieldId,
+             String sowingActivityId,
+             String cropId,
+             String seedName,
+             String quantityPreAcer,
+             String sowingType,
+             String rowDistance,
+             String columnDistance,
+             String reservedSeedingQuantity,
+             String sowingTractor,
+             String sowingMechanical,
+             String sowingStartTime,
+             String sowingEndTime,
+             String sowingDepth,
+             String sowingPerAcre,
+             String totalCost,
+             String sowingNote,
+             ApiCallBack<Object> callBack
+    ){
+        Call<ResultObj<Object>> call = Doapi.instance().sowingSaveOrUpdate(
+                token,
+                fieldId,
+                sowingActivityId,
+                cropId,
+                seedName,
+                quantityPreAcer,
+                sowingType,
+                rowDistance,
+                columnDistance,
+                reservedSeedingQuantity,
+                sowingTractor,
+                sowingMechanical,
+                sowingStartTime,
+                sowingEndTime,
+                sowingDepth,
+                sowingPerAcre,
+                totalCost,
+                sowingNote);
+        call.enqueue(new Callback<ResultObj<Object>>() {
+            @Override
+            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
+                if (response.isSuccessful()) {
+                    callBack.onResponse(response.body());
+                } else {
+                    callBack.onError(RESPONSE_NOT_SUCCESS);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
                 callBack.onError(RESPONSE_ON_FAILURE);
             }
         });
