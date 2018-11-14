@@ -38,4 +38,284 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/linearlayout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
+            <!--field-->
+            <TextView
+                android:id="@+id/fieldname"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="-" />
+
+            <!--crop-->
+            <TextView
+                android:id="@+id/cropInfo"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+
+                />
+
+            <!--收割时间-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="收割时间：" />
+
+                <TextView
+                    android:id="@+id/starttime"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+
+                <TextView
+                    android:id="@+id/selectstarttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_login_bg"
+                    android:layout_marginRight="10dp"
+                    android:text="选择" />
+
+            </RelativeLayout>
+
+
+            <!--收贮单位-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="收贮单位：" />
+
+                <EditText
+                    android:id="@+id/company"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--mechine-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="收割机械：" />
+
+                <EditText
+                    android:id="@+id/mechine"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--mechine num-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="收割机数量：" />
+
+                <EditText
+                    android:id="@+id/mechinenum"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--拉运车数量-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="拉运车数量：" />
+
+                <EditText
+                    android:id="@+id/layuncarnum"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--price-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="总产量：" />
+
+                <EditText
+                    android:id="@+id/allnum"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="(斤)" />
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="平均亩产：" />
+
+                <EditText
+                    android:id="@+id/average"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width"
+                    android:layout_marginTop="60dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="(斤)" />
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="120dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="亩收割成本：" />
+
+                <EditText
+                    android:id="@+id/priceofunit"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width"
+                    android:layout_marginTop="120dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="120dp"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="(元)" />
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="180dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="总费用：" />
+
+                <EditText
+                    android:id="@+id/priceall"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width"
+                    android:layout_marginTop="180dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="180dp"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="(元)" />
+            </RelativeLayout>
+
+            <!-- log-->
+            <EditText
+                android:minHeight="60dp"
+                android:paddingLeft="10dp"
+                android:id="@+id/beizhu"
+                android:background="@null"
+                android:hint="请输入备注信息"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--现场图片-->
+
+            <!--DELETE-->
+            <TextView
+                android:id="@+id/delete"
+                android:text="DELETE"
+                android:textColor="#f77878"
+                android:gravity="center"
+                android:textSize="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
 </RelativeLayout>

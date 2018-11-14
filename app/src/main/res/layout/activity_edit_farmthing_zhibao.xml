@@ -38,4 +38,285 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/linearlayout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <!--field-->
+            <TextView
+                android:id="@+id/fieldname"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="-" />
+
+            <!--crop-->
+            <TextView
+                android:id="@+id/cropInfo"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+
+                />
+
+            <!--植保类型-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="植保类型：" />
+
+                <EditText
+                    android:id="@+id/zhibaotype"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--灾害类型-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="灾害类型：" />
+
+                <EditText
+                    android:id="@+id/zaihaitype"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--植保方式-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="植保方式：" />
+
+                <EditText
+                    android:id="@+id/zhibaostyle"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--所用药物-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="所用药物：" />
+
+                <EditText
+                    android:id="@+id/useyaowu"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+            <!--植保效果-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="植保效果：" />
+
+                <EditText
+                    android:id="@+id/zhibaoeffect"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+            </RelativeLayout>
+
+
+            <!--zhibao time-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="植保时间：" />
+
+                <TextView
+                    android:id="@+id/starttime"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+
+                <TextView
+                    android:id="@+id/selectstarttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_login_bg"
+                    android:layout_marginRight="10dp"
+                    android:text="选择" />
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="结束时间：" />
+
+                <TextView
+                    android:id="@+id/endtime"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width"
+                    android:layout_marginTop="60dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/selectendtime"
+                    android:background="@drawable/button_login_bg"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="70dp"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginRight="10dp"
+
+                    android:text="选择" />
+            </RelativeLayout>
+
+
+            <!--price-->
+            <!--亩成本 总费用-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="亩施肥量：" />
+
+                <EditText
+                    android:id="@+id/sizepermu"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="(斤)" />
+
+                <TextView
+                    android:layout_width="@dimen/form_key_width"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="植保费用：" />
+
+                <EditText
+                    android:id="@+id/zhibaoprice"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/form_key_width"
+                    android:layout_marginTop="60dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="(元)" />
+            </RelativeLayout>
+
+            <!--备注信息-->
+            <EditText
+                android:minHeight="60dp"
+                android:paddingLeft="10dp"
+                android:id="@+id/beizhu"
+                android:background="@null"
+                android:hint="请输入备注信息"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--现场图片-->
+
+            <!--DELETE-->
+            <TextView
+                android:id="@+id/delete"
+                android:text="DELETE"
+                android:textColor="#f77878"
+                android:gravity="center"
+                android:textSize="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 </RelativeLayout>
