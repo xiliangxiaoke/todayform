@@ -9,6 +9,7 @@ import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
 
+import butterknife.OnClick;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -191,6 +192,56 @@ public interface MyApiService {
             @Query("sowingNote") String sowingNote
 
     );
+
+
+    /**
+     * 保存或修改农田灌溉记录
+     * @param token
+     * @param fieldId
+     * @param cropId
+     * @param irrigatingStartTime
+     * @param irrigatingEndTime
+     * @param waterPressure // 水压
+     * @param voltage // 电压
+     * @param equipmentSpeed 设备运行速度
+     * @param totalCost
+     * @param irrigatingNote
+     * @return
+     */
+    @GET("app/IrrigatingActivity/saveOrUpdate")
+    Call<ResultObj<Object>> irrigatingSaveOrUpdate(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("irrigatingActivityId") String irrigatingId,
+            @Query("cropId") String cropId,
+            @Query("irrigatingStartTime") String irrigatingStartTime,
+            @Query("irrigatingEndTime") String irrigatingEndTime,
+            @Query("waterPressure") String waterPressure,
+            @Query("voltage") String voltage,
+            @Query("equipmentSpeed") String equipmentSpeed,
+            @Query("totalCost") String totalCost,
+            @Query("irrigatingNote") String irrigatingNote
+
+    );
+
+
+    @GET("app/FertilizingActivity/saveOrUpdate")
+    Call<ResultObj<Object>> fertilizingSaveOrUpdate(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
+            @Query("fertilizingActivityId") String fertilizingActivityId,
+            @Query("fertilizingType") String fertilizingType,
+            @Query("fertilizingMethod") String fertilizingMethod,
+            @Query("fertilizingAcre") String fertilizingAcre,
+            @Query("fertilizingStartTime") String fertilizingStartTime,
+            @Query("fertilizingEndTime") String fertilizingEndTime,
+            @Query("totalQuantity") String totalQuantity,
+            @Query("totalCost") String totalCost,
+            @Query("fertilizingNote") String fertilizingNote
+
+    );
+
 
 
 

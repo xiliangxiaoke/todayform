@@ -36,7 +36,7 @@ import butterknife.OnClick;
 
 public class EditFarmthingBozhongActivity extends BaseActivity {
 
-    private static final int REQUEST_CODE_SELECT_CROP_ACTIVITY = 1001;
+
     @BindView(R.id.back)
     TextView back;
 
@@ -214,7 +214,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
     public void selectcropinfo() {
         Intent intent = new Intent(this, SelectCropActivity.class);
         intent.putExtra("fieldinfo_json",fieldinfo_json);
-        this.startActivityForResult(intent,REQUEST_CODE_SELECT_CROP_ACTIVITY);
+        this.startActivityForResult(intent,SelectCropActivity.REQUEST_CODE_SELECT_CROP_ACTIVITY);
     }
 
 
@@ -257,7 +257,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SELECT_CROP_ACTIVITY) {
+        if (requestCode == SelectCropActivity.REQUEST_CODE_SELECT_CROP_ACTIVITY) {
             //由选择作物页面返回
             if (resultCode == SelectCropActivity.RESULT_CODE_SELECT_CROP_ACTIVITY) {
                String cropjson =  data.getStringExtra("cropinfo_json");

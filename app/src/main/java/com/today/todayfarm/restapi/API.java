@@ -23,21 +23,7 @@ public class API {
     public static void sendRandomCode(String phone, ApiCallBack<PhoneCode> callBack){
 
         Call<ResultObj<PhoneCode>> call =  Doapi.instance().sendRandomCode(phone);
-        call.enqueue(new Callback<ResultObj<PhoneCode>>() {
-            @Override
-            public void onResponse(Call<ResultObj<PhoneCode>> call, Response<ResultObj<PhoneCode>> response) {
-                if(response.isSuccessful()){
-                    callBack.onResponse(response.body());
-                }else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<PhoneCode>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
 
@@ -49,21 +35,7 @@ public class API {
      */
     public static void login(String phone,String code,ApiCallBack<Object> callBack){
         Call<ResultObj<Object>> call = Doapi.instance().login(phone,code);
-        call.enqueue(new Callback<ResultObj<Object>>() {
-            @Override
-            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
-                if(response.isSuccessful()){
-                    callBack.onResponse(response.body());
-                }else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
     /**
@@ -74,21 +46,7 @@ public class API {
      */
     public static void registerUser(String phone,String code,ApiCallBack<Object> callBack){
         Call<ResultObj<Object>> call = Doapi.instance().registerUser(phone,code);
-        call.enqueue(new Callback<ResultObj<Object>>() {
-            @Override
-            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
-                if(response.isSuccessful()){
-                    callBack.onResponse(response.body());
-                }else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
     /**
@@ -101,118 +59,34 @@ public class API {
      */
     public static void saveOrUpdate(String token, String fieldName, Double fieldArea, String fieldBoundary,String cropName,ApiCallBack<Object> callBack) {
         Call<ResultObj<Object>> call = Doapi.instance().saveOrUpdate(token, fieldName, fieldArea, fieldBoundary,cropName);
-        call.enqueue(new Callback<ResultObj<Object>>() {
-            @Override
-            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
-                if (response.isSuccessful()) {
-                    callBack.onResponse(response.body());
-                } else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
 
     public static void findMyFields(String token,int currentpage,int pagesize,ApiCallBack<FieldInfo> callBack){
         Call<ResultObj<FieldInfo>> call = Doapi.instance().findMyFields(token,currentpage,pagesize);
-        call.enqueue(new Callback<ResultObj<FieldInfo>>() {
-            @Override
-            public void onResponse(Call<ResultObj<FieldInfo>> call, Response<ResultObj<FieldInfo>> response) {
-                if (response.isSuccessful()) {
-                    callBack.onResponse(response.body());
-                } else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<FieldInfo>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
     public static void getFieldById(String token, String fieldId,ApiCallBack<FieldInfo> callBack) {
         Call<ResultObj<FieldInfo>> call = Doapi.instance().getFieldById(token, fieldId);
-        call.enqueue(new Callback<ResultObj<FieldInfo>>() {
-            @Override
-            public void onResponse(Call<ResultObj<FieldInfo>> call, Response<ResultObj<FieldInfo>> response) {
-                if (response.isSuccessful()) {
-                    callBack.onResponse(response.body());
-                } else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<FieldInfo>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
 
     }
 
     public static void findMyFieldsAllActivity(String token, int currentpage, int pagesize,ApiCallBack<FieldThingInfo> callBack) {
         Call<ResultObj<FieldThingInfo>> call = Doapi.instance().findMyFieldsAllActivity(token, currentpage,pagesize);
-        call.enqueue(new Callback<ResultObj<FieldThingInfo>>() {
-            @Override
-            public void onResponse(Call<ResultObj<FieldThingInfo>> call, Response<ResultObj<FieldThingInfo>> response) {
-                if (response.isSuccessful()) {
-                    callBack.onResponse(response.body());
-                } else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<FieldThingInfo>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
     public static void findCropInfosByFieldId(String token, String fieldid, ApiCallBack<CropInfo> callBack){
         Call<ResultObj<CropInfo>> call = Doapi.instance().findCropInfosByFieldId(token, fieldid);
-        call.enqueue(new Callback<ResultObj<CropInfo>>() {
-            @Override
-            public void onResponse(Call<ResultObj<CropInfo>> call, Response<ResultObj<CropInfo>> response) {
-                if (response.isSuccessful()) {
-                    callBack.onResponse(response.body());
-                } else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<CropInfo>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
     public static void saveOrUpdateCropInfo(String token, String fieldid, String cropname, String plantyear, ApiCallBack<Object> callBack) {
         Call<ResultObj<Object>> call = Doapi.instance().saveOrUpdateCropInfo(token,fieldid,cropname,plantyear);
-        call.enqueue(new Callback<ResultObj<Object>>() {
-            @Override
-            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
-                if (response.isSuccessful()) {
-                    callBack.onResponse(response.body());
-                } else {
-                    callBack.onError(RESPONSE_NOT_SUCCESS);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
-                callBack.onError(RESPONSE_ON_FAILURE);
-            }
-        });
+        callenqueue(call,callBack);
     }
 
     public static void sowingSaveOrUpdate(
@@ -255,9 +129,67 @@ public class API {
                 sowingPerAcre,
                 totalCost,
                 sowingNote);
-        call.enqueue(new Callback<ResultObj<Object>>() {
+        callenqueue(call,callBack);
+    }
+
+
+    public static void irrigatingSaveOrUpdate(
+             String token,
+             String fieldId,
+             String irrigatingId,
+             String cropId,
+             String irrigatingStartTime,
+             String irrigatingEndTime,
+             String waterPressure,
+             String voltage,
+             String equipmentSpeed,
+             String totalCost,
+             String irrigatingNote,
+             ApiCallBack<Object> callBack
+    ) {
+        Call<ResultObj<Object>> call = Doapi.instance().irrigatingSaveOrUpdate(
+                token,fieldId,irrigatingId,cropId,irrigatingStartTime,irrigatingEndTime,waterPressure,
+                voltage,equipmentSpeed,totalCost,irrigatingNote
+        );
+        callenqueue(call,callBack);
+    }
+
+
+    public static void fertilizingSaveOrUpdate(
+            String token,
+            String fieldId,
+            String cropId,
+            String fertilizingActivityId,
+            String fertilizingType,
+            String fertilizingMethod,
+            String fertilizingAcre,
+            String fertilizingStartTime,
+            String fertilizingEndTime,
+            String totalQuantity,
+            String totalCost,
+            String fertilizingNote,
+            ApiCallBack<Object> callBack
+    ) {
+        Call<ResultObj<Object>> call = Doapi.instance().fertilizingSaveOrUpdate(
+                token,fieldId,cropId,fertilizingActivityId,fertilizingType,fertilizingMethod,fertilizingAcre,fertilizingStartTime,
+                fertilizingEndTime,totalQuantity,totalCost,fertilizingNote
+        );
+        callenqueue(call,callBack);
+    }
+
+    //==========================================================
+
+
+    /**
+     * 通用回调代码
+     * @param call
+     * @param callBack
+     * @param <E>
+     */
+    public  static <E>  void callenqueue (Call<ResultObj<E>> call,ApiCallBack<E> callBack){
+        call.enqueue(new Callback<ResultObj<E>>() {
             @Override
-            public void onResponse(Call<ResultObj<Object>> call, Response<ResultObj<Object>> response) {
+            public void onResponse(Call<ResultObj<E>> call, Response<ResultObj<E>> response) {
                 if (response.isSuccessful()) {
                     callBack.onResponse(response.body());
                 } else {
@@ -266,7 +198,7 @@ public class API {
             }
 
             @Override
-            public void onFailure(Call<ResultObj<Object>> call, Throwable t) {
+            public void onFailure(Call<ResultObj<E>> call, Throwable t) {
                 callBack.onError(RESPONSE_ON_FAILURE);
             }
         });

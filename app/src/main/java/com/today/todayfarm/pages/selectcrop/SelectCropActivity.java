@@ -47,7 +47,12 @@ import butterknife.OnClick;
 public class SelectCropActivity extends BaseActivity {
 
     public static final int RESULT_CODE_SELECT_CROP_ACTIVITY = 2001;
+
+
     public static final int REQUEST_CODE_CREATE_CROP_ACTIVITY = 1001;
+    public static final int REQUEST_CODE_SELECT_CROP_ACTIVITY = 1002;
+
+
     @BindView(R.id.back)
     TextView back;
 
