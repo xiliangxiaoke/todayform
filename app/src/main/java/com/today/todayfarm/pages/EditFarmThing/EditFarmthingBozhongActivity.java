@@ -186,6 +186,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                 pricepermu.getText().toString(),
                 priceall.getText().toString(),
                 beizhu.getText().toString(),
+                "",// todo: img list
                 new ApiCallBack<Object>() {
                     @Override
                     public void onResponse(ResultObj<Object> resultObj) {

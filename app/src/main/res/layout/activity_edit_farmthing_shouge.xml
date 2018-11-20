@@ -70,7 +70,7 @@
             <!--收割时间-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
+                android:layout_height="60dp">
                 <TextView
                     android:layout_width="@dimen/form_key_width"
                     android:layout_height="60dp"

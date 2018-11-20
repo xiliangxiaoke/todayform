@@ -107,7 +107,7 @@ public class API {
              String sowingDepth,
              String sowingPerAcre,
              String totalCost,
-             String sowingNote,
+             String sowingNote,String imgUrl,
              ApiCallBack<Object> callBack
     ){
         Call<ResultObj<Object>> call = Doapi.instance().sowingSaveOrUpdate(
@@ -128,7 +128,7 @@ public class API {
                 sowingDepth,
                 sowingPerAcre,
                 totalCost,
-                sowingNote);
+                sowingNote,imgUrl);
         callenqueue(call,callBack);
     }
 
@@ -144,12 +144,12 @@ public class API {
              String voltage,
              String equipmentSpeed,
              String totalCost,
-             String irrigatingNote,
+             String irrigatingNote,String imgUrl,
              ApiCallBack<Object> callBack
     ) {
         Call<ResultObj<Object>> call = Doapi.instance().irrigatingSaveOrUpdate(
                 token,fieldId,irrigatingId,cropId,irrigatingStartTime,irrigatingEndTime,waterPressure,
-                voltage,equipmentSpeed,totalCost,irrigatingNote
+                voltage,equipmentSpeed,totalCost,irrigatingNote,imgUrl
         );
         callenqueue(call,callBack);
     }
@@ -160,6 +160,7 @@ public class API {
             String fieldId,
             String cropId,
             String fertilizingActivityId,
+            String fertilizingName,
             String fertilizingType,
             String fertilizingMethod,
             String fertilizingAcre,
@@ -167,15 +168,110 @@ public class API {
             String fertilizingEndTime,
             String totalQuantity,
             String totalCost,
-            String fertilizingNote,
+            String fertilizingNote,String imgUrl,
             ApiCallBack<Object> callBack
     ) {
         Call<ResultObj<Object>> call = Doapi.instance().fertilizingSaveOrUpdate(
-                token,fieldId,cropId,fertilizingActivityId,fertilizingType,fertilizingMethod,fertilizingAcre,fertilizingStartTime,
-                fertilizingEndTime,totalQuantity,totalCost,fertilizingNote
+                token,fieldId,cropId,fertilizingActivityId,fertilizingName,fertilizingType,fertilizingMethod,fertilizingAcre,fertilizingStartTime,
+                fertilizingEndTime,totalQuantity,totalCost,fertilizingNote,imgUrl
         );
         callenqueue(call,callBack);
     }
+
+
+    public static void harvestingSaveOrUpdate(
+             String token,
+             String fieldId,
+             String cropId,
+             String HarvestingActivityId,
+             String harvestingStartTime,
+             String harvestingUnit,
+             String harvestingMachine,
+             String harvestingCount,
+            String pullTrackCount,
+             String totalYield,
+             String yieldPerAcre,
+             String harvestingPricePreAcre,
+            String totalCost,
+            String harvestingNote,
+             String userId,String imgUrl,
+            ApiCallBack<Object> callBack
+    ){
+        Call<ResultObj<Object>> call = Doapi.instance().harvestingSaveOrUpdate(
+                token,fieldId,cropId,HarvestingActivityId,harvestingStartTime,harvestingUnit,harvestingMachine,harvestingCount,
+                pullTrackCount,totalYield,yieldPerAcre,harvestingPricePreAcre,totalCost,harvestingNote,userId,imgUrl
+        );
+        callenqueue(call,callBack);
+    }
+
+    /**
+     * 保存或修改农田整地记录
+     * @param token
+     * @param fieldId
+     * @param cropId
+     * @param tillingActivityId
+     * @param userId
+     * @param tillingType
+     * @param tillingTractor
+     * @param tillingMechanical
+     * @param tillingStartTime
+     * @param tillingEndTime
+     * @param tillingDepth
+     * @param pricePerAcre
+     * @param totalCost
+     * @param tillingNote
+     */
+    public static void tillingSaveOrUpdate(
+             String token,
+             String fieldId,
+             String cropId,
+             String tillingActivityId,
+            String userId,
+             String tillingType,
+             String tillingTractor,
+             String tillingMechanical,
+             String tillingStartTime,
+             String tillingEndTime,
+             String tillingDepth,
+             String pricePerAcre,
+             String totalCost,
+             String tillingNote,String imgUrl,ApiCallBack<Object> callBack
+    ){
+        Call<ResultObj<Object>> call = Doapi.instance().tillingSaveOrUpdate(
+                token,fieldId,cropId,tillingActivityId,userId,tillingType,tillingTractor,tillingMechanical,tillingStartTime,
+                tillingEndTime,tillingDepth,pricePerAcre,totalCost,tillingNote,imgUrl
+        );
+        callenqueue(call,callBack);
+    }
+
+    public static void sprayingSaveOrUpdate(
+             String token,
+             String fieldId,
+             String cropId,
+             String sprayingActivityId,
+             String sprayingType,
+             String disasterType,
+             String sprayingMethod,
+            String drugName,
+             String sprayingEffect,
+             String sprayingStartTime,
+             String sprayingEndTime,
+             String quantityPerAcre,
+             String totalCost,
+             String sprayingNote,String imgUrl,ApiCallBack<Object> callBack
+    ){
+        Call<ResultObj<Object>> call = Doapi.instance().sprayingSaveOrUpdate(
+                token,fieldId,cropId,sprayingActivityId,sprayingType,disasterType,sprayingMethod,drugName,sprayingEffect
+                ,sprayingStartTime,sprayingEndTime,quantityPerAcre,totalCost,sprayingNote,imgUrl
+        );
+        callenqueue(call,callBack);
+    }
+
+
+
+
+
+
 
     //==========================================================
 

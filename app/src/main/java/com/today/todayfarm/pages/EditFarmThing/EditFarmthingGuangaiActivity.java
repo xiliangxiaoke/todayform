@@ -97,14 +97,14 @@ public class EditFarmthingGuangaiActivity extends Activity {
 
     @OnClick(R.id.edit)
     public void setEdit() {
-        if (tvcropinfo==null){
+        if (cropInfo==null){
             new SweetAlertDialog(this)
                     .setTitleText("缺少作物信息")
                     .show();
             return;
         }
 
-        if (tvfieldname==null){
+        if (fieldInfo==null){
             new SweetAlertDialog(this)
                     .setTitleText("缺少农田信息")
                     .show();
@@ -124,6 +124,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
                 etdevicespeed.getText().toString(),
                 etprice.getText().toString(),
                 etbeizhu.getText().toString(),
+                "",// todo: img list
                 new ApiCallBack<Object>() {
                     @Override
                     public void onResponse(ResultObj<Object> resultObj) {

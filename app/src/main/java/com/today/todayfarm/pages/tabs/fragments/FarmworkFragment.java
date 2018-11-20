@@ -85,7 +85,7 @@ public class FarmworkFragment extends Fragment {
             }
         });
 
-        requestFieldthinglist();
+
 
         setlistener();
         return view;
@@ -103,7 +103,11 @@ public class FarmworkFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestFieldthinglist();
+    }
 
     private void requestFieldthinglist() {
 

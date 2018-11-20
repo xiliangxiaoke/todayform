@@ -189,7 +189,8 @@ public interface MyApiService {
             @Query("sowingDepth") String sowingDepth,
             @Query("sowingPerAcre")String sowingPerAcre,
             @Query("totalCost") String totalCost,
-            @Query("sowingNote") String sowingNote
+            @Query("sowingNote") String sowingNote,
+            @Query("imgUrl") String imgUrl
 
     );
 
@@ -220,17 +221,35 @@ public interface MyApiService {
             @Query("voltage") String voltage,
             @Query("equipmentSpeed") String equipmentSpeed,
             @Query("totalCost") String totalCost,
-            @Query("irrigatingNote") String irrigatingNote
+            @Query("irrigatingNote") String irrigatingNote,
+            @Query("imgUrl") String imgUrl
 
     );
 
 
+    /**
+     * 保存或施肥记录
+     * @param token
+     * @param fieldId
+     * @param cropId
+     * @param fertilizingActivityId
+     * @param fertilizingType
+     * @param fertilizingMethod
+     * @param fertilizingAcre
+     * @param fertilizingStartTime
+     * @param fertilizingEndTime
+     * @param totalQuantity
+     * @param totalCost
+     * @param fertilizingNote
+     * @return
+     */
     @GET("app/FertilizingActivity/saveOrUpdate")
     Call<ResultObj<Object>> fertilizingSaveOrUpdate(
             @Query("token") String token,
             @Query("fieldId") String fieldId,
             @Query("cropId") String cropId,
             @Query("fertilizingActivityId") String fertilizingActivityId,
+            @Query("fertilizingName") String fertilizingName,
             @Query("fertilizingType") String fertilizingType,
             @Query("fertilizingMethod") String fertilizingMethod,
             @Query("fertilizingAcre") String fertilizingAcre,
@@ -238,9 +257,115 @@ public interface MyApiService {
             @Query("fertilizingEndTime") String fertilizingEndTime,
             @Query("totalQuantity") String totalQuantity,
             @Query("totalCost") String totalCost,
-            @Query("fertilizingNote") String fertilizingNote
+            @Query("fertilizingNote") String fertilizingNote,
+            @Query("imgUrl") String imgUrl
 
     );
+
+
+    /**
+     * 收割记录保存
+     * @param token
+     * @param fieldId
+     * @param cropId
+     * @param HarvestingActivityId
+     * @param harvestingStartTime
+     * @param harvestingUnit
+     * @param harvestingMachine
+     * @param harvestingCount
+     * @param pullTrackCount
+     * @param totalYield
+     * @param yieldPerAcre
+     * @param harvestingPricePreAcre
+     * @param totalCost
+     * @param harvestingNote
+     * @param userId
+     * @return
+     */
+    @GET("app/HarvestingActivity/saveOrUpdate")
+    Call<ResultObj<Object>> harvestingSaveOrUpdate(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
+            @Query("HarvestingActivityId") String HarvestingActivityId,
+            @Query("harvestingStartTime") String harvestingStartTime,
+            @Query("harvestingUnit") String harvestingUnit,
+            @Query("harvestingMachine") String harvestingMachine,
+            @Query("harvestingCount") String harvestingCount,
+            @Query("pullTrackCount") String pullTrackCount,
+            @Query("totalYield") String totalYield,
+            @Query("yieldPerAcre") String yieldPerAcre,
+            @Query("harvestingPricePreAcre") String harvestingPricePreAcre,
+            @Query("totalCost") String totalCost,
+            @Query("harvestingNote") String harvestingNote,
+            @Query("userId") String userId,
+            @Query("imgUrl") String imgUrl
+    );
+
+
+    /**
+     * 整地记录
+     * @param token
+     * @param fieldId
+     * @param cropId
+     * @param tillingActivityId
+     * @param userId
+     * @param tillingType
+     * @param tillingTractor
+     * @param tillingMechanical
+     * @param tillingStartTime
+     * @param tillingEndTime
+     * @param tillingDepth
+     * @param pricePerAcre
+     * @param totalCost
+     * @param tillingNote
+     * @return
+     */
+    @GET("app/TillingActivity/saveOrUpdate")
+    Call<ResultObj<Object>> tillingSaveOrUpdate(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
+            @Query("tillingActivityId") String tillingActivityId,
+            @Query("userId") String userId,
+            @Query("tillingType") String tillingType,
+            @Query("tillingTractor") String tillingTractor,
+            @Query("tillingMechanical") String tillingMechanical,
+            @Query("tillingStartTime") String tillingStartTime,
+            @Query("tillingEndTime") String tillingEndTime,
+            @Query("tillingDepth") String tillingDepth,
+            @Query("pricePerAcre") String pricePerAcre,
+            @Query("totalCost") String totalCost,
+            @Query("tillingNote") String tillingNote,
+            @Query("imgUrl") String imgUrl
+    );
+
+
+    @GET("app/SprayingActivity/saveOrUpdate")
+    Call<ResultObj<Object>> sprayingSaveOrUpdate(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
+            @Query("sprayingActivityId") String sprayingActivityId,
+            @Query("sprayingType") String sprayingType,
+            @Query("disasterType") String disasterType,
+            @Query("sprayingMethod") String sprayingMethod,
+            @Query("drugName") String drugName,
+            @Query("sprayingEffect") String sprayingEffect,
+            @Query("sprayingStartTime") String sprayingStartTime,
+            @Query("sprayingEndTime") String sprayingEndTime,
+            @Query("quantityPerAcre") String quantityPerAcre,
+            @Query("totalCost") String totalCost,
+            @Query("sprayingNote") String sprayingNote,
+            @Query("imgUrl") String imgUrl
+    );
+
+
+
+
+
+
+
 
 
 
