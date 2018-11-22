@@ -1,13 +1,9 @@
 package com.today.todayfarm.pages.EditFarmThing;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSpinner;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,12 +18,12 @@ import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.ToastUtil;
 
-import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -44,7 +40,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
     TextView edit;
 
     @BindView(R.id.fieldname)
-    TextView fieldname;
+    TextView tvfieldname;
 
     @BindView(R.id.cropInfo)
     TextView tvcropinfo;
@@ -142,6 +138,23 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
     @OnClick(R.id.delete)
     public void delete() {
         //TODO 删除
+        API.deleteSowingById(
+                Hawk.get(HawkKey.TOKEN),
+                sowingActivityId,
+                new ApiCallBack<Object>() {
+                    @Override
+                    public void onResponse(ResultObj<Object> resultObj) {
+                        //删除成功
+                        ToastUtil.show(EditFarmthingBozhongActivity.this,"删除成功");
+                        EditFarmthingBozhongActivity.this.finish();
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     @OnClick(R.id.back)
@@ -223,6 +236,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
     FieldInfo fieldInfo = null;
     String  fieldinfo_json;
     CropInfo cropInfo = null;
+    String fieldname = null;
 
     String sowingActivityId = null;//播种详情id
 
@@ -237,15 +251,52 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
 
         fieldinfo_json = getIntent().getStringExtra("fieldinfo_json");
         fieldInfo = new Gson().fromJson(fieldinfo_json, FieldInfo.class);
-        sowingActivityId = getIntent().getStringExtra("sowingid");
+        sowingActivityId = getIntent().getStringExtra("id");
+        fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
         if (fieldInfo != null) {
-            fieldname.setText(fieldInfo.getFieldName()+"  播种");
+            tvfieldname.setText(fieldInfo.getFieldName()+"  播种");
+        }
+
+        if (fieldname != null) {
+            tvfieldname.setText(fieldname+"  播种");
         }
 
         if (sowingActivityId != null && sowingActivityId.length()>0) {
             // TODO: get sowing detail
+            API.getSowingById(
+                    Hawk.get(HawkKey.TOKEN),
+                    sowingActivityId,
+                    new ApiCallBack<SowingInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<SowingInfo> resultObj) {
+                            if (resultObj.getCode() == 0){
+                                SowingInfo info = resultObj.getObject();
+                                croptypename.setText(info.getSeedName());
+                                seednumberpernuit.setText(info.getQuantityPreAcer());
+                                bozhongtype.setText(info.getSowingType());
+                                bozhonglinedividersize.setText(info.getRowDistance());
+                                bozhongunitdevidersize.setText(info.getColumnDistance());
+                                unitseednumber.setText(info.getReservedSeedingQuantity());
+                                bozhongcarhead.setText(info.getSowingTractor());
+                                bozhongmechine.setText(info.getSowingMechanical());
+                                bozhongstarttime.setText(info.getSowingStartTime());
+                                bozhongendtime.setText(info.getSowingEndTime());
+                                bozhongdeepth.setText(info.getSowingDepth());
+                                pricepermu.setText(info.getSowingPerAcre());
+                                priceall.setText(info.getTotalCost());
+                                beizhu.setText(info.getSowingNote());
+                            }
+                        }
+
+                        @Override
+                        public void onError(int code) {
+
+                        }
+                    }
+            );
+
         } else {
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));

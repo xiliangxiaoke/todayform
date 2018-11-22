@@ -1,10 +1,16 @@
 package com.today.todayfarm.restapi;
 
 import com.today.todayfarm.dom.CropInfo;
+import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
+import com.today.todayfarm.dom.HarvestingInfo;
+import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SowingInfo;
+import com.today.todayfarm.dom.SprayingInfo;
+import com.today.todayfarm.dom.TillingInfo;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -266,6 +272,79 @@ public class API {
         );
         callenqueue(call,callBack);
     }
+
+
+
+    public static void getSowingById(String token, String sowingActivityId, ApiCallBack<SowingInfo> callBack){
+        Call<ResultObj<SowingInfo>> call = Doapi.instance().getSowingById(token,sowingActivityId);
+        callenqueue(call,callBack);
+
+    }
+
+    public static void getIrrigatingById(String token, String IrrigatingActivityId, ApiCallBack<IrrigatingInfo> callBack){
+        Call<ResultObj<IrrigatingInfo>> call = Doapi.instance().getIrrigatingById(token,IrrigatingActivityId);
+        callenqueue(call,callBack);
+
+    }
+
+    public static void getFertilizingById(String token, String FertilizingActivityId, ApiCallBack<FertilizingInfo> callBack){
+        Call<ResultObj<FertilizingInfo>> call = Doapi.instance().getFertilizingById(token,FertilizingActivityId);
+        callenqueue(call,callBack);
+
+    }
+
+    public static void getHarvestingById(String token, String HarvestingActivityId, ApiCallBack<HarvestingInfo> callBack){
+        Call<ResultObj<HarvestingInfo>> call = Doapi.instance().getHarvestingById(token,HarvestingActivityId);
+        callenqueue(call,callBack);
+
+    }
+    public static void getTillingById(String token, String TillingActivityId, ApiCallBack<TillingInfo> callBack){
+        Call<ResultObj<TillingInfo>> call = Doapi.instance().getTillingById(token,TillingActivityId);
+        callenqueue(call,callBack);
+
+    }
+    public static void getSprayingById(String token, String SprayingActivityId, ApiCallBack<SprayingInfo> callBack){
+        Call<ResultObj<SprayingInfo>> call = Doapi.instance().getSprayingById(token,SprayingActivityId);
+        callenqueue(call,callBack);
+
+    }
+
+    public static void deleteSowingById(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteSowingById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void deleteIrrigatingById(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteIrrigatingById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void deleteFertilizingById(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteFertilizingById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void deleteHarvestingById(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteHarvestingById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void deleteTillingById(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteTillingById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void deleteSprayingById(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteSprayingById(token,id);
+        callenqueue(call,callBack);
+    }
+
 
 
 

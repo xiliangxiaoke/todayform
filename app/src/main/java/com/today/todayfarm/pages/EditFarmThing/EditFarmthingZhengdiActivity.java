@@ -18,6 +18,7 @@ import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.TillingInfo;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
@@ -88,6 +89,23 @@ public class EditFarmthingZhengdiActivity extends Activity {
     @OnClick(R.id.delete)
     public void delete() {
         //TODO 删除
+        API.deleteSowingById(
+                Hawk.get(HawkKey.TOKEN),
+                tillingActivityId,
+                new ApiCallBack<Object>() {
+                    @Override
+                    public void onResponse(ResultObj<Object> resultObj) {
+                        //删除成功
+                        ToastUtil.show(EditFarmthingZhengdiActivity.this,"删除成功");
+                        EditFarmthingZhengdiActivity.this.finish();
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     @OnClick(R.id.back)
@@ -167,6 +185,7 @@ public class EditFarmthingZhengdiActivity extends Activity {
     CropInfo cropInfo = null;
     String fieldinfo_json;
     String tillingActivityId = null;
+    String fieldname = null;
 
 
     @Override
@@ -181,15 +200,46 @@ public class EditFarmthingZhengdiActivity extends Activity {
 
         fieldinfo_json = getIntent().getStringExtra("fieldinfo_json");
         fieldInfo = new Gson().fromJson(fieldinfo_json, FieldInfo.class);
-        tillingActivityId = getIntent().getStringExtra("tillingActivityId");
+        tillingActivityId = getIntent().getStringExtra("id");
+        fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
         if (fieldInfo != null) {
             tvfieldname.setText(fieldInfo.getFieldName()+"  整地");
         }
 
+        if (fieldname != null) {
+            tvfieldname.setText(fieldname+"  整地");
+        }
+
         if (tillingActivityId != null && tillingActivityId.length()>0) {
             // TODO: get sowing detail
+            API.getTillingById(
+                    Hawk.get(HawkKey.TOKEN),
+                    tillingActivityId,
+                    new ApiCallBack<TillingInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<TillingInfo> resultObj) {
+                            if (resultObj.getCode() == 0) {
+                                TillingInfo info = resultObj.getObject();
+                                zhengditype.setText(info.getTillingType());
+                                carhead.setText(info.getTillingTractor());
+                                mechine.setText(info.getTillingMechanical());
+                                tvstarttime.setText(info.getTillingStartTime());
+                                tvendtime.setText(info.getTillingEndTime());
+                                deepth.setText(info.getTillingDepth());
+                                pricepermu.setText(info.getPricePerAcre());
+                                priceall.setText(info.getTotalCost());
+                                beizhu.setText(info.getTillingNote());
+                            }
+                        }
+
+                        @Override
+                        public void onError(int code) {
+
+                        }
+                    }
+            );
         } else {
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));

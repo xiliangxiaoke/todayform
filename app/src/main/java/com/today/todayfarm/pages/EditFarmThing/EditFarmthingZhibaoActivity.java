@@ -18,6 +18,7 @@ import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
@@ -97,6 +98,23 @@ public class EditFarmthingZhibaoActivity extends Activity {
     @OnClick(R.id.delete)
     public void delete() {
         //TODO 删除
+        API.deleteSowingById(
+                Hawk.get(HawkKey.TOKEN),
+                sprayingActivityId,
+                new ApiCallBack<Object>() {
+                    @Override
+                    public void onResponse(ResultObj<Object> resultObj) {
+                        //删除成功
+                        ToastUtil.show(EditFarmthingZhibaoActivity.this,"删除成功");
+                        EditFarmthingZhibaoActivity.this.finish();
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     @OnClick(R.id.back)
@@ -180,6 +198,7 @@ public class EditFarmthingZhibaoActivity extends Activity {
     CropInfo cropInfo = null;
     String fieldinfo_json;
     String sprayingActivityId = null;
+    String fieldname = null;
 
 
 
@@ -198,15 +217,47 @@ public class EditFarmthingZhibaoActivity extends Activity {
 
         fieldinfo_json = getIntent().getStringExtra("fieldinfo_json");
         fieldInfo = new Gson().fromJson(fieldinfo_json, FieldInfo.class);
-        sprayingActivityId = getIntent().getStringExtra("tillingActivityId");
+        sprayingActivityId = getIntent().getStringExtra("id");
+        fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
         if (fieldInfo != null) {
             tvfieldname.setText(fieldInfo.getFieldName()+"  植保");
         }
 
+        if (fieldname != null) {
+            tvfieldname.setText(fieldname+"  植保");
+        }
+
         if (sprayingActivityId != null && sprayingActivityId.length()>0) {
             // TODO: get sowing detail
+            API.getSprayingById(
+                    Hawk.get(HawkKey.TOKEN),
+                    sprayingActivityId,
+                    new ApiCallBack<SprayingInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<SprayingInfo> resultObj) {
+                            if (resultObj.getCode() == 0) {
+                                SprayingInfo info = resultObj.getObject();
+                                zhibaotype.setText(info.getSprayingType());
+                                zaihaitype.setText(info.getDisasterType());
+                                zhibaostyle.setText(info.getSprayingMethod());
+                                useyaowu.setText(info.getDrugName());
+                                zhibaoeffect.setText(info.getSprayingEffect());
+                                tvstarttime.setText(info.getSprayingStartTime());
+                                tvendtime.setText(info.getSprayingEndTime());
+                                sizepermu.setText(info.getQuantityPerAcre());
+                                zhibaoprice.setText(info.getTotalCost());
+                                beizhu.setText(info.getSprayingNote());
+                            }
+                        }
+
+                        @Override
+                        public void onError(int code) {
+
+                        }
+                    }
+            );
         } else {
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));

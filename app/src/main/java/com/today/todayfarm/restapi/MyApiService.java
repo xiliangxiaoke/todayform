@@ -5,15 +5,17 @@ import com.today.todayfarm.dom.FarmInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.GrowthDataInfo;
+import com.today.todayfarm.dom.HarvestingInfo;
+import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
-import com.today.todayfarm.dom.User;
+import com.today.todayfarm.dom.SowingInfo;
+import com.today.todayfarm.dom.FertilizingInfo;
+import com.today.todayfarm.dom.SprayingInfo;
+import com.today.todayfarm.dom.TillingInfo;
 
-import butterknife.OnClick;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -361,13 +363,117 @@ public interface MyApiService {
     );
 
 
+    /**
+     * 根据记录id获取播种记录详情
+     * @param token
+     * @param sowingActivityId
+     * @return
+     */
+    @GET("app/SowingActivity/getById")
+    Call<ResultObj<SowingInfo>> getSowingById(
+            @Query("token") String token,
+            @Query("sowingActivityId") String sowingActivityId
+    );
+
+
+    /**
+     * 根据记录id获取灌溉记录详情
+     * @param token
+     * @param irrigatingActivityId
+     * @return
+     */
+    @GET("app/IrrigatingActivity/getById")
+    Call<ResultObj<IrrigatingInfo>> getIrrigatingById(
+            @Query("token") String token,
+            @Query("irrigatingActivityId") String irrigatingActivityId
+    );
+
+
+    /**
+     * 根据记录id获取施肥记录详情
+     * @param token
+     * @param fertilizingActivityId
+     * @return
+     */
+    @GET("app/FertilizingActivity/getById")
+    Call<ResultObj<FertilizingInfo>> getFertilizingById(
+            @Query("token") String token,
+            @Query("fertilizingActivityId") String fertilizingActivityId
+    );
+
+
+    /**
+     * 根据记录id获取收割记录详情
+     * @param token
+     * @param HarvestingActivityId
+     * @return
+     */
+    @GET("app/HarvestingActivity/getById")
+    Call<ResultObj<HarvestingInfo>> getHarvestingById(
+            @Query("token") String token,
+            @Query("HarvestingActivityId") String HarvestingActivityId
+    );
+
+
+    /**
+     * 根据记录id获取整地记录详情
+     * @param token
+     * @param TillingActivityId
+     * @return
+     */
+    @GET("app/TillingActivity/getById")
+    Call<ResultObj<TillingInfo>> getTillingById(
+            @Query("token") String token,
+            @Query("TillingActivityId") String TillingActivityId
+    );
+
+
+    /**
+     * 根据记录id获取植保记录详情
+     * @param token
+     * @param sprayingActivityId
+     * @return
+     */
+    @GET("app/SprayingActivity/getById")
+    Call<ResultObj<SprayingInfo>> getSprayingById(
+            @Query("token") String token,
+            @Query("sprayingActivityId") String sprayingActivityId
+    );
 
 
 
+    // 删除弄事的六个接口
 
-
-
-
+    @GET("app/SowingActivity/deleteById")
+    Call<ResultObj<Object>> deleteSowingById(
+            @Query("token") String token,
+            @Query("sowingActivityId") String sowingActivityId
+    );
+    @GET("app/IrrigatingActivity/deleteById")
+    Call<ResultObj<Object>> deleteIrrigatingById(
+            @Query("token") String token,
+            @Query("irrigatingActivityId") String irrigatingActivityId
+    );
+    @GET("app/FertilizingActivity/deleteById")
+    Call<ResultObj<Object>> deleteFertilizingById(
+            @Query("token") String token,
+            @Query("fertilizingActivityId") String fertilizingActivityId
+    );
+    @GET("app/HarvestingActivity/deleteById")
+    Call<ResultObj<Object>> deleteHarvestingById(
+            @Query("token") String token,
+            @Query("HarvestingActivityId") String HarvestingActivityId
+    );
+    @GET("app/TillingActivity/deleteById")
+    Call<ResultObj<Object>> deleteTillingById(
+            @Query("token") String token,
+            @Query("tillingActivityId") String tillingActivityId
+    );
+    @GET("app/SprayingActivity/deleteById")
+    Call<ResultObj<Object>> deleteSprayingById(
+            @Query("token") String token,
+            @Query("sprayingActivityId") String sprayingActivityId
+    );
 
 
     //-------------------------------------------------------------------old

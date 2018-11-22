@@ -25,6 +25,12 @@ import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.ResultObj;
 
+import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
+import com.today.todayfarm.pages.EditFarmThing.EditFarmthingGuangaiActivity;
+import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShifeiActivity;
+import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShougeActivity;
+import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhengdiActivity;
+import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhibaoActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
 import com.today.todayfarm.restapi.API;
@@ -176,7 +182,28 @@ public class FarmworkFragment extends Fragment {
             holder.panel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // 跳转到指定的农事详情页面
+                    Intent intent = null;
+                    String type = info.getType();
+                    if("播种".equals(type)){
+                        intent = new Intent(FarmworkFragment.this.getContext(), EditFarmthingBozhongActivity.class);
+                    }else if ("灌溉".equals(type)){
+                        intent = new Intent(FarmworkFragment.this.getContext(), EditFarmthingGuangaiActivity.class);
+                    }else if ("施肥".equals(type)){
+                        intent = new Intent(FarmworkFragment.this.getContext(), EditFarmthingShifeiActivity.class);
+                    }else if ("收割".equals(type)){
+                        intent = new Intent(FarmworkFragment.this.getContext(), EditFarmthingShougeActivity.class);
+                    }else if ("整地".equals(type)){
+                        intent = new Intent(FarmworkFragment.this.getContext(), EditFarmthingZhengdiActivity.class);
+                    }else if ("植保".equals(type)){
+                        intent = new Intent(FarmworkFragment.this.getContext(), EditFarmthingZhibaoActivity.class);
+                    }
 
+
+//                    intent.putExtra("fieldinfo_json",fieldinfo_json);
+                    intent.putExtra("id",info.getId());
+                    intent.putExtra("fieldname",info.getFieldName());
+                    FarmworkFragment.this.startActivity(intent);
                 }
             });
 

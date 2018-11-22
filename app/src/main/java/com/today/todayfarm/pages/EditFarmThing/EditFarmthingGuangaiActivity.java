@@ -17,6 +17,7 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.restapi.API;
@@ -88,6 +89,23 @@ public class EditFarmthingGuangaiActivity extends Activity {
     @OnClick(R.id.delete)
     public void delete() {
         //TODO 删除
+        API.deleteSowingById(
+                Hawk.get(HawkKey.TOKEN),
+                irrigatingId,
+                new ApiCallBack<Object>() {
+                    @Override
+                    public void onResponse(ResultObj<Object> resultObj) {
+                        //删除成功
+                        ToastUtil.show(EditFarmthingGuangaiActivity.this,"删除成功");
+                        EditFarmthingGuangaiActivity.this.finish();
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     @OnClick(R.id.back)
@@ -158,6 +176,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
     CropInfo cropInfo = null;
     String fieldinfo_json;
     String irrigatingId = null;
+    String fieldname = null;
 
 
     @Override
@@ -171,15 +190,46 @@ public class EditFarmthingGuangaiActivity extends Activity {
 
         fieldinfo_json = getIntent().getStringExtra("fieldinfo_json");
         fieldInfo = new Gson().fromJson(fieldinfo_json, FieldInfo.class);
-        irrigatingId = getIntent().getStringExtra("irrigatingId");
+        irrigatingId = getIntent().getStringExtra("id");
+
+        fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
         if (fieldInfo != null) {
             tvfieldname.setText(fieldInfo.getFieldName()+"  灌溉");
         }
 
+        if (fieldname != null) {
+            tvfieldname.setText(fieldname+"  灌溉");
+        }
+
         if (irrigatingId != null && irrigatingId.length()>0) {
             // TODO: get sowing detail
+            API.getIrrigatingById(
+                    Hawk.get(HawkKey.TOKEN),
+                    irrigatingId,
+                    new ApiCallBack<IrrigatingInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<IrrigatingInfo> resultObj) {
+                            if (resultObj.getCode()==0){
+                                IrrigatingInfo info = resultObj.getObject();
+                                tvstarttime.setText(info.getIrrigatingStartTime());
+                                etwaterpress.setText(info.getWaterPressure());
+                                etepress.setText(info.getVoltage());
+                                etdevicespeed.setText(info.getEquipmentSpeed());
+                                tvendtime.setText(info.getIrrigatingEndTime());
+                                etprice.setText(info.getTotalCost());
+                                etbeizhu.setText(info.getIrrigatingNote());
+
+                            }
+                        }
+
+                        @Override
+                        public void onError(int code) {
+
+                        }
+                    }
+            );
         } else {
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));
