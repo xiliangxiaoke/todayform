@@ -15,6 +15,7 @@ import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.customView.PicHorizentalList;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.FieldInfo;
@@ -55,7 +56,8 @@ public class EditFarmthingShifeiActivity extends Activity {
     @BindView(R.id.priceall) EditText etpriceall;
     @BindView(R.id.beizhu) EditText beizhu;
     @BindView(R.id.delete) TextView delete;
-
+    @BindView(R.id.pics)
+    PicHorizentalList pics;
 
     @OnClick(R.id.selectstarttime)
     public void setTvselectstarttime() {
@@ -148,7 +150,7 @@ public class EditFarmthingShifeiActivity extends Activity {
                 etfeiall.getText().toString(),
                 etpriceall.getText().toString(),
                 beizhu.getText().toString(),
-                "",// todo: img list
+                pics.geturls(),// todo: img list
                 new ApiCallBack<Object>() {
                     @Override
                     public void onResponse(ResultObj<Object> resultObj) {
@@ -231,6 +233,7 @@ public class EditFarmthingShifeiActivity extends Activity {
                                 etfeiall.setText(info.getTotalQuantity());
                                 etpriceall.setText(info.getTotalCost());
                                 beizhu.setText(info.getFertilizingNote());
+                                pics.initdata(info.getImgUrl());
                             }
                         }
 

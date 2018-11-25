@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.customView.PicHorizentalList;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
@@ -100,6 +102,9 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
 //    备注
     @BindView(R.id.beizhu)
     EditText beizhu;
+
+    @BindView(R.id.pics)
+    PicHorizentalList pics;
 
 
     @OnClick(R.id.selectstarttime)
@@ -199,7 +204,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                 pricepermu.getText().toString(),
                 priceall.getText().toString(),
                 beizhu.getText().toString(),
-                "",// todo: img list
+                pics.geturls(),// todo: img list
                 new ApiCallBack<Object>() {
                     @Override
                     public void onResponse(ResultObj<Object> resultObj) {
@@ -271,6 +276,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                     new ApiCallBack<SowingInfo>() {
                         @Override
                         public void onResponse(ResultObj<SowingInfo> resultObj) {
+                            Log.v("getSowingInfo:","gson:"+new Gson().toJson(resultObj));
                             if (resultObj.getCode() == 0){
                                 SowingInfo info = resultObj.getObject();
                                 croptypename.setText(info.getSeedName());
@@ -287,6 +293,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                                 pricepermu.setText(info.getSowingPerAcre());
                                 priceall.setText(info.getTotalCost());
                                 beizhu.setText(info.getSowingNote());
+                                pics.initdata(info.getImgUrl());
                             }
                         }
 

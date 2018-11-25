@@ -12,6 +12,11 @@ import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.dom.TillingInfo;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -342,6 +347,32 @@ public class API {
     public static void deleteSprayingById(String token, String id, ApiCallBack<Object> callBack) {
         Call<ResultObj<Object>> call = Doapi.instance()
                 .deleteSprayingById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void uploadPic(String token, String bussType, File file, ApiCallBack<Object> callBack) {
+
+        //
+        RequestBody description = RequestBody.create(
+                MediaType.parse("multipart/form-data"),
+                bussType
+        );
+
+
+        //
+//        RequestBody body = RequestBody.create(
+//                MediaType.parse("multipart/form-data"), file);
+        RequestBody requestBody = RequestBody.create(
+                MediaType.parse("multipart/form-data"),file);
+
+        MultipartBody.Part body = MultipartBody.Part.createFormData(
+                "files",
+                file.getName(),
+                requestBody
+        );
+
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .uploadPic(token,description,body);
         callenqueue(call,callBack);
     }
 

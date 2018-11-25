@@ -14,8 +14,11 @@ import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.dom.TillingInfo;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -411,7 +414,7 @@ public interface MyApiService {
     @GET("app/HarvestingActivity/getById")
     Call<ResultObj<HarvestingInfo>> getHarvestingById(
             @Query("token") String token,
-            @Query("HarvestingActivityId") String HarvestingActivityId
+            @Query("harvestingActivityId") String HarvestingActivityId
     );
 
 
@@ -424,7 +427,7 @@ public interface MyApiService {
     @GET("app/TillingActivity/getById")
     Call<ResultObj<TillingInfo>> getTillingById(
             @Query("token") String token,
-            @Query("TillingActivityId") String TillingActivityId
+            @Query("tillingActivityId") String TillingActivityId
     );
 
 
@@ -474,6 +477,19 @@ public interface MyApiService {
             @Query("token") String token,
             @Query("sprayingActivityId") String sprayingActivityId
     );
+
+
+
+
+    @Multipart
+    @POST("app/file/uploadMulti")
+    Call<ResultObj<Object>> uploadPic(
+            @Query("token") String token,
+            @Part("bussType") RequestBody description,
+
+            @Part MultipartBody.Part file
+            );
+
 
 
     //-------------------------------------------------------------------old

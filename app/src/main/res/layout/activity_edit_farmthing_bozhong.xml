@@ -419,6 +419,25 @@
 
             <!--现场图片-->
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <TextView
+                    android:text="现场图片"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <com.today.todayfarm.customView.PicHorizentalList
+                    android:id="@+id/pics"
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"/>
+
+            </RelativeLayout>
+
             <!--DELETE-->
             <TextView
                 android:id="@+id/delete"
