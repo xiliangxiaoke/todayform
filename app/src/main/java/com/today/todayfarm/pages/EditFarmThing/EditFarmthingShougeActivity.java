@@ -104,7 +104,7 @@ public class EditFarmthingShougeActivity extends Activity {
 
     @OnClick(R.id.edit)
     public void setEdit() {
-        if (cropInfo==null){
+        if (tvcropinfo.getText().toString().length()==0){
             new SweetAlertDialog(this)
                     .setTitleText("缺少作物信息")
                     .show();
@@ -229,6 +229,25 @@ public class EditFarmthingShougeActivity extends Activity {
                                 priceall.setText(info.getTotalCost());
                                 beizhu.setText(info.getHarvestingNote());
                                 pics.initdata(info.getImgUrl());
+                                // 获取作物信息显示
+                                API.getCropInfoById(
+                                        Hawk.get(HawkKey.TOKEN), info.getCropId(),
+                                        new ApiCallBack<CropInfo>() {
+                                            @Override
+                                            public void onResponse(ResultObj<CropInfo> resultObj) {
+                                                if (resultObj.getCode() == 0) {
+                                                    CropInfo cropInfo = resultObj.getObject();
+                                                    String t = cropInfo.getCropName()+" "+cropInfo.getPlantYear();
+                                                    tvcropinfo.setText(t);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onError(int code) {
+
+                                            }
+                                        }
+                                );
                             }
                         }
 

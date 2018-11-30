@@ -3,6 +3,7 @@ package com.today.todayfarm.pages.createFarm;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -16,6 +17,7 @@ import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.dom.BoundaryInfo2Js;
 import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.MapDrawActionInfo;
@@ -126,11 +128,32 @@ public class CreateFarmActivity extends BaseActivity {
         // 设置
 //        MapDrawActionInfo mapDrawActionInfo = new MapDrawActionInfo();
 //        mapDrawActionInfo.setAction("getgeojson");
-        JSParamInfo<String> jsParamInfo = new JSParamInfo<>();
+        JSParamInfo<BoundaryInfo2Js> jsParamInfo = new JSParamInfo<>();
         jsParamInfo.setType("showgeo");
-        jsParamInfo.setParams(geojson);
-        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+        BoundaryInfo2Js boundaryInfo2Js =null;
+        Log.v("boundary:",geojson);
 
+        try{
+            boundaryInfo2Js = new Gson().fromJson(geojson,BoundaryInfo2Js.class);
+        }catch (Exception e){
+            Log.e("boundary err",e.getMessage());
+        }
+
+        jsParamInfo.setParams(boundaryInfo2Js);
+
+
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /**
+                 *要执行的操作
+                 */
+                WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+            }
+        }, 300);//3秒后执行Runnable中的run方法
 
 
 
@@ -141,35 +164,7 @@ public class CreateFarmActivity extends BaseActivity {
         WebSettings webSettings = map.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-//        map.addJavascriptInterface(new Android2JS(new Android2JS.CallBack() {
-//            @Override
-//            public void callback(String json) {
-//                if (json!=null){
-//                    JS2AndroidParam js2AndroidParam = new Gson().fromJson(json,JS2AndroidParam.class);
-//                    if (js2AndroidParam!=null){
-//                        if ("returngeojson".equals(js2AndroidParam.getType())){
-//                            if (js2AndroidParam.getValue()!=null && js2AndroidParam.getValue().length()>0){
-//                                //成功拿到geojson边界  js2AndroidParam.getValue()
-//
-//
-//
-////                                new SweetAlertDialog(AddFarm2MapActivity.this)
-////                                        .setTitleText(js2AndroidParam.getType())
-////                                        .setContentText(js2AndroidParam.getValue())
-////                                        .show();
-//                            }
-//                        }else if ("error".equals(js2AndroidParam.getType())){
-//                            Log.e("ERRORSSSS",js2AndroidParam.getValue());
-//                            new SweetAlertDialog(CreateFarmActivity.this)
-//                                    .setTitleText(js2AndroidParam.getType())
-//                                    .setContentText(js2AndroidParam.getValue())
-//                                    .show();
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }),"androidjs");
+
 
 
         map.loadUrl("file:///android_asset/index.html");

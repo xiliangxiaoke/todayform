@@ -3,17 +3,22 @@ package com.today.todayfarm.pages.tabs.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -21,12 +26,17 @@ import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.customView.BoundaryView;
+import com.today.todayfarm.dom.BoundaryInfo2Js;
+import com.today.todayfarm.dom.FieldBoundary;
 import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.AddFarmMap.AddFarm2MapActivity;
 import com.today.todayfarm.pages.pagedetail.FarmDetailActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
+import com.today.todayfarm.util.WebUtil;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -102,6 +112,7 @@ public class FarmlandFragment extends Fragment {
                 new ApiCallBack<FieldInfo>() {
                     @Override
                     public void onResponse(ResultObj<FieldInfo> resultObj) {
+                        Log.v("fieldinfolist:",new Gson().toJson(resultObj));
                         if (resultObj.getCode()==0){
                             if (resultObj.getList()!=null && resultObj.getList().size()>0){
                                 listData.addAll(resultObj.getList());
@@ -166,8 +177,9 @@ public class FarmlandFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull Viewholder holder, int position) {
             FieldInfo info = data.get(position);
-            holder.owner.setText(info.getFullName()+"的农田");
+            //holder.owner.setText(info.getFullName()+"的农田");
             holder.fieldname.setText(info.getFieldName());
+            Log.v("boundary geo:",info.getFieldBoundary());
             double fieldarea =0;
             try {
                 fieldarea = Double.parseDouble(info.getFieldArea())/666.666;
@@ -194,6 +206,32 @@ public class FarmlandFragment extends Fragment {
                     FarmlandFragment.this.getContext().startActivity(intent);
                 }
             });
+
+            // 显示地图 边界
+
+
+
+            JSParamInfo<BoundaryInfo2Js> jsParamInfo = new JSParamInfo<>();
+            jsParamInfo.setType("showgeo");
+            BoundaryInfo2Js boundaryInfo2Js =null;
+            Log.v("boundary:",info.getFieldBoundary());
+
+            try{
+                boundaryInfo2Js = new Gson().fromJson(info.getFieldBoundary(),BoundaryInfo2Js.class);
+            }catch (Exception e){
+                Log.e("boundary err",e.getMessage());
+            }
+
+
+
+
+
+
+            holder.map.setData(boundaryInfo2Js);
+
+
+
+
         }
 
         @Override
@@ -205,6 +243,7 @@ public class FarmlandFragment extends Fragment {
 
             View panel;
 
+            BoundaryView map;
             TextView owner;
             TextView fieldname;
             TextView areacrop;
@@ -215,6 +254,7 @@ public class FarmlandFragment extends Fragment {
                 fieldname = itemView.findViewById(R.id.fieldname);
                 areacrop = itemView.findViewById(R.id.areacrop);
                 panel = itemView.findViewById(R.id.panel);
+                map = itemView.findViewById(R.id.map);
 
             }
         }

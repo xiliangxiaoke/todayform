@@ -479,8 +479,13 @@ public interface MyApiService {
     );
 
 
-
-
+    /**
+     * 上传接口
+     * @param token
+     * @param description
+     * @param file
+     * @return
+     */
     @Multipart
     @POST("app/file/uploadMulti")
     Call<ResultObj<Object>> uploadPic(
@@ -489,6 +494,10 @@ public interface MyApiService {
 
             @Part MultipartBody.Part file
             );
+
+
+    @GET("app/cropInfo/getById")
+    Call<ResultObj<CropInfo>> getCropInfoById(@Query("token") String token,@Query("cropId") String cropId);
 
 
 

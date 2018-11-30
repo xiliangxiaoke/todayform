@@ -377,6 +377,11 @@ public class API {
     }
 
 
+    public static void getCropInfoById(String token,String cropid,ApiCallBack<CropInfo> callBack){
+        Call<ResultObj<CropInfo>> call = Doapi.instance()
+                .getCropInfoById(token,cropid);
+        callenqueue(call,callBack);
+    }
 
 
 

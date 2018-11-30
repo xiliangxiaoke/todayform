@@ -9,7 +9,6 @@
     <script src="./leaflet/Path.Drag.js"></script>
     <script src="./leaflet/Leaflet.Editable.js"></script>
     <script src="./leaflet/turf.min.js"></script>
-
     <title>Title</title>
 </head>
 <style>
@@ -86,6 +85,7 @@
     /***
         1 定位 {type:"location",params:{longitude:117,latitude:36}}
         2 绘制 {type:"draw",params:{action:"drawcircle|drawpolygon|getgeojson"}}
+        3 显示边界 {type:"showgeo",params:{自定义的geogson，包含circle 和 polygon}}
     */
     function callJS(paraminfo){
 
@@ -96,6 +96,8 @@
                 map.panTo(paramobj.params);
             }else if("draw" == paramobj.type){
                 doDraw(paramobj.params.action)
+            }else if("showgeo" == paramobj.type){
+                showfarmBoundary(paramobj.params)
             }
         }catch(e){
             var param = {
@@ -107,6 +109,22 @@
         }
 
     };
+
+    /**
+        显示农田边界
+        para: circle 和 polygon的结构体
+    */
+    function showfarmBoundary(para){
+        if(para.geotype==='circle'){
+
+            var circle = L.circle(para.center, {radius: para.radius}).addTo(map);
+            map.fitBounds(circle.getBounds());
+        }else if(para.geotype==='polygon'){
+            var polygon = L.polygon([para.coordinates], {color: 'red'}).addTo(map);
+            // zoom the map to the polygon
+            map.fitBounds(polygon.getBounds());
+        }
+    }
 
     // 进行绘制操作
     /**
@@ -138,14 +156,21 @@
                 if(drawtype == "circle"){
                     geovalue = {
                         geotype:"circle",
-                        center: [farmlanddraw.getLatLng().lng,farmlanddraw.getLatLng().lat],
+                        center: [farmlanddraw.getBounds().getCenter().lat,farmlanddraw.getBounds().getCenter().lng],
                         radius:farmlanddraw.getRadius()
                     };
                     area = getCircleArea(farmlanddraw.getRadius());
                 }else if(drawtype == "polygon"){
+
+                    var coors = [];
+                    farmlanddraw.getLatLngs()[0].forEach(function (ll){
+                        coors.push([ll.lat,ll.lng]);
+                    });
+
                     geovalue = {
                         geotype:"polygon",
-                        geojson:farmlanddraw.toGeoJSON()
+                        //geojson:farmlanddraw.toGeoJSON()
+                        coordinates:coors
                     }
                     area = turf.area(farmlanddraw.toGeoJSON().geometry);
                 }
@@ -168,6 +193,9 @@
 
 
 //--------------------------test
+
+
+//callJS('{"params":{"center":[31.601053,120.28519],"geotype":"circle","radius":4539.932},"type":"showgeo"}');
 
     function test(){
 

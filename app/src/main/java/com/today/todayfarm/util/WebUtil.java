@@ -1,6 +1,7 @@
 package com.today.todayfarm.util;
 
 import android.os.Build;
+import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
@@ -14,6 +15,8 @@ public class WebUtil {
      *             3 显示一个geo {type:"showgeo",params:"geojson string"}
      */
     public static void callJS(WebView map, String json) {
+        Log.v("boundary--",json);
+        Log.v("boundary--loadurl","javascript:callJS('"+json+"')");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             map.evaluateJavascript("javascript:callJS('"+json+"')", new ValueCallback<String>() {
                 @Override

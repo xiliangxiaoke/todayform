@@ -35,9 +35,26 @@ public class SprayingInfo {
     String         totalCost;
     String sprayingNote;
     String        userId;
-
+    String cropName;
+    String plantYear;
 
     String imgUrl;
+
+    public String getCropName() {
+        return cropName;
+    }
+
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
+    }
+
+    public String getPlantYear() {
+        return plantYear;
+    }
+
+    public void setPlantYear(String plantYear) {
+        this.plantYear = plantYear;
+    }
 
     public String getSprayingActivityId() {
         return sprayingActivityId;

@@ -29,6 +29,26 @@ public class IrrigatingInfo {
     String         userId;
     String         imgUrl;
 
+    String cropName;
+    String plantYear;
+
+
+    public String getCropName() {
+        return cropName;
+    }
+
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
+    }
+
+    public String getPlantYear() {
+        return plantYear;
+    }
+
+    public void setPlantYear(String plantYear) {
+        this.plantYear = plantYear;
+    }
+
     public String getIrrigatingActivityId() {
         return irrigatingActivityId;
     }
