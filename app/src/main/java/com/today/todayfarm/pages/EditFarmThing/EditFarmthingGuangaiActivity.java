@@ -230,7 +230,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
                                             @Override
                                             public void onResponse(ResultObj<CropInfo> resultObj) {
                                                 if (resultObj.getCode() == 0) {
-                                                    CropInfo cropInfo = resultObj.getObject();
+                                                    cropInfo = resultObj.getObject();
                                                     String t = cropInfo.getCropName()+" "+cropInfo.getPlantYear();
                                                     tvcropinfo.setText(t);
                                                 }

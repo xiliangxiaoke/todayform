@@ -81,6 +81,7 @@
                 android:id="@+id/farmthingpanel"
                 app:cardElevation="5dp"
                 app:contentPadding="0dp"
+
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -103,19 +104,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="1px"/>
                     <RelativeLayout
-
+                        android:id="@+id/farmthingtab"
                         android:layout_width="match_parent"
                         android:layout_height="70dp">
                         <TextView
                             android:id="@+id/farmthing"
-
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="10dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                            android:layout_height="wrap_content" />
                         <TextView
                             android:id="@+id/farmthingdate"
                             android:layout_alignParentRight="true"
+                            android:paddingRight="10dp"
+                            android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                            android:layout_height="wrap_content" />
                     </RelativeLayout>
                     <View
                         android:background="@color/devideline"

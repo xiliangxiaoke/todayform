@@ -500,6 +500,43 @@ public interface MyApiService {
     Call<ResultObj<CropInfo>> getCropInfoById(@Query("token") String token,@Query("cropId") String cropId);
 
 
+    /**
+     * 获取指定农田的全部农事记录
+     * @param token
+     * @param fieldId
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @GET("app/AllActivity/findFiledAllActivity")
+    Call<ResultObj<FieldThingInfo>> findFiledAllActivity(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+
+            @Query("currentPage") int currentPage,
+            @Query("pageSize") int pageSize
+    );
+
+
+    /**
+     * 获取指定农田的指定作物的农事记录
+     * @param token
+     * @param fieldId
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @GET("app/AllActivity/findFiledAllActivity")
+    Call<ResultObj<FieldThingInfo>> findFiledAllActivityOfCrop(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("cropInfoId") String cropInfoId,
+            @Query("year") int year,
+            @Query("currentPage") int currentPage,
+            @Query("pageSize") int pageSize
+    );
+
+
 
     //-------------------------------------------------------------------old
 

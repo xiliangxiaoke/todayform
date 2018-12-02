@@ -1,5 +1,8 @@
 package com.today.todayfarm.restapi;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.FieldInfo;
@@ -385,6 +388,22 @@ public class API {
 
 
 
+    public static void findFiledAllActivity(
+            String token,String fieldId,int currentPage,int pageSize,ApiCallBack<FieldThingInfo> callBack
+    ){
+        Call<ResultObj<FieldThingInfo>> call = Doapi.instance()
+                .findFiledAllActivity(token,fieldId,currentPage,pageSize);
+        callenqueue(call,callBack);
+    }
+
+
+    public static void findFiledAllActivityOfCrop(
+            String token,String fieldId,String cropInfoId,int year,int currentPage,int pageSize,ApiCallBack<FieldThingInfo> callBack
+    ){
+        Call<ResultObj<FieldThingInfo>> call = Doapi.instance()
+                .findFiledAllActivityOfCrop(token,fieldId,cropInfoId,year,currentPage,pageSize);
+        callenqueue(call,callBack);
+    }
 
 
 
@@ -401,6 +420,8 @@ public class API {
         call.enqueue(new Callback<ResultObj<E>>() {
             @Override
             public void onResponse(Call<ResultObj<E>> call, Response<ResultObj<E>> response) {
+
+                Log.v("=====>>>onResponse:",new Gson().toJson(response));
                 if (response.isSuccessful()) {
                     callBack.onResponse(response.body());
                 } else {

@@ -159,7 +159,7 @@ public class SelectCropActivity extends BaseActivity {
                                     }else{
                                         List<CropInfo> list = new ArrayList<>();
                                         list.add(crop);
-                                        map.put(crop.getPlantYear(), list);
+                                        map.put(crop.getPlantYear()+"", list);
                                     }
                                 }
                                 listData.clear();

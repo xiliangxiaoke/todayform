@@ -30,7 +30,7 @@ public class ResultObj<T> {
 
 	public PropInfo prop;
 
-	public String all;// 总数量
+	public int all;// 总数量
 
 	public String totalPage;
 
@@ -43,11 +43,11 @@ public class ResultObj<T> {
 		this.totalPage = totalPage;
 	}
 
-	public String getAll() {
+	public int getAll() {
 		return all;
 	}
 
-	public void setAll(String all) {
+	public void setAll(int all) {
 		this.all = all;
 	}
 

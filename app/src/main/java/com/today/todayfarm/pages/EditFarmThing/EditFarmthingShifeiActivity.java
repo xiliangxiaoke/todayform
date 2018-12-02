@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -121,54 +122,59 @@ public class EditFarmthingShifeiActivity extends Activity {
 
     @OnClick(R.id.edit)
     public void setEdit() {
-        if (tvcropinfo.getText().toString().length()==0){
-            new SweetAlertDialog(this)
-                    .setTitleText("缺少作物信息")
-                    .show();
-            return;
-        }
+        try{
+            if (tvcropinfo.getText().toString().length()==0){
+                new SweetAlertDialog(this)
+                        .setTitleText("缺少作物信息")
+                        .show();
+                return;
+            }
 
-        if (fieldInfo==null){
-            new SweetAlertDialog(this)
-                    .setTitleText("缺少农田信息")
-                    .show();
-            return;
-        }
+            if (fieldInfo==null){
+                new SweetAlertDialog(this)
+                        .setTitleText("缺少农田信息")
+                        .show();
+                return;
+            }
 
 
-        API.fertilizingSaveOrUpdate(
-                Hawk.get(HawkKey.TOKEN),
-                fieldInfo.getFieldId(),
-                cropInfo.getCropId(),
-                fertilizingActivityId,
-                etfeiliaoname.getText().toString(),
-                etshifeitype.getText().toString(),
-                etshifeistyle.getText().toString(),
-                etfeipermu.getText().toString(),
-                tvstarttime.getText().toString(),
-                tvendtime.getText().toString(),
-                etfeiall.getText().toString(),
-                etpriceall.getText().toString(),
-                beizhu.getText().toString(),
-                pics.geturls(),// todo: img list
-                new ApiCallBack<Object>() {
-                    @Override
-                    public void onResponse(ResultObj<Object> resultObj) {
-                        if (resultObj.getCode() == 0) {
-                            //保存成功
-                            ToastUtil.show(EditFarmthingShifeiActivity.this,"保存成功");
-                            EditFarmthingShifeiActivity.this.finish();
+            API.fertilizingSaveOrUpdate(
+                    Hawk.get(HawkKey.TOKEN),
+                    fieldInfo.getFieldId(),
+                    cropInfo.getCropId(),
+                    fertilizingActivityId,
+                    etfeiliaoname.getText().toString(),
+                    etshifeitype.getText().toString(),
+                    etshifeistyle.getText().toString(),
+                    etfeipermu.getText().toString(),
+                    tvstarttime.getText().toString(),
+                    tvendtime.getText().toString(),
+                    etfeiall.getText().toString(),
+                    etpriceall.getText().toString(),
+                    beizhu.getText().toString(),
+                    pics.geturls(),// todo: img list
+                    new ApiCallBack<Object>() {
+                        @Override
+                        public void onResponse(ResultObj<Object> resultObj) {
+                            if (resultObj.getCode() == 0) {
+                                //保存成功
+                                ToastUtil.show(EditFarmthingShifeiActivity.this,"保存成功");
+                                EditFarmthingShifeiActivity.this.finish();
+                            }
+                        }
+
+                        @Override
+                        public void onError(int code) {
+
                         }
                     }
 
-                    @Override
-                    public void onError(int code) {
 
-                    }
-                }
+            );
+        }catch (Exception e){
+            Log.e("ERROR:",e.getMessage(),e.getCause());
+        }
 
-
-        );
 
 
     }
@@ -241,7 +247,8 @@ public class EditFarmthingShifeiActivity extends Activity {
                                             @Override
                                             public void onResponse(ResultObj<CropInfo> resultObj) {
                                                 if (resultObj.getCode() == 0) {
-                                                    CropInfo cropInfo = resultObj.getObject();
+                                                    cropInfo = resultObj.getObject();
+                                                    Log.e("cropinfo",new Gson().toJson(cropInfo));
                                                     String t = cropInfo.getCropName()+" "+cropInfo.getPlantYear();
                                                     tvcropinfo.setText(t);
                                                 }

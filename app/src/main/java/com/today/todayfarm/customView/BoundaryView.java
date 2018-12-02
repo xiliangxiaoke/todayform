@@ -115,7 +115,7 @@ public class BoundaryView extends View{
                         List<Float> ll = data.getCoordinates().get(i);
 
                         float tx = (ll.get(1)-clng)*realX/dlng+cx;
-                        float ty = (ll.get(0)-clat)*realY/dlat+cy;
+                        float ty = (-ll.get(0)+clat)*realY/dlat+cy;
 
                         if (i==0){
                             path.moveTo(tx,ty);

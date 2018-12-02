@@ -131,7 +131,7 @@ public class FarmlandFragment extends Fragment {
                             DecimalFormat df = new DecimalFormat("#.00");
                             staticInfo.setText("已添加"+resultObj.getAll()+"块农田，总面积"+df.format(area)+"亩");
                             try {
-                                total = Integer.parseInt(resultObj.getAll()) ;
+                                total = resultObj.getAll() ;
                             } catch (Exception e) {
                             }
                         }

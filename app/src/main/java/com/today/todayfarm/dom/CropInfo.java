@@ -6,7 +6,7 @@ public class CropInfo {
     String cropId;
     String fieldId;
     String cropName;
-    String plantYear;
+    int plantYear;
     String totalCost;
     String totalRevenue;
 
@@ -35,11 +35,11 @@ public class CropInfo {
         this.cropName = cropName;
     }
 
-    public String getPlantYear() {
+    public int getPlantYear() {
         return plantYear;
     }
 
-    public void setPlantYear(String plantYear) {
+    public void setPlantYear(int plantYear) {
         this.plantYear = plantYear;
     }
 
