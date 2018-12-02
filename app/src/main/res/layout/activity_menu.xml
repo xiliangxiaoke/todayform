@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panel"
+android:background="#32000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#fff"
+        android:layout_width="200dp"
+        android:layout_height="match_parent">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+        <!--shou ye-->
+        <TextView
+            android:id="@+id/mainpage"
+            android:text="@string/menu_mainpage"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="200dp"
+            android:layout_height="60dp" />
+
+        <!--nong tian-->
+        <TextView
+            android:id="@+id/field"
+            android:text="@string/menu_farm"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+
+        <!--suggest-->
+        <TextView
+            android:id="@+id/suggest"
+            android:text="@string/menu_suggest"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+
+        <!--farm thing-->
+        <TextView
+            android:id="@+id/farmthing"
+            android:text="@string/menu_farmthing"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+
+        <!--zhuji-->
+        <TextView
+            android:id="@+id/zhuji"
+            android:text="@string/menu_zhuji"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <!--weather-->
+        <TextView
+            android:id="@+id/weather"
+            android:text="@string/menu_weather"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+
+        <!--setting-->
+        <TextView
+            android:id="@+id/setting"
+            android:text="@string/menu_setting"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

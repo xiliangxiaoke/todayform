@@ -32,12 +32,19 @@ import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShifeiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShougeActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhengdiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhibaoActivity;
+import com.today.todayfarm.pages.createcrop.CreateCropActivity;
 import com.today.todayfarm.pages.farmThingList.FarmThingListActivity;
+import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
+import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.Common;
 import com.today.todayfarm.util.WebUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,6 +98,18 @@ public class FarmDetailActivity extends Activity {
     TextView showallfarmthing;
 
 
+    @BindView(R.id.farmcroppanel)
+    CardView farmcroppanel;
+
+    @BindView(R.id.farmcropname)
+    TextView farmcropname;
+
+    @BindView(R.id.farmcropdate)
+    TextView farmcropdate;
+
+    @BindView(R.id.farmcropdatatab)
+    RelativeLayout farmcropdatatab;
+
     @OnClick(R.id.back)
     public void back() {
         this.finish();
@@ -101,8 +120,11 @@ public class FarmDetailActivity extends Activity {
         // TODO
     }
 
+    public static final int REQUEST_CODE_CREATE_CROP_ACTIVITY = 1001;
+
 
     FieldThingInfo fieldThingInfo = null;
+    CropInfo cropInfo = null;
 
 
     @Override
@@ -142,34 +164,34 @@ public class FarmDetailActivity extends Activity {
 
 
 
-                            // 获取农作物信息
-                            API.findCropInfosByFieldId(Hawk.get(HawkKey.TOKEN), fieldid, new ApiCallBack<CropInfo>() {
-                                @Override
-                                public void onResponse(ResultObj<CropInfo> resultObj) {
-                                    if (resultObj.getCode() == 0) {
-                                        // 显示作物信息
-                                        cropdatapanel.setVisibility(View.VISIBLE);
-                                        //
-
-                                        // SHOW ALL FARM CROP
-                                        showallfarmcrop.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent = new Intent(FarmDetailActivity.this, CropListActivity.class);
-                                                intent.putExtra("listdata",new Gson().toJson(resultObj));
-                                                FarmDetailActivity.this.startActivity(intent);
-                                            }
-                                        });
-                                    }else {
-                                        shownocroptip();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(int code) {
-                                    shownocroptip();
-                                }
-                            });
+//                            // 获取农作物信息
+//                            API.findCropInfosByFieldId(Hawk.get(HawkKey.TOKEN), fieldid, new ApiCallBack<CropInfo>() {
+//                                @Override
+//                                public void onResponse(ResultObj<CropInfo> resultObj) {
+//                                    if (resultObj.getCode() == 0) {
+//                                        // 显示作物信息
+//                                        cropdatapanel.setVisibility(View.VISIBLE);
+//                                        //
+//
+//                                        // SHOW ALL FARM CROP
+//                                        showallfarmcrop.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View view) {
+//                                                Intent intent = new Intent(FarmDetailActivity.this, CropListActivity.class);
+//                                                intent.putExtra("listdata",new Gson().toJson(resultObj));
+//                                                FarmDetailActivity.this.startActivity(intent);
+//                                            }
+//                                        });
+//                                    }else {
+//                                        shownocroptip();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onError(int code) {
+//                                    shownocroptip();
+//                                }
+//                            });
                         }
                     }
 
@@ -181,6 +203,22 @@ public class FarmDetailActivity extends Activity {
         );
 
         // 获取农事记录信息 获取总数all,及最新的一条
+        updateFieldthing();
+
+
+        // TODO 获取注记信息
+        updateZhuji();
+
+        // 获取作物信息
+        updateCropInfo();
+
+    }
+
+    private void updateZhuji() {
+
+    }
+
+    private void updateFieldthing() {
         API.findFiledAllActivity(
                 Hawk.get(HawkKey.TOKEN),
                 fieldid,
@@ -234,6 +272,7 @@ public class FarmDetailActivity extends Activity {
                                         Intent intent1 = new Intent();
                                         intent1.setClass(FarmDetailActivity.this, FarmThingListActivity.class);
                                         intent1.putExtra("fieldid",fieldid);
+                                        intent1.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
                                         FarmDetailActivity.this.startActivity(intent1);
                                     }
                                 });
@@ -246,10 +285,25 @@ public class FarmDetailActivity extends Activity {
                                     @Override
                                     public void onClick(View view) {
                                         //TODO 跳转到添加新农事页面
+                                        Intent intent = new Intent();
+                                        intent.setClass(FarmDetailActivity.this, SelectFarmActivity.class);
+                                        FarmDetailActivity.this.startActivity(intent);
                                     }
                                 });
 
                             }
+                        }else{
+                            farmthingname.setText("暂无相关农事记录");
+                            showallfarmthing.setText("添加新农事信息");
+                            showallfarmthing.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    //TODO 跳转到添加新农事页面
+                                    Intent intent = new Intent();
+                                    intent.setClass(FarmDetailActivity.this, SelectFarmActivity.class);
+                                    FarmDetailActivity.this.startActivity(intent);
+                                }
+                            });
                         }
                     }
 
@@ -259,7 +313,6 @@ public class FarmDetailActivity extends Activity {
                     }
                 }
         );
-
     }
 
     private void showfieldboundary(String boundary) {
@@ -278,7 +331,7 @@ public class FarmDetailActivity extends Activity {
 
 
 
-        Log.v("jsParamInfo:",new Gson().toJson(jsParamInfo));
+        //Log.v("jsParamInfo:",new Gson().toJson(jsParamInfo));
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -311,5 +364,76 @@ public class FarmDetailActivity extends Activity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
         map.loadUrl("file:///android_asset/index.html");
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CREATE_CROP_ACTIVITY && resultCode == CreateCropActivity.RESULT_CODE_CREATE_CROP) {
+            //刚创建完新的作物，刷新列表显示
+            updateCropInfo();
+        }
+    }
+
+    private void updateCropInfo() {
+        API.findCropInfosByFieldId(
+                Hawk.get(HawkKey.TOKEN), fieldid,
+                new ApiCallBack<CropInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<CropInfo> resultObj) {
+                        if (resultObj.getCode() == 0) {
+                            if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                List<CropInfo> croplist = resultObj.getList();
+                                if (croplist!=null && croplist.size()>0){
+
+                                    cropInfo= croplist.get(0);
+                                    nocroptip.setVisibility(View.INVISIBLE);
+                                    cropdatapanel.setVisibility(View.VISIBLE);
+                                    farmcropname.setText(cropInfo.getCropName());
+                                    farmcropdate.setText(cropInfo.getPlantYear()+"年");
+                                    showallfarmcrop.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            // 显示作物列表
+                                            Intent intent = new Intent(FarmDetailActivity.this, SelectCropActivity.class);
+                                            intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
+                                            FarmDetailActivity.this.startActivity(intent);
+                                        }
+                                    });
+
+
+                                }else {
+                                    // 提示暂无农作物
+                                    nocroptip.setVisibility(View.VISIBLE);
+                                    cropdatapanel.setVisibility(View.INVISIBLE);
+                                    nocroptip.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            // TODO 添加新作物
+                                            Intent intent = new Intent(FarmDetailActivity.this, CreateCropActivity.class);
+                                            intent.putExtra("fieldid", fieldid);
+                                            FarmDetailActivity.this.startActivityForResult(intent, REQUEST_CODE_CREATE_CROP_ACTIVITY);
+                                        }
+                                    });
+
+                                }
+
+                            }
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+
+        );
     }
 }

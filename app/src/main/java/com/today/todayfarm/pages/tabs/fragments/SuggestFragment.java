@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class SuggestFragment extends Fragment {
 
@@ -23,6 +26,33 @@ public class SuggestFragment extends Fragment {
         View view = inflater.inflate(R.layout.mainpage_suggest_fragment,container,false);
         btmenu = view.findViewById(R.id.menu);
         btmenu.setTypeface(MyApplication.iconTypeFace);
+
+
+        initlistener();
+
         return view;
+    }
+
+    private void initlistener() {
+        btmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //EventBus.getDefault().unregister(this);
     }
 }

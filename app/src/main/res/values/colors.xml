@@ -6,4 +6,7 @@
     <color name="titletxtcolor">#000000</color>
     <color name="titlebgcolor">#f2f2f2</color>
     <color name="devideline">#dcdbdb</color>
+
+
+    <color name="translucent_background">#80000000</color>
 </resources>

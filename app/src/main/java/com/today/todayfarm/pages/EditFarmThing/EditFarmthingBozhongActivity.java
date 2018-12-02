@@ -276,7 +276,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                     new ApiCallBack<SowingInfo>() {
                         @Override
                         public void onResponse(ResultObj<SowingInfo> resultObj) {
-                            Log.v("getSowingInfo:","gson:"+new Gson().toJson(resultObj));
+                            //Log.v("getSowingInfo:","gson:"+new Gson().toJson(resultObj));
                             if (resultObj.getCode() == 0){
                                 SowingInfo info = resultObj.getObject();
                                 croptypename.setText(info.getSeedName());

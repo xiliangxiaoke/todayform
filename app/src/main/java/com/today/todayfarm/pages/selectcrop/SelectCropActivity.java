@@ -153,8 +153,8 @@ public class SelectCropActivity extends BaseActivity {
                                 HashMap<String,List<CropInfo>> map = new HashMap();
                                 for (int i=0; i<croplist.size();i++) {
                                     CropInfo crop = croplist.get(i);
-                                    if (map.containsKey(crop.getPlantYear())){
-                                        List<CropInfo> list = (List<CropInfo>) map.get(crop.getPlantYear());
+                                    if (map.containsKey(crop.getPlantYear()+"")){
+                                        List<CropInfo> list = (List<CropInfo>) map.get(crop.getPlantYear()+"");
                                         list.add(crop);
                                     }else{
                                         List<CropInfo> list = new ArrayList<>();

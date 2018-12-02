@@ -23,6 +23,7 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
+import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
@@ -37,6 +38,8 @@ import com.today.todayfarm.pages.pagedetail.FarmDetailActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.WebUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -112,7 +115,7 @@ public class FarmlandFragment extends Fragment {
                 new ApiCallBack<FieldInfo>() {
                     @Override
                     public void onResponse(ResultObj<FieldInfo> resultObj) {
-                        Log.v("fieldinfolist:",new Gson().toJson(resultObj));
+                        //Log.v("fieldinfolist:",new Gson().toJson(resultObj));
                         if (resultObj.getCode()==0){
                             if (resultObj.getList()!=null && resultObj.getList().size()>0){
                                 listData.addAll(resultObj.getList());
@@ -155,6 +158,26 @@ public class FarmlandFragment extends Fragment {
                 FarmlandFragment.this.getContext().startActivity(intent);
             }
         });
+
+        btmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+            }
+        });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //EventBus.getDefault().unregister(this);
     }
 
     public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.Viewholder>{
@@ -179,7 +202,7 @@ public class FarmlandFragment extends Fragment {
             FieldInfo info = data.get(position);
             //holder.owner.setText(info.getFullName()+"的农田");
             holder.fieldname.setText(info.getFieldName());
-            Log.v("boundary geo:",info.getFieldBoundary());
+            //Log.v("boundary geo:",info.getFieldBoundary());
             double fieldarea =0;
             try {
                 fieldarea = Double.parseDouble(info.getFieldArea())/666.666;
@@ -214,7 +237,7 @@ public class FarmlandFragment extends Fragment {
             JSParamInfo<BoundaryInfo2Js> jsParamInfo = new JSParamInfo<>();
             jsParamInfo.setType("showgeo");
             BoundaryInfo2Js boundaryInfo2Js =null;
-            Log.v("boundary:",info.getFieldBoundary());
+            //Log.v("boundary:",info.getFieldBoundary());
 
             try{
                 boundaryInfo2Js = new Gson().fromJson(info.getFieldBoundary(),BoundaryInfo2Js.class);

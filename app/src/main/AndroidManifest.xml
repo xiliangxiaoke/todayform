@@ -100,7 +100,10 @@
         <activity android:name=".pages.CropList.CropListActivity" />
         <activity android:name=".pages.selectcrop.SelectCropActivity" />
         <activity android:name=".pages.createcrop.CreateCropActivity" />
-        <activity android:name=".pages.farmThingList.FarmThingListActivity"></activity>
+        <activity android:name=".pages.farmThingList.FarmThingListActivity" />
+        <activity android:name=".pages.menu.MenuActivity"
+            android:theme="@style/translucent"
+            ></activity>
     </application>
 
 </manifest>

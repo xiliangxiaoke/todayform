@@ -18,6 +18,7 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
+import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
@@ -36,6 +37,8 @@ import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +110,14 @@ public class FarmworkFragment extends Fragment {
                 FarmworkFragment.this.getContext().startActivity(intent);
             }
         });
+
+
+        btmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+            }
+        });
     }
 
     @Override
@@ -150,6 +161,19 @@ public class FarmworkFragment extends Fragment {
                     }
                 }
         );
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //EventBus.getDefault().unregister(this);
     }
 
 

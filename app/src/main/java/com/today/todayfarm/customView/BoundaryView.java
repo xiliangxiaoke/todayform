@@ -61,7 +61,7 @@ public class BoundaryView extends View{
         super.onDraw(canvas);
 
         try {
-            float devide = 10;
+            float devide = 20;
 
             float x = getWidth();
             float y = getHeight();

@@ -21,6 +21,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.google.gson.Gson;
+import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.dom.GeoPoint;
@@ -29,12 +30,16 @@ import com.today.todayfarm.util.WebUtil;
 
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * 首页地图模块
  */
+
 public class MapFragment extends Fragment implements AMapLocationListener{
 
 
@@ -93,6 +98,27 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                 }
             }
         });
+
+
+        btmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+            }
+        });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //EventBus.getDefault().unregister(this);
     }
 
     private void loadmap() {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- title -->
     <RelativeLayout
@@ -27,5 +28,138 @@
             android:layout_height="@dimen/titleheight" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/titleheight"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--pic-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/pic"
+                android:layout_centerInParent="true"
+                app:placeholderImage="@mipmap/camera"
+                app:placeholderImageScaleType="centerInside"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+        </RelativeLayout>
+
+        <View
+            android:background="@color/devideline"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--name-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:id="@+id/nameicon"
+                    android:text="@string/icon_exit"
+                    android:gravity="center_vertical|right"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/name"
+                    android:text="暂无"
+                    android:layout_marginLeft="60dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <!--phone-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:text="@string/icon_exit"
+                    android:id="@+id/phoneicon"
+                    android:gravity="center_vertical|right"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/phone"
+                    android:text="暂无"
+                    android:layout_marginLeft="60dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <!--com-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:text="@string/icon_exit"
+                    android:id="@+id/companyicon"
+                    android:gravity="center_vertical|right"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/company"
+                    android:text="暂无"
+                    android:layout_marginLeft="60dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <!--addr-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:id="@+id/addressicon"
+                    android:text="@string/icon_exit"
+                    android:gravity="center_vertical|right"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/address"
+                    android:text="暂无"
+                    android:layout_marginLeft="60dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <View
+            android:background="@color/devideline"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="50px"/>
+
+        <Button
+            android:id="@+id/account"
+            android:text="账号管理"
+            android:textColor="#ffffff"
+            android:background="@drawable/button_login_bg"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

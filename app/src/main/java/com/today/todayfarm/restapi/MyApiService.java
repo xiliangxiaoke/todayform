@@ -13,6 +13,7 @@ import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.dom.TillingInfo;
+import com.today.todayfarm.dom.User;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -534,6 +535,17 @@ public interface MyApiService {
             @Query("year") int year,
             @Query("currentPage") int currentPage,
             @Query("pageSize") int pageSize
+    );
+
+
+    /**
+     * 获取登陆用户的信息
+     * @param token
+     * @return
+     */
+    @GET("app/user/getLoginUserInfo")
+    Call<ResultObj<User>> getLoginUserInfo(
+            @Query("token") String token
     );
 
 

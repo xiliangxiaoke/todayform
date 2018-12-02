@@ -14,6 +14,7 @@ import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.dom.TillingInfo;
+import com.today.todayfarm.dom.User;
 
 import java.io.File;
 
@@ -405,6 +406,12 @@ public class API {
         callenqueue(call,callBack);
     }
 
+    public static void getLoginUserInfo(String token, ApiCallBack<User> callBack){
+        Call<ResultObj<User>> call = Doapi.instance()
+                .getLoginUserInfo(token);
+        callenqueue(call,callBack);
+    }
+
 
 
     //==========================================================
@@ -421,7 +428,7 @@ public class API {
             @Override
             public void onResponse(Call<ResultObj<E>> call, Response<ResultObj<E>> response) {
 
-                Log.v("=====>>>onResponse:",new Gson().toJson(response));
+                //Log.v("=====>>>onResponse:",new Gson().toJson(response));
                 if (response.isSuccessful()) {
                     callBack.onResponse(response.body());
                 } else {

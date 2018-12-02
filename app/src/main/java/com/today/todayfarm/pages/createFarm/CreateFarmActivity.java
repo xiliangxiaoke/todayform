@@ -131,7 +131,7 @@ public class CreateFarmActivity extends BaseActivity {
         JSParamInfo<BoundaryInfo2Js> jsParamInfo = new JSParamInfo<>();
         jsParamInfo.setType("showgeo");
         BoundaryInfo2Js boundaryInfo2Js =null;
-        Log.v("boundary:",geojson);
+        //Log.v("boundary:",geojson);
 
         try{
             boundaryInfo2Js = new Gson().fromJson(geojson,BoundaryInfo2Js.class);

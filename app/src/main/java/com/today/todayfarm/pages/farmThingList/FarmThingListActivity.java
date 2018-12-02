@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -24,6 +25,7 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
+import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
@@ -87,6 +89,7 @@ public class FarmThingListActivity extends BaseActivity {
     private List<String> mDataList = new ArrayList<>();
     private List<CropInfo> croplist = new ArrayList<>();
     String fieldid = null;
+    FieldInfo fieldInfo = null;
     int pageindex= 1;
     int pagesize = 5;
     int cropidx = 0;// 作物筛选条件列表的索引
@@ -109,6 +112,13 @@ public class FarmThingListActivity extends BaseActivity {
 
 
         fieldid= getIntent().getStringExtra("fieldid");
+        String fieldinfo_json = getIntent().getStringExtra("fieldinfo_json");
+        try {
+            fieldInfo = new Gson().fromJson(fieldinfo_json,FieldInfo.class);
+        } catch (Exception e) {
+
+        }
+
 
         initMagicIndicator1();
 
@@ -139,6 +149,8 @@ public class FarmThingListActivity extends BaseActivity {
 
         //获取作物清单
         getCropList();
+
+
 
 
     }
@@ -400,7 +412,7 @@ public class FarmThingListActivity extends BaseActivity {
                     }
 
 
-//                    intent.putExtra("fieldinfo_json",fieldinfo_json);
+                    intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
                     intent.putExtra("id",info.getId());
                     intent.putExtra("fieldname",info.getFieldName());
                     FarmThingListActivity.this.startActivity(intent);

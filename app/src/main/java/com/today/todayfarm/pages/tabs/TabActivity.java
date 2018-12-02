@@ -2,22 +2,26 @@ package com.today.todayfarm.pages.tabs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.orhanobut.hawk.Hawk;
+import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.pages.menu.MenuActivity;
 import com.today.todayfarm.pages.tabs.fragments.FarmlandFragment;
 import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
 import com.today.todayfarm.pages.tabs.fragments.MapFragment;
@@ -31,6 +35,10 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +62,9 @@ public class TabActivity extends BaseActivity {
     MagicIndicator magicIndicator;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +78,40 @@ public class TabActivity extends BaseActivity {
         switchPages(0);
 
     }
+
+
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onEvent(MessageEvent event){
+        if ("openMenuActivity".equals(event.type)){
+            //打开侧边菜单栏页面
+            try{
+                Intent intent = new Intent();
+                intent.setClass(this, MenuActivity.class);
+                this.startActivity(intent);
+            }catch (Exception e){
+                Log.e("ERROR",e.getMessage());
+            }
+
+        } else if ("menu_mainpage".equals(event.type)) {
+            fragmentContainerHelper.handlePageSelected(0,false);
+            switchPages(0);
+        } else if ("menu_field".equals(event.type)) {
+            fragmentContainerHelper.handlePageSelected(1,false);
+            switchPages(1);
+        } else if ("menu_suggest".equals(event.type)) {
+            fragmentContainerHelper.handlePageSelected(2,false);
+            switchPages(2);
+        } else if ("menu_farmthing".equals(event.type)) {
+            fragmentContainerHelper.handlePageSelected(3,false);
+            switchPages(3);
+        } else if ("menu_setting".equals(event.type)) {
+            fragmentContainerHelper.handlePageSelected(4,false);
+            switchPages(4);
+        }
+    }
+
+
+
 
     @Override
     protected void onResume() {
@@ -202,5 +247,18 @@ public class TabActivity extends BaseActivity {
         fragments.add(farmworkFragment);
         fragments.add(settingFragment);
 
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }
