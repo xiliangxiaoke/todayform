@@ -30,13 +30,13 @@
     <string name="mapbox_access_token">pk.eyJ1IjoieGlsaWFuZ3hpYW9rZSIsImEiOiJjam5penI3OTUwdTRyM3dxdHY2eXR0eGEyIn0.1c_ZjGpk6s6oasRSahw1UA</string>
 
 
-    <string name="menu_mainpage" >&#xf015;-  首页</string>
-    <string name="menu_farm" >&#xf009;-  农田</string>
-    <string name="menu_suggest" >&#xf06c;-  建议</string>
-    <string name="menu_farmthing" >&#xf21a;-  农事</string>
-    <string name="menu_zhuji" >&#xf279;-  注记</string>
-    <string name="menu_weather" >&#xf185;-  天气</string>
-    <string name="menu_setting" >&#xf013;-  设置</string>
+    <string name="menu_mainpage">&#xf015;-  首页</string>
+    <string name="menu_farm">&#xf009;-  农田</string>
+    <string name="menu_suggest">&#xf06c;-  建议</string>
+    <string name="menu_farmthing">&#xf21a;-  农事</string>
+    <string name="menu_zhuji">&#xf279;-  注记</string>
+    <string name="menu_weather">&#xf185;-  天气</string>
+    <string name="menu_setting">&#xf013;-  设置</string>
 
 
 </resources>

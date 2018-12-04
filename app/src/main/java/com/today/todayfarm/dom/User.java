@@ -26,6 +26,7 @@ public class User {
 	String remark;
 
 
+
 	public String getUserId() {
 		return userId;
 	}

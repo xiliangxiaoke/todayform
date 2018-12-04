@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,15 @@ import com.today.todayfarm.restapi.ApiCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+
+import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
+import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
+import cn.finalteam.rxgalleryfinal.rxbus.RxBusResultDisposable;
+import cn.finalteam.rxgalleryfinal.rxbus.event.ImageRadioResultEvent;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
 public class SettingFragment extends Fragment {
 
     private TextView btmenu;
@@ -41,6 +51,8 @@ public class SettingFragment extends Fragment {
 
 
     User user = null;
+
+    String headUrl = null;// 头像的地址
 
 
     @Nullable
@@ -109,6 +121,56 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+            }
+        });
+
+        pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 添加新图片
+                RxGalleryFinal
+                        .with(SettingFragment.this.getContext())
+                        .image()
+                        .imageLoader(ImageLoaderType.FRESCO)
+                        .radio()
+                        .subscribe(new RxBusResultDisposable<ImageRadioResultEvent>() {
+                            @Override
+                            protected void onEvent(ImageRadioResultEvent baseResultEvent) throws Exception {
+                                Log.d("sdf","sdf"+baseResultEvent.getResult().getOriginalPath());
+                                String picpath = baseResultEvent.getResult().getOriginalPath();
+
+                                final File file = new File(picpath);
+                                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+
+                                API.uploadPic(
+                                        Hawk.get(HawkKey.TOKEN),
+                                        "farmthingpic",
+                                        file,
+                                        new ApiCallBack<Object>() {
+                                            @Override
+                                            public void onResponse(ResultObj<Object> resultObj) {
+
+                                                String url = resultObj.getProp().getUrl();
+                                                Log.v("pics","upload success url:"+url);
+                                                if (url != null && url.length() > 0) {
+                                                    headUrl = url;
+                                                    // 图片上传成功
+                                                    Uri uri = Uri.parse(url);
+                                                    pic.setImageURI(uri);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onError(int code) {
+
+                                            }
+                                        }
+                                );
+
+                            }
+                        })
+                        .openGallery();
             }
         });
     }
