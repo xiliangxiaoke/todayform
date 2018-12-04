@@ -3,6 +3,7 @@ package com.today.todayfarm.pages.zhuji;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,16 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.base.BaseActivity;
+import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.NoteInfo;
+import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.menu.MenuActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
+import com.today.todayfarm.restapi.API;
+import com.today.todayfarm.restapi.ApiCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +59,7 @@ public class ZhujiActivity extends BaseActivity {
 
 
     RecyclerviewAdapter adapter = null;
-    List<FieldInfo> listData = new ArrayList<>();
+    List<NoteInfo> listData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +96,40 @@ public class ZhujiActivity extends BaseActivity {
 
     }
 
+    private void requestlist() {
+        API.findMyScoutingNotes(
+                Hawk.get(HawkKey.TOKEN),
+                pageidx,
+                pagesize,
+                new ApiCallBack<NoteInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<NoteInfo> resultObj) {
+                        if (resultObj.getCode()==0) {
+                            if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                listData.addAll(resultObj.getList());
+                                pageidx++;
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        springView.onFinishFreshAndLoad();
+                    }
+
+                    @Override
+                    public void onError(int code) {
+                        springView.onFinishFreshAndLoad();
+                    }
+                }
+        );
+    }
+
 
     public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.Viewholder>{
 
         Context context;
-        List<FieldInfo> data;
+        List<NoteInfo> data;
 
-        public RecyclerviewAdapter(Context context, List<FieldInfo> data) {
+        public RecyclerviewAdapter(Context context, List<NoteInfo> data) {
             this.context = context;
             this.data = data;
         }
@@ -108,10 +143,50 @@ public class ZhujiActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerviewAdapter.Viewholder holder, int position) {
-            FieldInfo info = data.get(position);
+            NoteInfo info = data.get(position);
+
+            holder.zhujiname.setText(info.getScoutingNoteInfo());
+            String fieldid = info.getFieldId();
+            if (fieldid != null) {
+                API.getFieldById(
+                        Hawk.get(HawkKey.TOKEN),
+                        fieldid,
+                        new ApiCallBack<FieldInfo>() {
+                            @Override
+                            public void onResponse(ResultObj<FieldInfo> resultObj) {
+                                if (resultObj.getCode() == 0) {
+                                    FieldInfo fieldInfo = resultObj.getObject();
+                                    if (fieldInfo != null) {
+                                        holder.fieldname.setText(fieldInfo.getFieldName());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(int code) {
+
+                            }
+                        }
+                );
+            }
 
 
-            holder.fieldname.setText(info.getFieldName());
+            // show pic
+            List<String> pics = info.getPhotos();
+            if (pics != null && pics.size() > 0) {
+                String ps = pics.get(0);
+                Uri uri = Uri.parse(ps);
+                holder.pic.setImageURI(uri);
+            }
+
+            holder.time.setText(info.getScoutingTime());
+
+            holder.panel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO 打開注记详情页
+                }
+            });
 
 
         }
@@ -124,13 +199,19 @@ public class ZhujiActivity extends BaseActivity {
         public class Viewholder extends RecyclerView.ViewHolder{
 
             View panel;
+            TextView zhujiname;
             TextView fieldname;
+            SimpleDraweeView pic;
+            TextView time;
 
 
 
             public Viewholder(View itemView) {
                 super(itemView);
+                zhujiname = itemView.findViewById(R.id.zhujiname);
                 fieldname = itemView.findViewById(R.id.fieldname);
+                pic = itemView.findViewById(R.id.pic);
+                time =itemView.findViewById(R.id.time);
                 panel = itemView.findViewById(R.id.panel);
 
             }

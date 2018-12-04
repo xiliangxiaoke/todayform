@@ -9,6 +9,7 @@ import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.HarvestingInfo;
 import com.today.todayfarm.dom.IrrigatingInfo;
+import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.SowingInfo;
@@ -409,6 +410,12 @@ public class API {
     public static void getLoginUserInfo(String token, ApiCallBack<User> callBack){
         Call<ResultObj<User>> call = Doapi.instance()
                 .getLoginUserInfo(token);
+        callenqueue(call,callBack);
+    }
+
+    public static void findMyScoutingNotes(String token,int currentpage,int pagesize ,ApiCallBack<NoteInfo> callBack) {
+        Call<ResultObj<NoteInfo>> call = Doapi.instance()
+               .findMyScoutingNotes(token,currentpage,pagesize);
         callenqueue(call,callBack);
     }
 

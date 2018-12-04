@@ -7,6 +7,7 @@ import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.GrowthDataInfo;
 import com.today.todayfarm.dom.HarvestingInfo;
 import com.today.todayfarm.dom.IrrigatingInfo;
+import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.SowingInfo;
@@ -546,6 +547,13 @@ public interface MyApiService {
     @GET("app/user/getLoginUserInfo")
     Call<ResultObj<User>> getLoginUserInfo(
             @Query("token") String token
+    );
+
+    @GET("app/ScoutingNote/findMyScoutingNotes")
+    Call<ResultObj<NoteInfo>> findMyScoutingNotes(
+            @Query("token") String token,
+            @Query("currentPage") int currentpage,
+            @Query("pageSize") int pageSize
     );
 
 

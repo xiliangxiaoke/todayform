@@ -86,6 +86,9 @@
         1 定位 {type:"location",params:{longitude:117,latitude:36}}
         2 绘制 {type:"draw",params:{action:"drawcircle|drawpolygon|getgeojson"}}
         3 显示边界 {type:"showgeo",params:{自定义的geogson，包含circle 和 polygon}}
+        4 首页显示区划图 {type:"showallboundary",list:[]}
+        5 首页显示健康监测图 {type:"showhealthimg",list:[]}
+        6 首页显示影像图 {type:"showrsimg",list:[]}
     */
     function callJS(paraminfo){
 
@@ -98,6 +101,12 @@
                 doDraw(paramobj.params.action)
             }else if("showgeo" == paramobj.type){
                 showfarmBoundary(paramobj.params)
+            }else if("showallboundary" == paramobj.type){
+
+            }else if("showhealthimg" == paramobj.type){
+
+            }else if("showrsimg" == paramobj.type){
+
             }
         }catch(e){
             var param = {
