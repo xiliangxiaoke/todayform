@@ -11,7 +11,8 @@
         android:layout_height="@dimen/titleheight">
 
         <TextView
-            android:text="编辑农事记录"
+            android:id="@+id/title"
+            android:text="注记"
             android:textColor="#ffffff"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"

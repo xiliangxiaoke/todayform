@@ -23,7 +23,7 @@ public class NoteInfo {
     String scoutingTime;
     GeoPoint scoutingPosition;
     String userId;
-    List<String> photos;
+    String photos;
 
 
     public String getScoutingNoteId() {
@@ -82,11 +82,11 @@ public class NoteInfo {
         this.userId = userId;
     }
 
-    public List<String> getPhotos() {
+    public String getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(String photos) {
         this.photos = photos;
     }
 }

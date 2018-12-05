@@ -26,6 +26,7 @@ import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.menu.MenuActivity;
+import com.today.todayfarm.pages.note.EditNoteActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
 import com.today.todayfarm.restapi.API;
@@ -185,6 +186,10 @@ public class ZhujiActivity extends BaseActivity {
                 @Override
                 public void onClick(View view) {
                     //TODO 打開注记详情页
+                    Intent intent = new Intent();
+                    intent.setClass(ZhujiActivity.this, EditNoteActivity.class);
+                    intent.putExtra("noteinfo_json",new Gson().toJson(info));
+                    ZhujiActivity.this.startActivity(intent);
                 }
             });
 
