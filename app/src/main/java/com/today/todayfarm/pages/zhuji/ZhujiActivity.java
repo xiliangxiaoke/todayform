@@ -33,6 +33,7 @@ import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -173,12 +174,21 @@ public class ZhujiActivity extends BaseActivity {
 
 
             // show pic
-            List<String> pics = info.getPhotos();
-            if (pics != null && pics.size() > 0) {
-                String ps = pics.get(0);
-                Uri uri = Uri.parse(ps);
-                holder.pic.setImageURI(uri);
+            String urls = info.getPhotos();
+            if (urls!=null && urls.length()>0){
+                String[] urlarr =  urls.split(";");
+                List l = Arrays.asList(urlarr);
+                List<String> pics = new ArrayList<>(l);
+                if (pics != null && pics.size() > 0) {
+                    String ps = pics.get(0);
+                    Uri uri = Uri.parse(ps);
+                    holder.pic.setImageURI(uri);
+                }
+            }else{
+
             }
+
+
 
             holder.time.setText(info.getScoutingTime());
 

@@ -102,6 +102,10 @@ public class SettingFragment extends Fragment {
                                 phone.setText(user.getPhone());
                                 company.setText(user.getOrgName());
                                 address.setText(user.getOrgAddress());
+                                if (user.getHeadImgUrl() != null && user.getHeadImgUrl().length() > 0) {
+                                    Uri uri = Uri.parse(user.getHeadImgUrl());
+                                    pic.setImageURI(uri);
+                                }
                             }
                         }
                     }

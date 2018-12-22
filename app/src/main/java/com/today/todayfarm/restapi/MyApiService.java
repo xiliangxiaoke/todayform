@@ -6,6 +6,7 @@ import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.GrowthDataInfo;
 import com.today.todayfarm.dom.HarvestingInfo;
+import com.today.todayfarm.dom.HealthImgInfo;
 import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
@@ -554,6 +555,11 @@ public interface MyApiService {
             @Query("token") String token,
             @Query("currentPage") int currentpage,
             @Query("pageSize") int pageSize
+    );
+
+    @GET("app/HealthImg/findMyHealthImgsWeekdays")
+    Call<ResultObj<HealthImgInfo>> findMyHealthImgsWeekdays(
+            @Query("token") String token
     );
 
 

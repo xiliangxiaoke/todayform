@@ -37,6 +37,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <!-- 影像数据选择 -->
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/niceSpinner"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <!--定位按钮-->
     <ImageView
         android:id="@+id/geolocation"
@@ -49,5 +58,40 @@
         android:padding="5dp"
         android:layout_width="30dp"
         android:layout_height="30dp" />
+    
+    <!-- 图例-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+
+        android:layout_width="40dp"
+        android:layout_height="200dp">
+
+        <!--好-->
+        <TextView
+            android:text="好"
+            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <View
+            android:background="@drawable/map_crop_state_legend"
+            android:layout_width="20dp"
+            android:layout_height="120dp"/>
+
+        <!--坏-->
+        <TextView
+            android:text="坏"
+            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
 
 </RelativeLayout>

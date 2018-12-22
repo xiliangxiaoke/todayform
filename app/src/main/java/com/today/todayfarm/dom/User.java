@@ -24,8 +24,16 @@ public class User {
 	String orgName;
 	String orgAddress;
 	String remark;
+	String headImgUrl;
 
 
+	public String getHeadImgUrl() {
+		return headImgUrl;
+	}
+
+	public void setHeadImgUrl(String headImgUrl) {
+		this.headImgUrl = headImgUrl;
+	}
 
 	public String getUserId() {
 		return userId;

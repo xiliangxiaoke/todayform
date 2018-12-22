@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
+import com.umeng.analytics.MobclickAgent;
+
 import org.greenrobot.eventbus.EventBus;
 
 public class BaseActivity extends AppCompatActivity {
@@ -15,6 +17,18 @@ public class BaseActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onStart() {
