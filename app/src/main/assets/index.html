@@ -34,6 +34,7 @@
 
     var farmlanddraw = null; // 用来存储绘制的农田
     var drawtype = "circle"; // circle polygon
+    var cacheFeatures = []; // 用来存储已经加载的要素，供删除用
 
     var map = L.map('map', {
         center: [31.59, 120.29],
@@ -103,22 +104,91 @@
             }else if("showgeo" == paramobj.type){
                 showfarmBoundary(paramobj.params)
             }else if("showallboundary" == paramobj.type){
-
+                showallboundary(paramobj.list);
             }else if("showhealthimg" == paramobj.type){
-
+                showHealthImg(paramobj.list)
             }else if("showrsimg" == paramobj.type){
 
             }
         }catch(e){
             var param = {
                     type:"error",
-                    value:""+e
+                    value:"aa"+e.name+" "+e.message
+
 
                 };
             androidjs.call(JSON.stringify(param));
         }
 
     };
+
+    /**
+        在地图上显示所有的农田边界
+
+    */
+    function showallboundary(list){
+        // 先删除已有的数据
+
+        cacheFeatures.forEach(function (f){
+            map.removeLayer(f);
+        });
+
+        cacheFeatures = [];
+
+        list.forEach(function (info){
+
+            para = info;
+
+            if(para.geotype==='circle'){
+
+                var circle = L.circle(para.center, {radius: para.radius}).addTo(map);
+                cacheFeatures.push(circle);
+
+            }else if(para.geotype==='polygon'){
+                var polygon = L.polygon([para.coordinates], {color: 'red'}).addTo(map);
+                cacheFeatures.push(polygon);
+                // zoom the map to the polygon
+
+            }
+
+        });
+
+        map.fitBounds(L.featureGroup(cacheFeatures).getBounds());
+
+
+
+    }
+
+    /**
+        显示健康监测影像，可能有多个，都显示，并清除之前显示过的数据，然后适当居中
+        //{"healthImgId":1,
+        // "healthImgTime":"2018-10-27",
+        // "fieldId":"402881e66671a1c9016671a4e57a0000",
+        // "healthImgPath":"http://59.110.14.23:8070/jrnq/resource/health/health.jpg",
+        // "healthImgLeft":23.0,
+        // "healthImgRight":23.0,
+        // "healthImgTop":23.0,
+        // "healthImgBottom":23.0,
+        // "fieldName":"农田名称2"}
+    */
+    function showHealthImg(list){
+
+        // 先删除已有的数据
+
+        cacheFeatures.forEach(function (f){
+            map.removeLayer(f);
+        });
+
+        cacheFeatures = [];
+        list.forEach(function (info){
+            var imageUrl = info.healthImgPath,
+            imageBounds = [[info.healthImgBottom, info.healthImgLeft], [info.healthImgTop, info.healthImgRight]];
+            cacheFeatures.push(L.imageOverlay(imageUrl, imageBounds).addTo(map));
+
+        });
+
+        map.fitBounds(L.featureGroup(cacheFeatures).getBounds());
+    }
 
     /**
         显示农田边界

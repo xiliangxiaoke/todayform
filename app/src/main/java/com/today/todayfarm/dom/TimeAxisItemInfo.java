@@ -8,10 +8,19 @@ import java.util.List;
 public class TimeAxisItemInfo {
     long timestamp; //时间戳
     int dateText; // 在时间轴上显示的日期
+    int monthText; // 月份
     List<HealthImgInfo> healthImgInfos; // 当天的健康监测影像信息
 
     // TODO 补充卫星影像的
 
+
+    public int getMonthText() {
+        return monthText;
+    }
+
+    public void setMonthText(int monthText) {
+        this.monthText = monthText;
+    }
 
     public long getTimestamp() {
         return timestamp;

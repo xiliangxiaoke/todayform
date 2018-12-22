@@ -1,6 +1,7 @@
 package com.today.todayfarm.pages.tabs.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +32,20 @@ import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.dom.BoundaryInfo2Js;
+import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.GeoPoint;
 import com.today.todayfarm.dom.HealthImgInfo;
+import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.TimeAxisItemInfo;
+import com.today.todayfarm.pages.AddFarmMap.AddFarm2MapActivity;
+import com.today.todayfarm.pages.createFarm.CreateFarmActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
+import com.today.todayfarm.util.Android2JS;
+import com.today.todayfarm.util.ToastUtil;
 import com.today.todayfarm.util.WebUtil;
 
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -71,6 +80,8 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
     private RecyclerView recyclerView;
 
+    TextView datetv;
+
 
 
     private RecyclerviewAdapter adapter;
@@ -80,7 +91,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
     public AMapLocationClientOption option = new AMapLocationClientOption();
 
 
-    int datatype = 3;//1- 健康监测  2-卫星影像  3-区划
+    int datatype = 1;//1- 健康监测  2-卫星影像  3-区划
 
 
     @Nullable
@@ -93,12 +104,14 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         btmenu.setTypeface(MyApplication.iconTypeFace);
         map = view.findViewById(R.id.map);
         geolocation = view.findViewById(R.id.geolocation);
+        datetv = view.findViewById(R.id.date);
 
-        adapter = new RecyclerviewAdapter(this.getContext(),timeregion);
+        adapter = new RecyclerviewAdapter(this.getContext());
         recyclerView = view.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
 
         //加载地图js
@@ -122,6 +135,9 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         option.setOnceLocationLatest(true);
 
         initlistener();
+
+        // 默认显示健康监测数据
+        showHealthData();
 
         return view;
     }
@@ -157,12 +173,16 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
                 if (position == 0) {
                     //  获取健康监测数据
+                    datatype = 1;
                     showHealthData();
                 } else if (position == 1) {
                     // TODO 获取卫星影像数据
+                    datatype = 2;
                     showStaliteData();
                 } else if (position == 2) {
-                    // TODO 获取作物区划图
+                    // 获取作物区划图
+                    datatype = 3;
+                    timeregion.clear();
                     showBlock();
                 }
             }
@@ -171,6 +191,56 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
     private void showBlock() {
 
+        API.findMyFields(
+                Hawk.get(HawkKey.TOKEN),
+                1,
+                1000,
+                new ApiCallBack<FieldInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<FieldInfo> resultObj) {
+                        //Log.v("fieldinfolist:",new Gson().toJson(resultObj));
+                        if (resultObj.getCode()==0){
+                            if (resultObj.getList()!=null && resultObj.getList().size()>0){
+                                // 显示到地图上
+
+
+
+
+                                JSParamInfo<BoundaryInfo2Js> jsParamInfo = new JSParamInfo<>();
+                                jsParamInfo.setType("showallboundary");
+
+                                List<BoundaryInfo2Js> bs = new ArrayList<>();
+
+                                for (int i=0;i<resultObj.getList().size();i++) {
+                                    BoundaryInfo2Js boundaryInfo2Js =null;
+                                    try{
+                                        boundaryInfo2Js = new Gson().fromJson(resultObj.getList().get(i).getFieldBoundary(),BoundaryInfo2Js.class);
+                                    }catch (Exception e){
+                                        Log.e("boundary err",e.getMessage());
+                                    }
+                                    bs.add(boundaryInfo2Js);
+                                }
+
+
+
+
+
+
+                                jsParamInfo.setList(bs);
+
+                                WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     private void showStaliteData() {
@@ -190,18 +260,25 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
                             // test 先减三个月 为了计算到有数据的时间段
-                            calendar.add(Calendar.MONTH, -3);
+                            calendar.add(Calendar.MONTH, -5);
 
                              timeregion = new ArrayList<>();
 
                             for (int i =0; i<30;i++){
 
-                                calendar.add(Calendar.DATE,-1);
+                                calendar.add(Calendar.DATE,1);
                                 TimeAxisItemInfo info = new TimeAxisItemInfo();
                                 info.setTimestamp(calendar.getTimeInMillis());
+
                                 info.setDateText(calendar.get(Calendar.DATE));
+                                info.setMonthText(calendar.get(Calendar.MONTH)+1);
                                 timeregion.add(info);
                             }
+                            // 显示日期描述
+                            datetv.setText(
+                                    calendar.get(Calendar.YEAR)+"年"+
+                                            (calendar.get(Calendar.MONTH)+1)+"月"
+                            );
 
                             // 往里插实际的影像数据
                             if (resultObj.getList() != null && resultObj.getList().size() > 0) {
@@ -211,33 +288,46 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                                 }
                             }
 
-                            // TODO 显示数据时间轴
+                            // 显示数据时间轴
                             adapter.notifyDataSetChanged();
+
+
+
+
 
                         }
                     }
 
                     private void insertHealthData2TimeRegion(List<TimeAxisItemInfo> timeregion, HealthImgInfo healthImgInfo) {
+                        String[] ss = healthImgInfo.getHealthImgTime().split("-");
+                        int h_year = 0;
+                        int h_month = 0;
+                        int h_date= 0;
+                        if (ss.length == 3) {
+                            h_year = Integer.parseInt(ss[0]);
+                            h_month = Integer.parseInt(ss[1]);
+                            h_date = Integer.parseInt(ss[2]);
+                        }
                         for (int i = 0; i < timeregion.size(); i++) {
                             //"2018-08-15"
                             Calendar caTimeRegion = Calendar.getInstance();
                             caTimeRegion.setTime(new Date(timeregion.get(i).getTimestamp()));
                             int TR_YEAR = caTimeRegion.get(Calendar.YEAR);
-                            int TR_MONTH = caTimeRegion.get(Calendar.MONTH);
+                            int TR_MONTH = caTimeRegion.get(Calendar.MONTH)+1;
                             int TR_DATE = caTimeRegion.get(Calendar.DATE);
-                            String[] ss = healthImgInfo.getHealthImgTime().split("-");
-                            if (ss.length == 3) {
+
+
                                 if (
-                                        TR_YEAR == Integer.parseInt(ss[0])
-                                        && TR_MONTH == Integer.parseInt(ss[1])
-                                        && TR_DATE == Integer.parseInt(ss[2])
+                                        TR_YEAR == h_year
+                                        && TR_MONTH == h_month
+                                        && TR_DATE == h_date
                                         ){
                                     if (timeregion.get(i).getHealthImgInfos() == null) {
                                         timeregion.get(i).setHealthImgInfos(new ArrayList<>());
                                     }
                                     timeregion.get(i).getHealthImgInfos().add(healthImgInfo);
                                 }
-                            }
+
                         }
                     }
 
@@ -266,6 +356,25 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         WebSettings webSettings = map.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        map.addJavascriptInterface(new Android2JS(new Android2JS.CallBack() {
+            @Override
+            public void callback(String json) {
+                if (json!=null){
+                    JS2AndroidParam js2AndroidParam = new Gson().fromJson(json,JS2AndroidParam.class);
+                    if (js2AndroidParam!=null){
+                        if ("error".equals(js2AndroidParam.getType())){
+                            Log.e("ERRORSSSS",js2AndroidParam.getValue());
+                            Log.e("ERRORSSSS",js2AndroidParam.getValue());
+                            new SweetAlertDialog(MapFragment.this.getContext())
+                                    .setTitleText(js2AndroidParam.getType())
+                                    .setContentText(js2AndroidParam.getValue())
+                                    .show();
+
+                        }
+                    }
+                }
+            }
+        }),"androidjs");
 
         map.loadUrl("file:///android_asset/index.html");
     }
@@ -313,11 +422,11 @@ public class MapFragment extends Fragment implements AMapLocationListener{
     public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.Viewholder>{
 
         Context context;
-        List<TimeAxisItemInfo> data;
 
-        public RecyclerviewAdapter(Context context, List<TimeAxisItemInfo> data) {
+
+        public RecyclerviewAdapter(Context context) {
             this.context = context;
-            this.data = data;
+
         }
 
         @NonNull
@@ -337,18 +446,39 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                 holder.datablock.setVisibility(View.GONE);
             }
 
-            holder.label.setText(info.getDateText());
+            // 如果是1号显示日期
+            if (info.getDateText() == 1) {
+                holder.label.setText(info.getMonthText()+"-"+info.getDateText());
+            }else{
+                holder.label.setText(""+info.getDateText());
+            }
+
             holder.panel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO: 在地图上显示当前的影像数据，分是健康检测影像还是卫星影像，加个标志位
+                    if (datatype == 1){
+                        //如果有健康监测的数据就显示到地图上，没有提示没有
+                        if (info.getHealthImgInfos() != null && info.getHealthImgInfos().size() > 0) {
+                            JSParamInfo<HealthImgInfo> jsParamInfo = new JSParamInfo<>();
+                            jsParamInfo.setType("showhealthimg");
+                            jsParamInfo.setList(info.getHealthImgInfos());
+                            WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+                        } else {
+                            ToastUtil.show(MapFragment.this.getContext(),"该日无影像数据！");
+                        }
+                    } else if (datatype == 2) {
+                        // TODO: 如果有卫星影像的数据就显示卫星影像的数据，没有提示没有
+                    } else {
+
+                    }
                 }
             });
         }
 
         @Override
         public int getItemCount() {
-            return data.size();
+            return timeregion.size();
         }
 
         public class Viewholder extends RecyclerView.ViewHolder{

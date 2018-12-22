@@ -443,7 +443,7 @@ public class API {
             @Override
             public void onResponse(Call<ResultObj<E>> call, Response<ResultObj<E>> response) {
 
-                //Log.v("=====>>>onResponse:",new Gson().toJson(response));
+                Log.v("=====>>>onResponse:",new Gson().toJson(response));
                 if (response.isSuccessful()) {
                     callBack.onResponse(response.body());
                 } else {

@@ -12,6 +12,7 @@
         <TextView
             android:text="农田列表"
             android:textColor="#ffffff"
+            android:textSize="@dimen/title_text_size"
             android:gravity="center"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"

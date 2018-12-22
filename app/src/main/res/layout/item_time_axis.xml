@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panel"
+    android:background="#64ffffff"
     android:layout_width="50dp"
-    android:layout_height="100dp">
+    android:layout_height="50dp">
 
 
     <!--横线-->
     <View
-        android:background="#1e49f7"
+        android:background="#183bc7"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
 
     <!--竖线-->
     <View
-        android:background="#1e49f7"
+        android:background="#183bc7"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:layout_width="2dp"
-        android:layout_height="20dp"/>
+        android:layout_height="10dp"/>
 
     <!--数据提示块-->
     <View
         android:id="@+id/datablock"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
+        android:background="@drawable/time_block"
         android:visibility="gone"
         android:layout_width="10dp"
         android:layout_height="5dp"/>
@@ -32,7 +35,7 @@
     <TextView
         android:id="@+id/label"
         android:gravity="center_horizontal"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
