@@ -76,6 +76,86 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
+
+            <!--降水和降温-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--降水-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="降水"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/rainvalue"
+                        android:text="0毫米"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/raintime"
+                        android:text="自1月1日来"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <TextView
+                        android:id="@+id/raindetail"
+                        android:text="查看详情"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <!--降温-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="降温"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tempvalue"
+                        android:text="0GDD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/temptime"
+                        android:text="自1月1日来"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <TextView
+                        android:id="@+id/tempdetail"
+                        android:text="查看详情"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--未来三天预测数据-->
+
+            <TextView
+                android:id="@+id/threedaysdata"
+                android:text="未来三天预测数据"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <!--农事记录-->
             <android.support.v7.widget.CardView
                 android:id="@+id/farmthingpanel"
@@ -203,6 +283,70 @@
             </android.support.v7.widget.CardView>
 
 
+            <!--土壤-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/farmoilpanel"
+                app:cardElevation="5dp"
+                app:contentPadding="0dp"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+
+
+                    android:background="@drawable/panel_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="212dp">
+                    <TextView
+                        android:text="土壤"
+                        android:textSize="20sp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                    <View
+                        android:background="@color/devideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"/>
+                    <!--土壤类型-->
+                    <TextView
+                        android:id="@+id/oiltype"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <!--地表有机碳-->
+                    <TextView
+                        android:id="@+id/oilcfirst"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <!--5厘米有机碳-->
+                    <TextView
+                        android:id="@+id/oilcsecond"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <!--15厘米有机碳-->
+                    <TextView
+                        android:id="@+id/oilcthird"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <!--土壤PH-->
+                    <TextView
+                        android:id="@+id/oilph"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
             <!--作物-->
             <android.support.v7.widget.CardView

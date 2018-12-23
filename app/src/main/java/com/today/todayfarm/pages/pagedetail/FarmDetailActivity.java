@@ -97,6 +97,24 @@ public class FarmDetailActivity extends Activity {
     @BindView(R.id.showallfarmthing)
     TextView showallfarmthing;
 
+    @BindView(R.id.rainvalue) TextView rainvalue;
+    @BindView(R.id.raintime) TextView raintime;
+    @BindView(R.id.raindetail) TextView raindetail;
+
+    @BindView(R.id.tempvalue) TextView tempvalue;
+    @BindView(R.id.temptime) TextView temptime;
+    @BindView(R.id.tempdetail) TextView tempdetail;
+
+    @BindView(R.id.threedaysdata) TextView threedaysdata;
+
+    @BindView(R.id.oiltype) TextView oiltype;
+    @BindView(R.id.oilcfirst) TextView oilcfirst;
+    @BindView(R.id.oilcsecond) TextView oilcsecond;
+    @BindView(R.id.oilcthird) TextView oilcthird;
+    @BindView(R.id.oilph) TextView oilph;
+
+
+
 
     @BindView(R.id.farmcroppanel)
     CardView farmcroppanel;
@@ -119,6 +137,23 @@ public class FarmDetailActivity extends Activity {
     public void edit() {
         // TODO
     }
+
+    @OnClick(R.id.raindetail)
+    public void showRaindetail() {
+        // TODO 显示降雨详情
+    }
+
+    @OnClick(R.id.tempdetail)
+    public void showTempdetail() {
+        // TODO 显示温度详情
+    }
+
+    @OnClick(R.id.threedaysdata)
+    public void showThreedaysdata(){
+        // TODO 显示三天预测结果
+    }
+
+
 
     public static final int REQUEST_CODE_CREATE_CROP_ACTIVITY = 1001;
 
@@ -204,6 +239,12 @@ public class FarmDetailActivity extends Activity {
 
         // 获取农事记录信息 获取总数all,及最新的一条
         updateFieldthing();
+
+        // 获取积温信息
+        getTempData();
+
+        // 获取降水信息
+        getRainData();
 
 
         // TODO 获取注记信息

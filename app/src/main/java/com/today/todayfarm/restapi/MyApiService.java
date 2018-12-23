@@ -557,9 +557,46 @@ public interface MyApiService {
             @Query("pageSize") int pageSize
     );
 
+    /**
+     * 获取指定时间段内的健康监测影像数据 TODO 后面补充时间段相关字段
+     * @param token
+     * @return
+     */
     @GET("app/HealthImg/findMyHealthImgsWeekdays")
     Call<ResultObj<HealthImgInfo>> findMyHealthImgsWeekdays(
             @Query("token") String token
+    );
+
+    /**
+     * 获取农田的积温或累积积温数据
+     * * @param token
+     *      * @param fieldId
+     *      * @param type （1：种植日期，0：全年数据）
+     *      * @param name（积温或累积积温）
+     * @return
+     */
+    @GET("app/ClimateData/findTemperatureDatas")
+    Call<ResultObj<Object>> findTemperatureDatas(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("type") int type,
+            @Query("name") String name
+    );
+
+    /**
+     * 获取农田的降水或累积降水数据
+     * @param token
+     * @param fieldId
+     * @param type （1：种植日期，0：全年数据）
+     * @param name （降水或累积降水）
+     * @return
+     */
+    @GET("app/ClimateData/findRainDatas")
+    Call<ResultObj<Object>> findRainDatas(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("type") int type,
+            @Query("name") String name
     );
 
 

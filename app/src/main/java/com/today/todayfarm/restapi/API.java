@@ -428,6 +428,19 @@ public class API {
     }
 
 
+    // todo: 这里的泛型要改
+    public static void findTemperatureDatas(String token,String fieldid,int type,String name,ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .findTemperatureDatas(token,fieldid,type,name);
+        callenqueue(call,callBack);
+    }
+
+    // todo: 这里的泛型要改
+    public static void findRainDatas(String token,String fieldid,int type,String name,ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .findRainDatas(token,fieldid,type,name);
+        callenqueue(call,callBack);
+    }
 
     //==========================================================
 
