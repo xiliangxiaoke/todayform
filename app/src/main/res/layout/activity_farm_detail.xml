@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#259b24"
+        android:background="#46A05A"
         android:layout_height="@dimen/titleheight">
 
         <TextView
@@ -74,32 +74,44 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="30dp" />
 
 
             <!--降水和降温-->
             <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <!--降水-->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_weight="1"
+                    android:background="@drawable/boxbg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="降水"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/rainvalue"
                         android:text="0毫米"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/raintime"
                         android:text="自1月1日来"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <View
@@ -109,29 +121,45 @@
                     <TextView
                         android:id="@+id/raindetail"
                         android:text="查看详情"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="40dp" />
 
                 </LinearLayout>
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"/>
                 <!--降温-->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_weight="1"
+                    android:background="@drawable/boxbg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:text="降温"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/tempvalue"
                         android:text="0GDD"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/temptime"
                         android:text="自1月1日来"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <View
@@ -141,8 +169,10 @@
                     <TextView
                         android:id="@+id/tempdetail"
                         android:text="查看详情"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="40dp" />
 
                 </LinearLayout>
 
@@ -152,9 +182,14 @@
 
             <TextView
                 android:id="@+id/threedaysdata"
+                android:background="@drawable/boxbg"
+                android:layout_margin="10dp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
                 android:text="未来三天预测数据"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
 
             <!--农事记录-->
             <android.support.v7.widget.CardView
@@ -297,7 +332,7 @@
 
                     android:background="@drawable/panel_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="212dp">
+                    android:layout_height="200dp">
                     <TextView
                         android:text="土壤"
                         android:textSize="20sp"
@@ -315,35 +350,35 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="30dp" />
                     <!--地表有机碳-->
                     <TextView
                         android:id="@+id/oilcfirst"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="30dp" />
                     <!--5厘米有机碳-->
                     <TextView
                         android:id="@+id/oilcsecond"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="30dp" />
                     <!--15厘米有机碳-->
                     <TextView
                         android:id="@+id/oilcthird"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="30dp" />
                     <!--土壤PH-->
                     <TextView
                         android:id="@+id/oilph"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="30dp" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

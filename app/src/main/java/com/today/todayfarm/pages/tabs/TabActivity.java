@@ -88,6 +88,7 @@ public class TabActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setClass(this, MenuActivity.class);
                 this.startActivity(intent);
+                //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
             }catch (Exception e){
                 Log.e("ERROR",e.getMessage());
             }
@@ -191,8 +192,8 @@ public class TabActivity extends BaseActivity {
                     public void onSelected(int i, int i1) {
 
                         // 34 141 28
-                        titleimg.setTextColor(Color.parseColor("#259b24"));
-                        titletext.setTextColor(Color.parseColor("#259b24"));
+                        titleimg.setTextColor(Color.parseColor("#46A05A"));
+                        titletext.setTextColor(Color.parseColor("#46A05A"));
                     }
 
                     @Override

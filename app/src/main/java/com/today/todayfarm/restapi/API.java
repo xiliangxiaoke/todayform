@@ -13,10 +13,14 @@ import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.dom.TillingInfo;
+import com.today.todayfarm.dom.TotalRainAndTemp;
 import com.today.todayfarm.dom.User;
+
+import org.json.JSONArray;
 
 import java.io.File;
 
@@ -441,6 +445,27 @@ public class API {
                 .findRainDatas(token,fieldid,type,name);
         callenqueue(call,callBack);
     }
+
+
+
+    public static void getThreeDayWeather(String token, String fieldid, int type , ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .getThreeDayWeather(token,fieldid,type);
+        callenqueue(call,callBack);
+    }
+
+    public static void findClimateDatas(String token, String fieldid, ApiCallBack<TotalRainAndTemp> callBack) {
+        Call<ResultObj<TotalRainAndTemp>> call = Doapi.instance()
+                .findClimateDatas(token,fieldid);
+        callenqueue(call,callBack);
+    }
+
+    public static void getSoilsInfo(String token, String fieldid, ApiCallBack<SoilInfo> callBack) {
+        Call<ResultObj<SoilInfo>> call = Doapi.instance()
+                .getSoilsInfo(token,fieldid);
+        callenqueue(call,callBack);
+    }
+
 
     //==========================================================
 

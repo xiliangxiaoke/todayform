@@ -11,11 +11,15 @@ import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
 import com.today.todayfarm.dom.TillingInfo;
+import com.today.todayfarm.dom.TotalRainAndTemp;
 import com.today.todayfarm.dom.User;
+
+import org.json.JSONArray;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -567,12 +571,19 @@ public interface MyApiService {
             @Query("token") String token
     );
 
+
+    @GET("app/ClimateData/findClimateDatas")
+    Call<ResultObj<TotalRainAndTemp>> findClimateDatas(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId
+    );
+
     /**
      * 获取农田的积温或累积积温数据
      * * @param token
      *      * @param fieldId
      *      * @param type （1：种植日期，0：全年数据）
-     *      * @param name（积温或累积积温）
+     *      * @param name（（temperature：积温，totalTemperature：累积积温）
      * @return
      */
     @GET("app/ClimateData/findTemperatureDatas")
@@ -588,7 +599,7 @@ public interface MyApiService {
      * @param token
      * @param fieldId
      * @param type （1：种植日期，0：全年数据）
-     * @param name （降水或累积降水）
+     * @param name （rain：降水，totalRain：累积降水）
      * @return
      */
     @GET("app/ClimateData/findRainDatas")
@@ -597,6 +608,30 @@ public interface MyApiService {
             @Query("fieldId") String fieldId,
             @Query("type") int type,
             @Query("name") String name
+    );
+
+
+    /**
+     * 获取农田的未来三天预测数据
+     * @param token
+     * @param fieldId
+     * @param type(0:温度，1：湿度,2:降水)
+     * @return
+     */
+    @GET("app/ThreeDayWeather/getThreeDayWeather")
+    Call<ResultObj<Object>> getThreeDayWeather(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("type") int type
+    );
+
+
+
+
+    @GET("app/soilgrids/getSoilsInfo")
+    Call<ResultObj<SoilInfo>> getSoilsInfo(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId
     );
 
 

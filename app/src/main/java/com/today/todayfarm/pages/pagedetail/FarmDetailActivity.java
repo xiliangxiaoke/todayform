@@ -19,13 +19,14 @@ import com.today.todayfarm.AddNewCrop.AddNewCropActivity;
 import com.today.todayfarm.dom.BoundaryInfo2Js;
 import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.JSParamInfo;
-import com.today.todayfarm.pages.CropList.CropListActivity;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SoilInfo;
+import com.today.todayfarm.dom.TotalRainAndTemp;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingGuangaiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShifeiActivity;
@@ -36,14 +37,12 @@ import com.today.todayfarm.pages.createcrop.CreateCropActivity;
 import com.today.todayfarm.pages.farmThingList.FarmThingListActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
-import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
+import com.today.todayfarm.pages.threeDaysWeather.ThreeDaysWeatherActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.Common;
 import com.today.todayfarm.util.WebUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -151,6 +150,12 @@ public class FarmDetailActivity extends Activity {
     @OnClick(R.id.threedaysdata)
     public void showThreedaysdata(){
         // TODO 显示三天预测结果
+
+        Intent intent = new Intent();
+        intent.setClass(this, ThreeDaysWeatherActivity.class);
+        intent.putExtra("fieldid",fieldid);
+        this.startActivity(intent);
+
     }
 
 
@@ -199,34 +204,6 @@ public class FarmDetailActivity extends Activity {
 
 
 
-//                            // 获取农作物信息
-//                            API.findCropInfosByFieldId(Hawk.get(HawkKey.TOKEN), fieldid, new ApiCallBack<CropInfo>() {
-//                                @Override
-//                                public void onResponse(ResultObj<CropInfo> resultObj) {
-//                                    if (resultObj.getCode() == 0) {
-//                                        // 显示作物信息
-//                                        cropdatapanel.setVisibility(View.VISIBLE);
-//                                        //
-//
-//                                        // SHOW ALL FARM CROP
-//                                        showallfarmcrop.setOnClickListener(new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View view) {
-//                                                Intent intent = new Intent(FarmDetailActivity.this, CropListActivity.class);
-//                                                intent.putExtra("listdata",new Gson().toJson(resultObj));
-//                                                FarmDetailActivity.this.startActivity(intent);
-//                                            }
-//                                        });
-//                                    }else {
-//                                        shownocroptip();
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onError(int code) {
-//                                    shownocroptip();
-//                                }
-//                            });
                         }
                     }
 
@@ -240,12 +217,13 @@ public class FarmDetailActivity extends Activity {
         // 获取农事记录信息 获取总数all,及最新的一条
         updateFieldthing();
 
-        // 获取积温信息
-        getTempData();
+        // 获取积温和降水统计信息
+        getTotalRainAndTempData();
 
-        // 获取降水信息
-        getRainData();
 
+
+        // 获取土壤信息
+        getSoilinfo();
 
         // TODO 获取注记信息
         updateZhuji();
@@ -253,6 +231,60 @@ public class FarmDetailActivity extends Activity {
         // 获取作物信息
         updateCropInfo();
 
+    }
+
+    private void getSoilinfo() {
+        API.getSoilsInfo(
+                Hawk.get(HawkKey.TOKEN),
+                fieldid,
+                new ApiCallBack<SoilInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<SoilInfo> resultObj) {
+                        if (resultObj.getCode() == 0) {
+                            SoilInfo soilInfo = resultObj.getObject();
+
+                            oiltype.setText("主要土壤类型："+soilInfo.getMajorName());
+                            oilcfirst.setText("地表土有机碳含量："+soilInfo.getSl1()+"克/千克");
+                            oilcsecond.setText("5cm土有机碳含量："+soilInfo.getSl2()+"克/千克");
+                            oilcthird.setText("15cm土有机碳含量："+soilInfo.getSl3()+"克/千克");
+                            oilph.setText("土壤PH值："+soilInfo.getPhValue());
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
+    }
+
+    private void getRainData() {
+
+    }
+
+    private void getTotalRainAndTempData() {
+
+        API.findClimateDatas(
+                Hawk.get(HawkKey.TOKEN),
+                fieldid,
+                new ApiCallBack<TotalRainAndTemp>() {
+                    @Override
+                    public void onResponse(ResultObj<TotalRainAndTemp> resultObj) {
+                        if (resultObj.getCode() == 0) {
+                            if (resultObj.getProp() != null) {
+                                rainvalue.setText(resultObj.getProp().getRain()+"毫米");
+                                tempvalue.setText(resultObj.getProp().getTemperature()+" GDD");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     private void updateZhuji() {

@@ -39,9 +39,13 @@
             android:name="com.amap.api.v2.apikey"
             android:value="8195b0d10fd123e1c387d32e145edb25" />
 
-        <!-- TODO:  -->
-        <meta-data android:value="YOUR_APP_KEY" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="TodayFarm_android" android:name="UMENG_CHANNEL"/>
+        <!-- TODO: -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="YOUR_APP_KEY" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="TodayFarm_android" />
 
         <activity
             android:name=".MainActivity"
@@ -109,7 +113,10 @@
             android:name=".pages.menu.MenuActivity"
             android:theme="@style/translucent" />
         <activity android:name=".pages.zhuji.ZhujiActivity" />
-        <activity android:name=".pages.note.EditNoteActivity"></activity>
+        <activity android:name=".pages.note.EditNoteActivity" />
+        <activity android:name=".pages.threeDaysWeather.ThreeDaysWeatherActivity"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

@@ -43,6 +43,7 @@ public class MenuActivity extends Activity {
     @OnClick(R.id.panel)
     public void setPanel(){
         this.finish();
+        //overridePendingTransition(R.anim.out_to_left,R.anim.in_from_left);
     }
 
 

@@ -5,7 +5,7 @@
 
     <!-- title -->
     <RelativeLayout
-        android:background="#259b24"
+        android:background="#46A05A"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleheight">
 

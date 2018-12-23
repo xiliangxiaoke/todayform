@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <script src="./echarts/echarts.js"></script>
+    <title></title>
+</head>
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    html, body, #main {
+        height: 100%;
+        width: 100vw;
+    }
+</style>
+<body>
+
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" ></div>
+
+
+</body>
+
+<script>
+
+    // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+
+    // android 调用js的方法入口{type:"",param:{},list:[]}
+    /***
+        1 未来三天预测数据-降雨量 {type:"threeDaysWeatherChart",list:[]}
+        2 未来三天预测数据-湿度 {type:"threeDaysHumidChart",list:[]}
+        3 未来三天预测数据-温度 {type:"threeDaysTempChart",list:[]}
+        4
+        5
+        6
+        7
+    */
+    function callJS(paraminfo){
+
+        try{
+            var paramobj = JSON.parse(paraminfo);
+            // 未来三天预测数据-温度
+            if ("threeDaysWeatherChart" == paramobj.type) {
+                showThreeDaysWeatherChart(paramobj.list);
+            }else if("threeDaysHumidChart" == paramobj.type){
+                showThreeDaysHumidChart(paramobj.list);
+            }else if("threeDaysTempChart" == paramobj.type){
+                showThreeDaysTempChart(paramobj.list);
+            }
+        }catch(e){
+            var param = {
+                    type:"error",
+                    value:"aa"+e.name+" "+e.message
+
+
+                };
+            androidjs.call(JSON.stringify(param));
+        }
+
+    };
+
+    // 三天 温度
+    function showThreeDaysTempChart(list){
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data[0].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data[1]);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'温度(℃)',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    // 三天 湿度
+    function showThreeDaysHumidChart(list){
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data[0].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data[1]);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'湿度(%)',
+                nameLocation:'middle',
+                min:0,
+                type:'value',
+                nameGap:35
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    // 三天 降雨
+    function showThreeDaysWeatherChart(list){
+
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data[0].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data[1]);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'降雨量(mm)',
+                nameLocation:'middle',
+                min:0,
+                type:'value',
+                nameGap:35
+
+
+            },
+            series: [{
+                name: '',
+                type: 'bar',
+                symbol:'circle',
+                label:{
+                    show:false
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+
+
+
+
+//--------------------------test
+
+
+//callJS('{"list":[["20181223230000",45.0],["20181224020000",44.0],["20181224050000",6.0],["20181224080000",0.0],["20181224110000",0.0],["20181224140000",6.0],["20181224170000",7.0],["20181224200000",23.0],["20181224230000",0.0],["20181225020000",0.0],["20181225050000",0.0],["20181225080000",0.0],["20181225110000",0.0],["20181225140000",0.0],["20181225170000",0.0],["20181225200000",0.0],["20181226020000",0.0],["20181226080000",0.0],["20181226140000",0.0],["20181226200000",0.0]],"type":"threeDaysWeatherChart"}');
+
+
+
+
+    
+</script>
+
+</html>
