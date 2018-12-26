@@ -36,10 +36,14 @@
         1 未来三天预测数据-降雨量 {type:"threeDaysWeatherChart",list:[]}
         2 未来三天预测数据-湿度 {type:"threeDaysHumidChart",list:[]}
         3 未来三天预测数据-温度 {type:"threeDaysTempChart",list:[]}
-        4
-        5
-        6
-        7
+        4 累积降水量-指定作物种植以来 {type:"rainTotalByCrop",list:[]}
+        5 每日降水量-指定作物种植以来 {type:"rainEveryDayByCrop",list:[]}
+        6 累积降水量-全年（地块）{type:"rainTotalYearByField",list:[]}
+        7 每日降水量-全年（地块）{type:"rainEveryDayYearByField",list:[]}
+        8 累积积温-指定作物种植以来 {type:"tempTotalByCrop",list:[]}
+        9 每日积温-指定作物种植以来 {type:"tempEveryDayByCrop",list:[]}
+        10 累积积温-全年（地块）{type:"tempTotalYearByField",list:[]}
+        11 每日积温-全年（地块）{type:"tempEveryDayYearByField",list:[]}
     */
     function callJS(paraminfo){
 
@@ -52,6 +56,22 @@
                 showThreeDaysHumidChart(paramobj.list);
             }else if("threeDaysTempChart" == paramobj.type){
                 showThreeDaysTempChart(paramobj.list);
+            }else if("rainTotalByCrop" == paramobj.type){
+                showrainTotalByCropChart(paramobj.list);
+            }else if("rainEveryDayByCrop" == paramobj.type){
+                showrainEveryDayByCropChart(paramobj.list);
+            }else if("rainTotalYearByField" == paramobj.type){
+                showrainTotalYearByFieldChart(paramobj.list);
+            }else if("rainEveryDayYearByField" == paramobj.type){
+                showrainEveryDayYearByFieldChart(paramobj.list);
+            }else if("tempTotalByCrop" == paramobj.type){
+                showtempTotalByCropChart(paramobj.list);
+            }else if("tempEveryDayByCrop" == paramobj.type){
+                showtempEveryDayByCropChart(paramobj.list);
+            }else if("tempTotalYearByField" == paramobj.type){
+                showtempTotalYearByFieldChart(paramobj.list);
+            }else if("tempEveryDayYearByField " == paramobj.type){
+                showtempEveryDayYearByFieldChart(paramobj.list);
             }
         }catch(e){
             var param = {
@@ -64,6 +84,46 @@
         }
 
     };
+
+    // 自种植以来的累积降水量
+    function showrainTotalByCropChart(list){
+
+    }
+
+    // 自种植以来的每日降水量
+    function showrainEveryDayByCropChart(list) {
+        // body...
+    }
+
+    // 全年累积降水量
+    function showrainTotalYearByFieldChart(list) {
+        // body...
+    }
+
+    // 全年每日降水量
+    function rainEveryDayYearByField(list) {
+        // body...
+    }
+
+    // 自种植以来累积积温
+    function showtempTotalByCropChart(list) {
+        // body...
+    }
+
+    // 自种植以来每日积温
+    function showtempEveryDayByCropChart(list) {
+        // body...
+    }
+
+    // 全年累积积温
+    function showtempTotalYearByFieldChart(list) {
+        // body...
+    }
+
+    // 全年每日积温
+    function showtempEveryDayYearByFieldChart(list) {
+        // body...
+    }
 
     // 三天 温度
     function showThreeDaysTempChart(list){
