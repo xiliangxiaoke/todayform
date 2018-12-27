@@ -8,6 +8,7 @@ import com.today.todayfarm.dom.GrowthDataInfo;
 import com.today.todayfarm.dom.HarvestingInfo;
 import com.today.todayfarm.dom.HealthImgInfo;
 import com.today.todayfarm.dom.IrrigatingInfo;
+import com.today.todayfarm.dom.NameValuePair;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
@@ -587,9 +588,10 @@ public interface MyApiService {
      * @return
      */
     @GET("app/ClimateData/findTemperatureDatas")
-    Call<ResultObj<Object>> findTemperatureDatas(
+    Call<ResultObj<NameValuePair>> findTemperatureDatas(
             @Query("token") String token,
             @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
             @Query("type") int type,
             @Query("name") String name
     );
@@ -603,9 +605,10 @@ public interface MyApiService {
      * @return
      */
     @GET("app/ClimateData/findRainDatas")
-    Call<ResultObj<Object>> findRainDatas(
+    Call<ResultObj<NameValuePair>> findRainDatas(
             @Query("token") String token,
             @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
             @Query("type") int type,
             @Query("name") String name
     );

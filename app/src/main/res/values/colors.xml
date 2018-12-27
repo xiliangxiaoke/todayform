@@ -9,4 +9,5 @@
 
 
     <color name="translucent_background">#80000000</color>
+    <color name="mainTitleColor">#46A05A</color>
 </resources>

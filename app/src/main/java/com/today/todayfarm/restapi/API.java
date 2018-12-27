@@ -10,6 +10,7 @@ import com.today.todayfarm.dom.FieldThingInfo;
 import com.today.todayfarm.dom.HarvestingInfo;
 import com.today.todayfarm.dom.HealthImgInfo;
 import com.today.todayfarm.dom.IrrigatingInfo;
+import com.today.todayfarm.dom.NameValuePair;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
@@ -433,16 +434,16 @@ public class API {
 
 
     // todo: 这里的泛型要改
-    public static void findTemperatureDatas(String token,String fieldid,int type,String name,ApiCallBack<Object> callBack){
-        Call<ResultObj<Object>> call = Doapi.instance()
-                .findTemperatureDatas(token,fieldid,type,name);
+    public static void findTemperatureDatas(String token,String fieldid,String cropid,int type,String name,ApiCallBack<NameValuePair> callBack){
+        Call<ResultObj<NameValuePair>> call = Doapi.instance()
+                .findTemperatureDatas(token,fieldid,cropid,type,name);
         callenqueue(call,callBack);
     }
 
     // todo: 这里的泛型要改
-    public static void findRainDatas(String token,String fieldid,int type,String name,ApiCallBack<Object> callBack){
-        Call<ResultObj<Object>> call = Doapi.instance()
-                .findRainDatas(token,fieldid,type,name);
+    public static void findRainDatas(String token,String fieldid,String cropid,int type,String name,ApiCallBack<NameValuePair> callBack){
+        Call<ResultObj<NameValuePair>> call = Doapi.instance()
+                .findRainDatas(token,fieldid,cropid,type,name);
         callenqueue(call,callBack);
     }
 

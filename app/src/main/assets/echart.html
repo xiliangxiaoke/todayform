@@ -88,41 +88,393 @@
     // 自种植以来的累积降水量
     function showrainTotalByCropChart(list){
 
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 自种植以来的每日降水量
     function showrainEveryDayByCropChart(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 全年累积降水量
     function showrainTotalYearByFieldChart(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 全年每日降水量
     function rainEveryDayYearByField(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 自种植以来累积积温
     function showtempTotalByCropChart(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 自种植以来每日积温
     function showtempEveryDayByCropChart(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 全年累积积温
     function showtempTotalYearByFieldChart(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 全年每日积温
     function showtempEveryDayYearByFieldChart(list) {
         // body...
+        var xAxisData = [];
+        var yAxisData = [];
+
+        list.forEach(function(data){
+            var hour = data['name'].substring(8,10);
+            xAxisData.push(hour);
+            yAxisData.push(data['value']);
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis:{
+                name:'积温',
+                nameLocation:'middle',
+                type:'value',
+                nameGap:35,
+                min:'dataMin'
+            },
+            series: [{
+                name: '',
+                type: 'line',
+                symbol:'circle',
+                label:{
+                    show:true,
+                    color:'#000000'
+                },
+                itemStyle:{
+                    color:'#7BB4EA'
+                },
+                lineStyle:{
+                    color:'#7BB4EA'
+                },
+                data: yAxisData
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
     }
 
     // 三天 温度

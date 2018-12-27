@@ -114,9 +114,10 @@
             android:theme="@style/translucent" />
         <activity android:name=".pages.zhuji.ZhujiActivity" />
         <activity android:name=".pages.note.EditNoteActivity" />
-        <activity android:name=".pages.threeDaysWeather.ThreeDaysWeatherActivity"
-            android:screenOrientation="landscape"
-            ></activity>
+        <activity
+            android:name=".pages.threeDaysWeather.ThreeDaysWeatherActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".pages.rainchart.RainDetailActivity"></activity>
     </application>
 
 </manifest>

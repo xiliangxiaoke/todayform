@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pages.rainchart.RainDetailActivity">
+
+    <!--title-->
+    <RelativeLayout
+        android:background="@color/mainTitleColor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:id="@+id/title"
+            android:text="分析图表"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--return-->
+        <TextView
+            android:id="@+id/back"
+            android:gravity="center"
+            android:text="@string/icon_back"
+            android:textColor="#ffffff"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/niceSpinner"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- 总数统计显示 -->
+            <TextView
+                android:id="@+id/totaldata"
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/fromdate"
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--累积数据图表-->
+            <RelativeLayout
+                android:background="@drawable/boxbg"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+                <TextView
+                    android:id="@+id/totalcharttitle"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <WebView
+                    android:layout_marginTop="50dp"
+                    android:id="@+id/totalChartWebview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+                <TextView
+                    android:id="@+id/showTotalDetail"
+                    android:text="查看详情"
+                    android:layout_marginTop="250dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <View
+                    android:layout_marginTop="250dp"
+                    android:background="@color/devideline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"/>
+
+            </RelativeLayout>
+
+            <!--每日数据图表-->
+
+            <RelativeLayout
+                android:background="@drawable/boxbg"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+                <TextView
+                    android:id="@+id/everydaycharttitle"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <WebView
+                    android:layout_marginTop="50dp"
+                    android:id="@+id/everydayChartWebview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+                <TextView
+                    android:id="@+id/showEverydayDetail"
+                    android:text="查看详情"
+                    android:layout_marginTop="250dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <View
+                    android:layout_marginTop="250dp"
+                    android:background="@color/devideline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

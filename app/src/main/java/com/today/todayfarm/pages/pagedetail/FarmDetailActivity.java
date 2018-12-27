@@ -35,6 +35,7 @@ import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhengdiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhibaoActivity;
 import com.today.todayfarm.pages.createcrop.CreateCropActivity;
 import com.today.todayfarm.pages.farmThingList.FarmThingListActivity;
+import com.today.todayfarm.pages.rainchart.RainDetailActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.threeDaysWeather.ThreeDaysWeatherActivity;
@@ -140,6 +141,11 @@ public class FarmDetailActivity extends Activity {
     @OnClick(R.id.raindetail)
     public void showRaindetail() {
         // TODO 显示降雨详情
+        Intent intent = new Intent();
+        intent.setClass(this,RainDetailActivity.class);
+        intent.putExtra("fieldId",fieldid);
+        intent.putExtra("fieldName",fieldInfo.getFieldName());
+        this.startActivity(intent);
     }
 
     @OnClick(R.id.tempdetail)
