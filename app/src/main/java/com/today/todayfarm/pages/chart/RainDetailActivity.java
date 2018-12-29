@@ -1,6 +1,6 @@
-package com.today.todayfarm.pages.rainchart;
+package com.today.todayfarm.pages.chart;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -26,8 +26,6 @@ import com.today.todayfarm.util.WebUtil;
 import org.angmarch.views.NiceSpinner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,6 +50,7 @@ public class RainDetailActivity extends BaseActivity {
     @BindView(R.id.niceSpinner)
     NiceSpinner niceSpinner;
     private List<CropInfo> croplist = new ArrayList<>();
+    private CropInfo cropInfo = null;
 
 
     @OnClick(R.id.back)
@@ -60,13 +59,30 @@ public class RainDetailActivity extends BaseActivity {
     }
 
     @OnClick(R.id.showTotalDetail)
-            public void showTotalDetail(){
+    public void showTotalDetail() {
+
         // TODO 打开累积图表 横屏
+
+        Intent intent = new Intent();
+        intent.setClass(this, FullChartActivity.class);
+        intent.putExtra("charttype","rain");
+        intent.putExtra("datatype","total");
+        intent.putExtra("fieldId",fieldId);
+        intent.putExtra("cropId",cropInfo!=null?cropInfo.getCropId():null);
+        this.startActivity(intent);
+
     }
 
     @OnClick(R.id.showEverydayDetail)
             public void showEverydayDetail(){
         // TODO 打开每日图表 横屏
+        Intent intent = new Intent();
+        intent.setClass(this, FullChartActivity.class);
+        intent.putExtra("charttype","rain");
+        intent.putExtra("datatype","everyday");
+        intent.putExtra("fieldId",fieldId);
+        intent.putExtra("cropId",cropInfo!=null?cropInfo.getCropId():null);
+        this.startActivity(intent);
     }
 
     String fieldId=null;
@@ -136,7 +152,8 @@ public class RainDetailActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                CropInfo cropInfo = croplist.get(position);
+                 cropInfo = croplist.get(position);
+
 
                 // TODO 根据选择的作物更新图表数据
                 initchartdata(cropInfo,1);
@@ -165,8 +182,11 @@ public class RainDetailActivity extends BaseActivity {
                                     );
                                 }
 
+
+                                cropInfo = croplist.get(0);
+
                                 // 初始化图表数据
-                                initchartdata(croplist.get(0),1);
+                                initchartdata(cropInfo,1);
 
                             }else{
                                 initchartdata(null,0);

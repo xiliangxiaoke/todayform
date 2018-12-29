@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--title-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+        <!--back-->
+        <TextView
+            android:id="@+id/back"
+            android:gravity="center"
+            android:text="@string/icon_back"
+            android:textColor="#ffffff"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+        <TextView
+            android:text="图表数据"
+            android:layout_marginLeft="@dimen/titleheight"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+
+        <!--降水量-->
+        <TextView
+            android:id="@+id/fromCrop"
+            android:text="自种植以来"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+        <!--湿度-->
+        <TextView
+            android:id="@+id/allyear"
+            android:text="全年"
+            android:layout_toLeftOf="@id/fromCrop"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+
+
+
+
+    </RelativeLayout>
+
+
+    <!-- echarts webview-->
+    <WebView
+        android:id="@+id/webview"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

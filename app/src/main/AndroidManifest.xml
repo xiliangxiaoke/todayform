@@ -117,7 +117,8 @@
         <activity
             android:name=".pages.threeDaysWeather.ThreeDaysWeatherActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".pages.rainchart.RainDetailActivity"></activity>
+        <activity android:name=".pages.chart.RainDetailActivity" />
+        <activity android:name=".pages.chart.FullChartActivity"></activity>
     </application>
 
 </manifest>
