@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
@@ -69,6 +70,7 @@ public class TabActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
         ButterKnife.bind(this);
 
         initfragments();
@@ -88,6 +90,7 @@ public class TabActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setClass(this, MenuActivity.class);
                 this.startActivity(intent);
+                this.overridePendingTransition(0,0);
                 //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
             }catch (Exception e){
                 Log.e("ERROR",e.getMessage());

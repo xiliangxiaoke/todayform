@@ -53,6 +53,7 @@ public class ZhujiActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setClass(this, MenuActivity.class);
         this.startActivity(intent);
+        this.overridePendingTransition(0,0);
         //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
     }
 
