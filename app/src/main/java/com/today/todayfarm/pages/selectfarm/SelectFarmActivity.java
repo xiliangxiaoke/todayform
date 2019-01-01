@@ -57,6 +57,7 @@ public class SelectFarmActivity extends Activity {
     int pageidx = 1;
     int pagesize = 20;
     int total = 0;
+    String fromactivity = "";
 
     RecyclerviewAdapter adapter = null;
     List<FieldInfo> listData = new ArrayList<>();
@@ -69,6 +70,8 @@ public class SelectFarmActivity extends Activity {
         ButterKnife.bind(this);
 
         back.setTypeface(MyApplication.iconTypeFace);
+
+        fromactivity = getIntent().getStringExtra("from");
 
 
         springView.setHeader(new DefaultHeader(this));
@@ -164,11 +167,21 @@ public class SelectFarmActivity extends Activity {
             holder.panel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // 进入 选择农事类型页面
-                    Intent intent = new Intent(SelectFarmActivity.this, SelectFarmThingActivity.class);
-                    intent.putExtra("fieldinfo_json",new Gson().toJson(info));
-                    SelectFarmActivity.this.startActivity(intent);
-                    SelectFarmActivity.this.finish();
+                    // 1 从添加注记页面过来的，要返回选中的地块信息
+                    // 2 从农事页面过来的，跳转到选择农事类型页面
+                    if ("EditNoteActivity".equals(fromactivity)) {
+                        Intent intent = new Intent();
+                        intent.putExtra("data",new Gson().toJson(info));
+                        SelectFarmActivity.this.setResult(0,intent);
+                        SelectFarmActivity.this.finish();
+                    }else{
+                        Intent intent = new Intent(SelectFarmActivity.this, SelectFarmThingActivity.class);
+                        intent.putExtra("fieldinfo_json",new Gson().toJson(info));
+                        SelectFarmActivity.this.startActivity(intent);
+                        SelectFarmActivity.this.finish();
+                    }
+
+
                 }
             });
         }

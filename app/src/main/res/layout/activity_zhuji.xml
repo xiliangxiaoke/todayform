@@ -45,4 +45,18 @@
 
     </com.liaoinstan.springview.widget.SpringView>
 
+
+    <!--  添加农事-->
+    <Button
+        android:id="@+id/addnote"
+        android:text="@string/icon_add"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/add_btn_bg"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
 </RelativeLayout>

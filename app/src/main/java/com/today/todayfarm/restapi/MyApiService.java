@@ -555,11 +555,66 @@ public interface MyApiService {
             @Query("token") String token
     );
 
+    /**
+     * 获取注记列表
+     * @param token
+     * @param currentpage
+     * @param pageSize
+     * @return
+     */
     @GET("app/ScoutingNote/findMyScoutingNotes")
     Call<ResultObj<NoteInfo>> findMyScoutingNotes(
             @Query("token") String token,
             @Query("currentPage") int currentpage,
             @Query("pageSize") int pageSize
+    );
+
+
+    /**
+     * 添加注记
+     * @param token
+     * @param scoutingNoteId
+     * @param fieldId
+     * @param cropId
+     * @param scoutingNoteInfo
+     * @param scoutingTime yyyy-MM-dd
+     * @param scoutingPosition 注记位置
+     * @param imgUrl 用分号隔开
+     * @return
+     */
+    @GET("app/ScoutingNote/saveOrUpdate")
+    Call<ResultObj<Object>> addScoutingNote(
+            @Query("token") String token,
+
+            @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
+            @Query("scoutingNoteInfo") String scoutingNoteInfo,
+            @Query("scoutingTime") String scoutingTime,
+            @Query("scoutingPosition") String scoutingPosition,
+            @Query("imgUrl") String imgUrl
+    );
+
+    /**
+     * 修改注记
+     * @param token
+     * @param fieldId
+     * @param cropId
+     * @param scoutingNoteInfo
+     * @param scoutingTime
+     * @param scoutingPosition
+     * @param imgUrl
+     * @return
+     */
+    @GET("app/ScoutingNote/saveOrUpdate")
+    Call<ResultObj<Object>> updateScoutingNote(
+            @Query("token") String token,
+            @Query("scoutingNoteId") String scoutingNoteId,
+            @Query("fieldId") String fieldId,
+            @Query("cropId") String cropId,
+            @Query("scoutingNoteInfo") String scoutingNoteInfo,
+            @Query("scoutingTime") String scoutingTime,
+            @Query("scoutingPosition") String scoutingPosition,
+            @Query("imgUrl") String imgUrl
     );
 
     /**

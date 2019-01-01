@@ -109,6 +109,8 @@
                 showHealthImg(paramobj.list)
             }else if("showrsimg" == paramobj.type){
 
+            }else if("notelocation" == paramobj.type){
+                showNoteLocation(paramobj.params);
             }
         }catch(e){
             var param = {
@@ -121,6 +123,20 @@
         }
 
     };
+
+    function showNoteLocation(position) {
+        // body...
+        var myIcon = L.icon({
+            iconUrl: './pics/loc.png',
+            iconSize: [40, 40],
+            iconAnchor: [20, 40]
+        });
+        L.marker(
+            [position.lat, position.lng],
+            {icon: myIcon}
+            )
+        .addTo(map);
+    }
 
     /**
         在地图上显示所有的农田边界

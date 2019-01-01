@@ -47,6 +47,15 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"/>
 
+    <!--map edit-->
+    <ImageView
+        android:id="@+id/setmaploc"
+        android:src="@mipmap/maps"
+        android:layout_alignBottom="@id/webview"
+        android:layout_margin="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -143,6 +152,7 @@
             android:background="@color/devideline"
             android:layout_width="match_parent"
             android:layout_height="1px"/>
+        <!--delete-->
         <TextView
             android:id="@+id/delete"
             android:gravity="center"

@@ -3,6 +3,8 @@ package com.today.todayfarm.util;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Common {
 
@@ -54,6 +56,12 @@ public class Common {
 
         }
         return sb.toString();
+    }
+
+
+    public static String getSimpleDateFormatTime(String format, Calendar calendar) {
+        SimpleDateFormat sdf= new SimpleDateFormat(format);
+        return sdf.format(calendar.getTime());
     }
 
 }

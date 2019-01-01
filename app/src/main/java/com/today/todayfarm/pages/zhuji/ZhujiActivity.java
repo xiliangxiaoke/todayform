@@ -57,6 +57,16 @@ public class ZhujiActivity extends BaseActivity {
         //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
     }
 
+    @OnClick(R.id.addnote)
+    public void addnote() {
+        // 添加新注记
+        Intent intent = new Intent();
+        intent.setClass(ZhujiActivity.this, EditNoteActivity.class);
+
+        intent.putExtra("pagetype","add");
+        ZhujiActivity.this.startActivity(intent);
+    }
+
 
     int pageidx = 1;
     int pagesize = 20;
@@ -201,6 +211,7 @@ public class ZhujiActivity extends BaseActivity {
                     Intent intent = new Intent();
                     intent.setClass(ZhujiActivity.this, EditNoteActivity.class);
                     intent.putExtra("noteinfo_json",new Gson().toJson(info));
+                    intent.putExtra("pagetype","edit");
                     ZhujiActivity.this.startActivity(intent);
                 }
             });

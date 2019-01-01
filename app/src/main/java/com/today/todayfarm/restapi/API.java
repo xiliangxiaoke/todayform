@@ -467,6 +467,36 @@ public class API {
         callenqueue(call,callBack);
     }
 
+    public static void addScoutingNote(
+            String token,
+
+            String fieldid,
+            String cropid,
+            String noteinfo,
+            String time,
+            String position,
+            String imgurl,ApiCallBack<Object> callBack
+    ) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .addScoutingNote(token,fieldid,cropid,noteinfo,time,position,imgurl);
+        callenqueue(call,callBack);
+    }
+
+    public static void updateScoutingNote(
+            String token,
+            String scoutingNoteId,
+            String fieldid,
+            String cropid,
+            String noteinfo,
+            String time,
+            String position,
+            String imgurl,ApiCallBack<Object> callBack
+    ) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .updateScoutingNote(token,scoutingNoteId,fieldid,cropid,noteinfo,time,position,imgurl);
+        callenqueue(call,callBack);
+    }
+
 
     //==========================================================
 
