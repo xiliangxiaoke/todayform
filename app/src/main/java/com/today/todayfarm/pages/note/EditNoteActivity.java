@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.today.todayfarm.dom.BoundaryInfo2Js;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.GeoPoint;
+import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.ResultObj;
@@ -31,6 +33,7 @@ import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.restapi.MyApiService;
+import com.today.todayfarm.util.Android2JS;
 import com.today.todayfarm.util.Common;
 import com.today.todayfarm.util.ToastUtil;
 import com.today.todayfarm.util.WebUtil;
@@ -168,6 +171,9 @@ public class EditNoteActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_note);
         ButterKnife.bind(this);
 
+
+        initwebview();
+
         close.setTypeface(MyApplication.iconTypeFace);
         save.setTypeface(MyApplication.iconTypeFace);
 
@@ -217,6 +223,33 @@ public class EditNoteActivity extends BaseActivity {
             calendar.setTime(new Date());
         }
 
+    }
+
+    private void initwebview() {
+        WebSettings webSettings1 = webView.getSettings();
+        webSettings1.setJavaScriptEnabled(true);
+        webSettings1.setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.addJavascriptInterface(new Android2JS(new Android2JS.CallBack() {
+            @Override
+            public void callback(String json) {
+                if (json!=null){
+                    JS2AndroidParam js2AndroidParam = new Gson().fromJson(json,JS2AndroidParam.class);
+                    if (js2AndroidParam!=null){
+                        // do something
+                        if ("returnpoint".equals(js2AndroidParam.getType())) {
+                            String gpjson = js2AndroidParam.getValue();
+                            GeoPoint gp = null;
+                            try {
+                                gp = new Gson().fromJson(gpjson,GeoPoint.class);
+                            } catch (Exception e) {
+
+                            }
+                            position = gp;
+                        }
+                    }
+                }
+            }
+        }),"androidjs");
     }
 
     private void setcropname() {

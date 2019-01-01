@@ -35,6 +35,7 @@
     var farmlanddraw = null; // 用来存储绘制的农田
     var drawtype = "circle"; // circle polygon
     var cacheFeatures = []; // 用来存储已经加载的要素，供删除用
+    var clicktype = "normal";
 
     var map = L.map('map', {
         center: [31.59, 120.29],
@@ -79,6 +80,24 @@
     });
 
 
+    map.on('click',function mapclick(argument) {
+        // body...
+        if (clicktype === "setnoteloc") {
+            var geovalue = {
+                lat:argument.latlng.lat,
+                lng:argument.latlng.lng
+            }
+            //显示标注
+            showNoteLocation(argument.latlng);
+            var param = {
+                    type:"returnpoint",
+                    value:""+JSON.stringify(geovalue)
+                }
+                androidjs.call(JSON.stringify(param));
+        }
+    })
+
+
 
 
 
@@ -90,7 +109,8 @@
         4 首页显示区划图 {type:"showallboundary",list:[]}
         5 首页显示健康监测图 {type:"showhealthimg",list:[]}
         6 首页显示影像图 {type:"showrsimg",list:[]}
-        7 设置注记位置 {type:"notelocation",params:{lon:"",lat:""}}
+        7 显示注记位置 {type:"notelocation",params:{lon:"",lat:""}}
+        8 设置注记位置 {type:"setnoteloc"}
     */
     function callJS(paraminfo){
 
@@ -111,6 +131,8 @@
 
             }else if("notelocation" == paramobj.type){
                 showNoteLocation(paramobj.params);
+            }else if ("setnoteloc" == paramobj.type) {
+                setnoteloc();
             }
         }catch(e){
             var param = {
@@ -123,6 +145,12 @@
         }
 
     };
+
+    function setnoteloc() {
+        // body...
+        clicktype = "setnoteloc";
+
+    }
 
     function showNoteLocation(position) {
         // body...
