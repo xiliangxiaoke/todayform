@@ -37,6 +37,13 @@
     <string name="menu_zhuji">&#xf279;-  注记</string>
     <string name="menu_weather">&#xf185;-  天气</string>
     <string name="menu_setting">&#xf013;-  设置</string>
+    <string name="title_activity_drawer_tab">DrawerTabActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
 
 </resources>

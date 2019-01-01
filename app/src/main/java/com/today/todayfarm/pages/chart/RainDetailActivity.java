@@ -2,6 +2,7 @@ package com.today.todayfarm.pages.chart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
@@ -36,6 +38,8 @@ public class RainDetailActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.back)
+    TextView back;
 
     @BindView(R.id.totalcharttitle)
     TextView totalcharttitle;
@@ -96,6 +100,7 @@ public class RainDetailActivity extends BaseActivity {
 
         fieldId = getIntent().getStringExtra("fieldId");
         fieldName = getIntent().getStringExtra("fieldName");
+        back.setTypeface(MyApplication.iconTypeFace);
 
 
         title.setText(fieldName);
@@ -128,6 +133,7 @@ public class RainDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        totalChartWebview.loadUrl("file:///android_asset/echart.html");
 
 
         WebSettings webSettings2 = everydayChartWebview.getSettings();
@@ -144,6 +150,7 @@ public class RainDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        everydayChartWebview.loadUrl("file:///android_asset/echart.html");
 
     }
 
@@ -182,6 +189,7 @@ public class RainDetailActivity extends BaseActivity {
                                     );
                                 }
 
+                                niceSpinner.attachDataSource(spinnerdata);
 
                                 cropInfo = croplist.get(0);
 
@@ -223,6 +231,18 @@ public class RainDetailActivity extends BaseActivity {
                     public void onResponse(ResultObj<NameValuePair> resultObj) {
                         if (resultObj.getCode() == 0) {
                             JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+                            if (type == 1) {
+                                //自种植以来数据
+                                jsParamInfo.setType("rainTotalByCrop");
+                            } else {
+                                // 全年数据
+                                jsParamInfo.setType("rainTotalYearByField");
+                            }
+                            jsParamInfo.setList(resultObj.getList());
+                            WebUtil.callJS(totalChartWebview, new Gson().toJson(jsParamInfo));
+                        } else {
+                            // 显示空数据
+                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
                             if (type == 1){
                                 //自种植以来数据
                                 jsParamInfo.setType("rainTotalByCrop");
@@ -230,7 +250,8 @@ public class RainDetailActivity extends BaseActivity {
                                 // 全年数据
                                 jsParamInfo.setType("rainTotalYearByField");
                             }
-                            jsParamInfo.setList(resultObj.getList());
+                            jsParamInfo.setList(getEmptylist());
+                            Log.v("calljsdata:",new Gson().toJson(jsParamInfo));
                             WebUtil.callJS(totalChartWebview,new Gson().toJson(jsParamInfo));
                         }
                     }
@@ -238,6 +259,17 @@ public class RainDetailActivity extends BaseActivity {
                     @Override
                     public void onError(int code) {
 
+                    }
+
+                    private List<NameValuePair> getEmptylist() {
+                        List<NameValuePair> list = new ArrayList<NameValuePair>();
+                        for (int i=1;i<10;i++) {
+                            NameValuePair pair = new NameValuePair();
+                            pair.setName(""+i);
+                            pair.setValue(0);
+                            list.add(pair);
+                        }
+                        return list;
                     }
                 }
         );
@@ -253,6 +285,18 @@ public class RainDetailActivity extends BaseActivity {
                     public void onResponse(ResultObj<NameValuePair> resultObj) {
                         if (resultObj.getCode() == 0) {
                             JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+                            if (type == 1) {
+                                //自种植以来数据
+                                jsParamInfo.setType("rainEveryDayByCrop");
+                            } else {
+                                // 全年数据
+                                jsParamInfo.setType("rainEveryDayYearByField");
+                            }
+                            jsParamInfo.setList(resultObj.getList());
+                            WebUtil.callJS(everydayChartWebview, new Gson().toJson(jsParamInfo));
+                        } else {
+                            // 显示空数据
+                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
                             if (type == 1){
                                 //自种植以来数据
                                 jsParamInfo.setType("rainEveryDayByCrop");
@@ -260,7 +304,7 @@ public class RainDetailActivity extends BaseActivity {
                                 // 全年数据
                                 jsParamInfo.setType("rainEveryDayYearByField");
                             }
-                            jsParamInfo.setList(resultObj.getList());
+                            jsParamInfo.setList(getEmptylist());
                             WebUtil.callJS(everydayChartWebview,new Gson().toJson(jsParamInfo));
                         }
                     }
@@ -268,6 +312,17 @@ public class RainDetailActivity extends BaseActivity {
                     @Override
                     public void onError(int code) {
 
+                    }
+
+                    private List<NameValuePair> getEmptylist() {
+                        List<NameValuePair> list = new ArrayList<NameValuePair>();
+                        for (int i=1;i<10;i++) {
+                            NameValuePair pair = new NameValuePair();
+                            pair.setName(""+i);
+                            pair.setValue(0);
+                            list.add(pair);
+                        }
+                        return list;
                     }
                 }
         );

@@ -14,6 +14,7 @@ import com.today.todayfarm.dom.NameValuePair;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SatellateImgInfo;
 import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
@@ -429,6 +430,12 @@ public class API {
     public static void findMyHealthImgsWeekdays(String token,ApiCallBack<HealthImgInfo> callBack) {
         Call<ResultObj<HealthImgInfo>> call = Doapi.instance()
                 .findMyHealthImgsWeekdays(token);
+        callenqueue(call,callBack);
+    }
+
+    public static void findSatellateImgsWeekdays(String token,ApiCallBack<SatellateImgInfo> callBack) {
+        Call<ResultObj<SatellateImgInfo>> call = Doapi.instance()
+                .findSatellateImgsWeekdays(token);
         callenqueue(call,callBack);
     }
 

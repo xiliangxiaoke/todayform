@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
@@ -36,6 +37,8 @@ public class TempDetailActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.back)
+    TextView back;
 
     @BindView(R.id.totalcharttitle)
     TextView totalcharttitle;
@@ -90,6 +93,7 @@ public class TempDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rain_detail);
         ButterKnife.bind(this);
+        back.setTypeface(MyApplication.iconTypeFace);
 
         fieldId = getIntent().getStringExtra("fieldId");
         fieldName = getIntent().getStringExtra("fieldName");
@@ -125,6 +129,7 @@ public class TempDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        totalChartWebview.loadUrl("file:///android_asset/echart.html");
 
 
         WebSettings webSettings2 = everydayChartWebview.getSettings();
@@ -141,6 +146,7 @@ public class TempDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        everydayChartWebview.loadUrl("file:///android_asset/echart.html");
 
     }
 
@@ -177,6 +183,8 @@ public class TempDetailActivity extends BaseActivity {
                                             croplist.get(i).getCropName()+" "+croplist.get(i).getPlantYear()+"年"
                                     );
                                 }
+
+                                niceSpinner.attachDataSource(spinnerdata);
 
                                 cropInfo = croplist.get(0);
                                 // 初始化图表数据

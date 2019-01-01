@@ -88,37 +88,90 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".base.BaseActivity" />
-        <activity android:name=".pages.regist.RegistActivity" />
-        <activity android:name=".pages.tabs.TabActivity" />
-        <activity android:name=".pages.login.LoginActivity" />
+        <activity
+            android:name=".pages.regist.RegistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.tabs.TabActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.login.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.AddFarmMap.AddFarm2MapActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".pages.createFarm.CreateFarmActivity" />
-        <activity android:name=".pages.pagedetail.FarmDetailActivity" />
-        <activity android:name=".pages.selectfarmthing.SelectFarmThingActivity" />
-        <activity android:name=".pages.EditFarmThing.EditFarmthingZhengdiActivity" />
-        <activity android:name=".pages.EditFarmThing.EditFarmthingBozhongActivity" />
-        <activity android:name=".pages.EditFarmThing.EditFarmthingShifeiActivity" />
-        <activity android:name=".pages.EditFarmThing.EditFarmthingGuangaiActivity" />
-        <activity android:name=".pages.EditFarmThing.EditFarmthingZhibaoActivity" />
-        <activity android:name=".pages.EditFarmThing.EditFarmthingShougeActivity" />
-        <activity android:name=".pages.selectfarm.SelectFarmActivity" />
-        <activity android:name=".AddNewCrop.AddNewCropActivity" />
-        <activity android:name=".pages.CropList.CropListActivity" />
-        <activity android:name=".pages.selectcrop.SelectCropActivity" />
-        <activity android:name=".pages.createcrop.CreateCropActivity" />
-        <activity android:name=".pages.farmThingList.FarmThingListActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.createFarm.CreateFarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.pagedetail.FarmDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.selectfarmthing.SelectFarmThingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.EditFarmThing.EditFarmthingZhengdiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.EditFarmThing.EditFarmthingBozhongActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.EditFarmThing.EditFarmthingShifeiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.EditFarmThing.EditFarmthingGuangaiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.EditFarmThing.EditFarmthingZhibaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.EditFarmThing.EditFarmthingShougeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.selectfarm.SelectFarmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddNewCrop.AddNewCropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.CropList.CropListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.selectcrop.SelectCropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.createcrop.CreateCropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.farmThingList.FarmThingListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.menu.MenuActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/translucent" />
-        <activity android:name=".pages.zhuji.ZhujiActivity" />
-        <activity android:name=".pages.note.EditNoteActivity" />
+        <activity
+            android:name=".pages.zhuji.ZhujiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.note.EditNoteActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.threeDaysWeather.ThreeDaysWeatherActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".pages.chart.RainDetailActivity" />
-        <activity android:name=".pages.chart.FullChartActivity"></activity>
+        <activity
+            android:name=".pages.chart.RainDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.chart.TempDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.chart.FullChartActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".pages.tabs.DrawerTabActivity"
+            android:label="@string/title_activity_drawer_tab"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -126,9 +126,9 @@
             }else if("showallboundary" == paramobj.type){
                 showallboundary(paramobj.list);
             }else if("showhealthimg" == paramobj.type){
-                showHealthImg(paramobj.list)
+                showHealthImg(paramobj.list);
             }else if("showrsimg" == paramobj.type){
-
+                showRsImg(paramobj.list);
             }else if("notelocation" == paramobj.type){
                 showNoteLocation(paramobj.params);
             }else if ("setnoteloc" == paramobj.type) {
@@ -234,6 +234,36 @@
         map.fitBounds(L.featureGroup(cacheFeatures).getBounds());
     }
 
+
+    /**
+        显示健康监测影像，可能有多个，都显示，并清除之前显示过的数据，然后适当居中
+        //{"satellateImgId":"402881ec67b9a2060167b9a329570000","
+        // satellateImgTime":"2019-01-01","
+        // fieldId":"bbee8e9767780d870167787f30120004","
+        // satellateImgLeft":20.12,"
+        // satellateImgRight":60.12,"
+        // satellateImgTop":80.12,"
+        // satellateImgBottom":30.12,
+        // "imgUrl":"http://localhost:8080/jrnq/resources/satImg/upload.jpg"}
+    */
+    function showRsImg(list){
+        // 先删除已有的数据
+
+        cacheFeatures.forEach(function (f){
+            map.removeLayer(f);
+        });
+        cacheFeatures = [];
+
+        list.forEach(function (info){
+            var imageUrl = info.imgUrl,
+            imageBounds = [[info.satellateImgBottom, info.satellateImgLeft], [info.satellateImgTop, info.satellateImgRight]];
+            cacheFeatures.push(L.imageOverlay(imageUrl, imageBounds).addTo(map));
+
+        });
+
+        map.fitBounds(L.featureGroup(cacheFeatures).getBounds());
+    }
+
     /**
         显示农田边界
         para: circle 和 polygon的结构体
@@ -321,23 +351,7 @@
 
 //callJS('{"params":{"center":[31.601053,120.28519],"geotype":"circle","radius":4539.932},"type":"showgeo"}');
 
-    function test(){
 
-        var param = '{"type":"draw","params":{"action":"drawcircle"}}';
-        callJS(param);
-    }
-
-    function test1(){
-
-        var param = '{"type":"draw","params":{"action":"drawpolygon"}}';
-        callJS(param);
-    }
-
-    function test2(){
-
-        var param = '{"type":"draw","params":{"action":"getgeojson"}}';
-        callJS(param);
-    }
 
     
 </script>

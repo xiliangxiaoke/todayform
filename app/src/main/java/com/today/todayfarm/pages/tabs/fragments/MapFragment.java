@@ -39,6 +39,7 @@ import com.today.todayfarm.dom.HealthImgInfo;
 import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SatellateImgInfo;
 import com.today.todayfarm.dom.TimeAxisItemInfo;
 import com.today.todayfarm.pages.AddFarmMap.AddFarm2MapActivity;
 import com.today.todayfarm.pages.createFarm.CreateFarmActivity;
@@ -175,15 +176,18 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     //  获取健康监测数据
                     datatype = 1;
                     showHealthData();
+                    recyclerView.setVisibility(View.VISIBLE);
                 } else if (position == 1) {
                     // TODO 获取卫星影像数据
                     datatype = 2;
                     showStaliteData();
+                    recyclerView.setVisibility(View.VISIBLE);
                 } else if (position == 2) {
                     // 获取作物区划图
                     datatype = 3;
                     timeregion.clear();
                     showBlock();
+                    recyclerView.setVisibility(View.GONE);
                 }
             }
         });
@@ -244,7 +248,89 @@ public class MapFragment extends Fragment implements AMapLocationListener{
     }
 
     private void showStaliteData() {
+        API.findSatellateImgsWeekdays(
+                Hawk.get(HawkKey.TOKEN),
+                new ApiCallBack<SatellateImgInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<SatellateImgInfo> resultObj) {
+                        // 解析卫星影像数据显示到地图上
+                        if (resultObj.getCode() == 0) {
+                            // 1 先计算出一个月的时间列表
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(new Date());
+                            calendar.add(Calendar.MONTH, -1);
 
+                            timeregion = new ArrayList<>();
+
+                            for (int i =0; i<30;i++){
+
+                                calendar.add(Calendar.DATE,1);
+                                TimeAxisItemInfo info = new TimeAxisItemInfo();
+                                info.setTimestamp(calendar.getTimeInMillis());
+
+                                info.setDateText(calendar.get(Calendar.DATE));
+                                info.setMonthText(calendar.get(Calendar.MONTH)+1);
+                                timeregion.add(info);
+                            }
+
+                            // 显示日期描述
+                            datetv.setText(
+                                    calendar.get(Calendar.YEAR)+"年"+
+                                            (calendar.get(Calendar.MONTH)+1)+"月"
+                            );
+
+                            // 往里插实际的影像数据
+                            if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                List<SatellateImgInfo> satellateImgInfos = resultObj.getList();
+                                for (int i = 0; i < satellateImgInfos.size(); i++) {
+                                    insertSatellateData2TimeRegion(timeregion,satellateImgInfos.get(i));
+                                }
+                            }
+
+                            // 显示数据时间轴
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    private void insertSatellateData2TimeRegion(List<TimeAxisItemInfo> timeregion, SatellateImgInfo satellateImgInfo) {
+                        String[] ss = satellateImgInfo.getSatellateImgTime().split("-");
+                        int h_year = 0;
+                        int h_month = 0;
+                        int h_date= 0;
+                        if (ss.length == 3) {
+                            h_year = Integer.parseInt(ss[0]);
+                            h_month = Integer.parseInt(ss[1]);
+                            h_date = Integer.parseInt(ss[2]);
+                        }
+                        for (int i = 0; i < timeregion.size(); i++) {
+                            //"2018-08-15"
+                            Calendar caTimeRegion = Calendar.getInstance();
+                            caTimeRegion.setTime(new Date(timeregion.get(i).getTimestamp()));
+                            int TR_YEAR = caTimeRegion.get(Calendar.YEAR);
+                            int TR_MONTH = caTimeRegion.get(Calendar.MONTH)+1;
+                            int TR_DATE = caTimeRegion.get(Calendar.DATE);
+
+
+                            if (
+                                    TR_YEAR == h_year
+                                            && TR_MONTH == h_month
+                                            && TR_DATE == h_date
+                                    ){
+                                if (timeregion.get(i).getSatellateImgInfos() == null) {
+                                    timeregion.get(i).setSatellateImgInfos(new ArrayList<>());
+                                }
+                                timeregion.get(i).getSatellateImgInfos().add(satellateImgInfo);
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     // 获取健康数据
@@ -255,12 +341,13 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     @Override
                     public void onResponse(ResultObj<HealthImgInfo> resultObj) {
                         if (resultObj.getCode() == 0) {
-                            // TODO 解析健康监测数据结果，展示到地图上
+                            //  解析健康监测数据结果，展示到地图上
                             // 1 先计算出一个月的时间列表
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
+                            calendar.add(Calendar.MONTH, -1);
                             // test 先减三个月 为了计算到有数据的时间段
-                            calendar.add(Calendar.MONTH, -5);
+                            //calendar.add(Calendar.MONTH, -5);
 
                              timeregion = new ArrayList<>();
 
@@ -456,7 +543,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
             holder.panel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: 在地图上显示当前的影像数据，分是健康检测影像还是卫星影像，加个标志位
+                    //  在地图上显示当前的影像数据，分是健康检测影像还是卫星影像，加个标志位
                     if (datatype == 1){
                         //如果有健康监测的数据就显示到地图上，没有提示没有
                         if (info.getHealthImgInfos() != null && info.getHealthImgInfos().size() > 0) {
@@ -469,6 +556,14 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                         }
                     } else if (datatype == 2) {
                         // TODO: 如果有卫星影像的数据就显示卫星影像的数据，没有提示没有
+                        if (info.getSatellateImgInfos() != null && info.getSatellateImgInfos().size() > 0) {
+                            JSParamInfo<SatellateImgInfo> jsParamInfo = new JSParamInfo<>();
+                            jsParamInfo.setType("showrsimg");
+                            jsParamInfo.setList(info.getSatellateImgInfos());
+                            WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+                        } else {
+                            ToastUtil.show(MapFragment.this.getContext(),"该日无影像数据！");
+                        }
                     } else {
 
                     }

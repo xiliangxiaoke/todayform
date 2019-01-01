@@ -12,6 +12,7 @@ import com.today.todayfarm.dom.NameValuePair;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.dom.SatellateImgInfo;
 import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
@@ -624,6 +625,11 @@ public interface MyApiService {
      */
     @GET("app/HealthImg/findMyHealthImgsWeekdays")
     Call<ResultObj<HealthImgInfo>> findMyHealthImgsWeekdays(
+            @Query("token") String token
+    );
+
+    @GET("app/SatellateImg/findMyFieldImages")
+    Call<ResultObj<SatellateImgInfo>> findSatellateImgsWeekdays(
             @Query("token") String token
     );
 

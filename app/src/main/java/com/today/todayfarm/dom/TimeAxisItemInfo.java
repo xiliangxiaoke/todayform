@@ -10,9 +10,15 @@ public class TimeAxisItemInfo {
     int dateText; // 在时间轴上显示的日期
     int monthText; // 月份
     List<HealthImgInfo> healthImgInfos; // 当天的健康监测影像信息
+    List<SatellateImgInfo> satellateImgInfos; //当天的卫星影像信息
 
-    // TODO 补充卫星影像的
+    public List<SatellateImgInfo> getSatellateImgInfos() {
+        return satellateImgInfos;
+    }
 
+    public void setSatellateImgInfos(List<SatellateImgInfo> satellateImgInfos) {
+        this.satellateImgInfos = satellateImgInfos;
+    }
 
     public int getMonthText() {
         return monthText;
