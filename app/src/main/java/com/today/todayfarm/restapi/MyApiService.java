@@ -700,6 +700,15 @@ public interface MyApiService {
 
 
 
+    @GET("app/Agronomy/findCropsByPage")
+    Call<ResultObj<CropInfo>> getCropHelpList(
+            @Query("token") String token,
+            @Query("currentPage") int currentpage,
+            @Query("pageSize") int pageSize
+    );
+
+
+
     //-------------------------------------------------------------------old
 
     @POST("editUserInfo")

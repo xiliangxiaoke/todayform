@@ -505,6 +505,13 @@ public class API {
     }
 
 
+    public static void getCropHelpList(String token , int currentPage,int pageSize,ApiCallBack<CropInfo> callBack){
+        Call<ResultObj<CropInfo>> call = Doapi.instance()
+                .getCropHelpList(token,currentPage,pageSize);
+        callenqueue(call,callBack);
+    }
+
+
     //==========================================================
 
 

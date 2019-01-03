@@ -171,7 +171,8 @@
         <activity
             android:name=".pages.tabs.DrawerTabActivity"
             android:label="@string/title_activity_drawer_tab"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".pages.suggest.CropSuggestListActivity"></activity>
     </application>
 
 </manifest>

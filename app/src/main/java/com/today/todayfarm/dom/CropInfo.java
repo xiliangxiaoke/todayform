@@ -11,6 +11,80 @@ public class CropInfo {
     String totalRevenue;
 
 
+    //{"cropId":1,"cropName":"Corn",
+    // "cropLargeImageUrl":"https://d3v24yjyxmlw9f.cloudfront.net/agronomy/crops/large_images/000/000/001/original/large.png",
+    // "cropMediumImageUrl":"https://d3v24yjyxmlw9f.cloudfront.net/agronomy/crops/medium_images/000/000/001/original/medium.png",
+    // "cropSmallImageUrl":"https://d3v24yjyxmlw9f.cloudfront.net/agronomy/crops/small_images/000/000/001/original/small.png",
+    // "isAdded":"",
+    // "isAgronomyAvailable":"true",
+    // "isIrrigated":"",
+    // "plantingDate":""}
+
+
+    String cropLargeImageUrl;
+    String cropMediumImageUrl;
+    String cropSmallImageUrl;
+    String isAdded;
+    String isAgronomyAvailable;
+    String isIrrigated;
+    String plantingDate;
+
+    public String getCropLargeImageUrl() {
+        return cropLargeImageUrl;
+    }
+
+    public void setCropLargeImageUrl(String cropLargeImageUrl) {
+        this.cropLargeImageUrl = cropLargeImageUrl;
+    }
+
+    public String getCropMediumImageUrl() {
+        return cropMediumImageUrl;
+    }
+
+    public void setCropMediumImageUrl(String cropMediumImageUrl) {
+        this.cropMediumImageUrl = cropMediumImageUrl;
+    }
+
+    public String getCropSmallImageUrl() {
+        return cropSmallImageUrl;
+    }
+
+    public void setCropSmallImageUrl(String cropSmallImageUrl) {
+        this.cropSmallImageUrl = cropSmallImageUrl;
+    }
+
+    public String getIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(String isAdded) {
+        this.isAdded = isAdded;
+    }
+
+    public String getIsAgronomyAvailable() {
+        return isAgronomyAvailable;
+    }
+
+    public void setIsAgronomyAvailable(String isAgronomyAvailable) {
+        this.isAgronomyAvailable = isAgronomyAvailable;
+    }
+
+    public String getIsIrrigated() {
+        return isIrrigated;
+    }
+
+    public void setIsIrrigated(String isIrrigated) {
+        this.isIrrigated = isIrrigated;
+    }
+
+    public String getPlantingDate() {
+        return plantingDate;
+    }
+
+    public void setPlantingDate(String plantingDate) {
+        this.plantingDate = plantingDate;
+    }
+
     public String getCropId() {
         return cropId;
     }
