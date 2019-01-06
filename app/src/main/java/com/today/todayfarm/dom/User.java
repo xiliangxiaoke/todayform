@@ -26,6 +26,39 @@ public class User {
 	String remark;
 	String headImgUrl;
 
+	//{"associateUserId":"402881e6677ede9601677eebb4f30000",
+	// "userId":"20181014150813",
+	// "aliasName":"郑红彦",
+	// "phone":"13401089839",
+	// "userAuth":0}（普通用户0，管理人员：1）
+
+	String associateUserId;
+	String aliasName;
+	int userAuth;
+
+	public String getAssociateUserId() {
+		return associateUserId;
+	}
+
+	public void setAssociateUserId(String associateUserId) {
+		this.associateUserId = associateUserId;
+	}
+
+	public String getAliasName() {
+		return aliasName;
+	}
+
+	public void setAliasName(String aliasName) {
+		this.aliasName = aliasName;
+	}
+
+	public int getUserAuth() {
+		return userAuth;
+	}
+
+	public void setUserAuth(int userAuth) {
+		this.userAuth = userAuth;
+	}
 
 	public String getHeadImgUrl() {
 		return headImgUrl;

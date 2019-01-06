@@ -18,6 +18,8 @@ import com.today.todayfarm.dom.SatellateImgInfo;
 import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
+import com.today.todayfarm.dom.StageInfo;
+import com.today.todayfarm.dom.SubStageInfo;
 import com.today.todayfarm.dom.TillingInfo;
 import com.today.todayfarm.dom.TotalRainAndTemp;
 import com.today.todayfarm.dom.User;
@@ -508,6 +510,42 @@ public class API {
     public static void getCropHelpList(String token , int currentPage,int pageSize,ApiCallBack<CropInfo> callBack){
         Call<ResultObj<CropInfo>> call = Doapi.instance()
                 .getCropHelpList(token,currentPage,pageSize);
+        callenqueue(call,callBack);
+    }
+
+    public static void findCropStages(String token, String cropId, ApiCallBack<StageInfo> callBack) {
+        Call<ResultObj<StageInfo>> call = Doapi.instance()
+                .findCropStages(token,cropId);
+        callenqueue(call,callBack);
+    }
+
+    public static void findCropSubStages(String token, String stageid, ApiCallBack<SubStageInfo> callBack) {
+        Call<ResultObj<SubStageInfo>> call = Doapi.instance()
+                .findCropSubStages(token,stageid);
+        callenqueue(call,callBack);
+    }
+
+    public static void findMyUsers(String token, int currentpage, int pagesize, ApiCallBack<User> callBack) {
+        Call<ResultObj<User>> call = Doapi.instance()
+                .findMyUsers(token,currentpage,pagesize);
+        callenqueue(call,callBack);
+    }
+
+    public static void addUser(String token,String name,String phone,String auth,ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .addUser(token,name,phone,auth);
+        callenqueue(call,callBack);
+    }
+
+    public static void updateUser(String token,String id,String name,String phone,String auth,ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .updateUser(token,id,name,phone,auth);
+        callenqueue(call,callBack);
+    }
+
+    public static void delUser(String token, String id, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .delUser(token,id);
         callenqueue(call,callBack);
     }
 

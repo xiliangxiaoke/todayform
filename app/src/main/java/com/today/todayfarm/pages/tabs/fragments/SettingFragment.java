@@ -177,6 +177,14 @@ public class SettingFragment extends Fragment {
                         .openGallery();
             }
         });
+
+        account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 打开账户管理页面
+
+            }
+        });
     }
 
 

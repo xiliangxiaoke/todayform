@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.suggest.CropSuggestListActivity">
+    tools:context=".pages.suggest.StageDetailActivity">
+
 
     <!-- title -->
     <RelativeLayout
@@ -13,7 +14,7 @@
         android:layout_height="@dimen/titleheight">
 
         <TextView
-            android:text="农艺咨询"
+            android:id="@+id/title"
             android:textColor="#ffffff"
             android:textSize="@dimen/title_text_size"
             android:gravity="center"
@@ -42,5 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.liaoinstan.springview.widget.SpringView>
+
 
 </RelativeLayout>

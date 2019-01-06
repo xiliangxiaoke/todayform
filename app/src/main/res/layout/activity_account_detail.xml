@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:background="#46A05A"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:id="@+id/title"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="@dimen/title_text_size"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/back"
+            android:textColor="#ffffff"
+            android:text="@string/icon_back"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+        <TextView
+            android:id="@+id/save"
+            android:textColor="#ffffff"
+            android:layout_alignParentRight="true"
+            android:text="@string/icon_edit"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--手机-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:text="手机号："
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!--姓名-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:text="姓名："
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!--操作权限-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="操作权限："
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/niceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--delete-->
+    <Button
+        android:text="删除"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_login_bg"
+        android:id="@+id/delete"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</RelativeLayout>

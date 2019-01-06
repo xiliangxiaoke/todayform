@@ -17,6 +17,8 @@ import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.SowingInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.SprayingInfo;
+import com.today.todayfarm.dom.StageInfo;
+import com.today.todayfarm.dom.SubStageInfo;
 import com.today.todayfarm.dom.TillingInfo;
 import com.today.todayfarm.dom.TotalRainAndTemp;
 import com.today.todayfarm.dom.User;
@@ -705,6 +707,51 @@ public interface MyApiService {
             @Query("token") String token,
             @Query("currentPage") int currentpage,
             @Query("pageSize") int pageSize
+    );
+
+    @GET("app/Agronomy/findCropStages")
+    Call<ResultObj<StageInfo>> findCropStages(
+            @Query("token") String token,
+            @Query("cropId") String cropId
+    );
+
+    @GET("app/Agronomy/findCropSubStages")
+    Call<ResultObj<SubStageInfo>> findCropSubStages(
+            @Query("token") String token,
+            @Query("stageId")String stageId
+    );
+
+    @GET("app/associateUser/findMyUsers")
+    Call<ResultObj<User>> findMyUsers(
+            @Query("token") String token,
+            @Query("currentPage") int currentpage,
+            @Query("pageSize") int pageSize
+    );
+
+
+    @GET("app/associateUser/saveOrUpdate")
+    Call<ResultObj<Object>> addUser(
+            @Query("token") String token,
+            @Query("aliasName") String aliasName,
+            @Query("phone") String phone,
+            @Query("userAuth") String userAuth
+
+    );
+
+    @GET("app/associateUser/saveOrUpdate")
+    Call<ResultObj<Object>> updateUser(
+            @Query("token") String token,
+            @Query("associateUserId") String id,
+            @Query("aliasName") String aliasName,
+            @Query("phone") String phone,
+            @Query("userAuth") String userAuth
+
+    );
+
+    @GET("app/associateUser/deleteById")
+    Call<ResultObj<Object>> delUser(
+            @Query("token") String token,
+            @Query("associateUserId") String id
     );
 
 
