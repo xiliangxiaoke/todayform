@@ -25,6 +25,10 @@
     <string name="icon_yes">&#xf00c;</string>
     <string name="icon_back">&#xf060;</string>
     <string name="icon_edit">&#xf040;</string>
+    <string name="icon_user">&#xf007;</string>
+    <string name="icon_phone">&#xf098;</string>
+    <string name="icon_building">&#xf1ad;</string>
+    <string name="icon_location">&#xf041;</string>
 
     <!-- mapbox  -->
     <string name="mapbox_access_token">pk.eyJ1IjoieGlsaWFuZ3hpYW9rZSIsImEiOiJjam5penI3OTUwdTRyM3dxdHY2eXR0eGEyIn0.1c_ZjGpk6s6oasRSahw1UA</string>

@@ -6,8 +6,9 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/img"
-        app:actualImageScaleType="centerCrop"
+
+        app:actualImageScaleType="fitCenter"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="300dp" />
 
 </RelativeLayout>

@@ -43,6 +43,7 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/titleheight"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--手机-->
@@ -84,7 +85,7 @@
                 android:text="操作权限："
                 android:gravity="center"
                 android:layout_width="100dp"
-                android:layout_height="match_parent" />
+                android:layout_height="50dp" />
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/niceSpinner"
                 android:layout_width="match_parent"

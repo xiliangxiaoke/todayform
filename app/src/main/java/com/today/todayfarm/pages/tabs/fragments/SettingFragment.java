@@ -1,5 +1,6 @@
 package com.today.todayfarm.pages.tabs.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
+import com.today.todayfarm.pages.account.AccountManageActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 
@@ -47,7 +49,7 @@ public class SettingFragment extends Fragment {
     TextView companyicon;
     TextView addressicon;
 
-    Button account;
+    TextView account;
 
 
     User user = null;
@@ -65,7 +67,7 @@ public class SettingFragment extends Fragment {
         name = view.findViewById(R.id.name);
         phone = view.findViewById(R.id.phone);
         company = view.findViewById(R.id.company);
-        address = view.findViewById(R.id.account);
+        address = view.findViewById(R.id.address);
         account = view.findViewById(R.id.account);
         nameicon = view.findViewById(R.id.nameicon);
         phoneicon = view.findViewById(R.id.phoneicon);
@@ -182,6 +184,8 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // 打开账户管理页面
+                Intent intent = new Intent(SettingFragment.this.getContext(), AccountManageActivity.class);
+                SettingFragment.this.startActivity(intent);
 
             }
         });

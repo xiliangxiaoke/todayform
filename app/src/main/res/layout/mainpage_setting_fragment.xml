@@ -67,7 +67,7 @@
                 android:layout_height="60dp">
                 <TextView
                     android:id="@+id/nameicon"
-                    android:text="@string/icon_exit"
+                    android:text="@string/icon_user"
                     android:gravity="center_vertical|right"
                     android:layout_width="60dp"
                     android:layout_height="match_parent" />
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <TextView
-                    android:text="@string/icon_exit"
+                    android:text="@string/icon_phone"
                     android:id="@+id/phoneicon"
                     android:gravity="center_vertical|right"
                     android:layout_width="60dp"
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <TextView
-                    android:text="@string/icon_exit"
+                    android:text="@string/icon_building"
                     android:id="@+id/companyicon"
                     android:gravity="center_vertical|right"
                     android:layout_width="60dp"
@@ -124,7 +124,7 @@
                 android:layout_height="60dp">
                 <TextView
                     android:id="@+id/addressicon"
-                    android:text="@string/icon_exit"
+                    android:text="@string/icon_location"
                     android:gravity="center_vertical|right"
                     android:layout_width="60dp"
                     android:layout_height="match_parent" />
@@ -150,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="50px"/>
 
-        <Button
+        <TextView
             android:id="@+id/account"
             android:text="账号管理"
             android:textColor="#ffffff"

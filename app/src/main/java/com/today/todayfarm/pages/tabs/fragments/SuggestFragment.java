@@ -53,7 +53,7 @@ public class SuggestFragment extends Fragment {
     int pageSize = 20;
 
     List<CropInfo> datalist = new ArrayList<>();
-    RecyclerviewAdapter adapter = new RecyclerviewAdapter(this.getContext());
+    RecyclerviewAdapter adapter = null;
 
     @Nullable
     @Override
@@ -71,6 +71,7 @@ public class SuggestFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(),2);
         layoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new RecyclerviewAdapter(SuggestFragment.this.getActivity());
         recyclerView.setAdapter(adapter);
 
 
@@ -97,11 +98,12 @@ public class SuggestFragment extends Fragment {
                             datalist.addAll(resultObj.getList());
                             adapter.notifyDataSetChanged();
                         }
+                        springView.onFinishFreshAndLoad();
                     }
 
                     @Override
                     public void onError(int code) {
-
+                        springView.onFinishFreshAndLoad();
                     }
                 }
         );

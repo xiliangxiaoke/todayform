@@ -12,6 +12,7 @@ import com.cazaea.sweetalert.SweetAlertDialog;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.ResultObj;
@@ -43,6 +44,10 @@ public class AccountDetailActivity extends BaseActivity {
     NiceSpinner niceSpinner;
     @BindView(R.id.delete)
     Button delete;
+    @BindView(R.id.back)
+    TextView back;
+    @BindView(R.id.save)
+    TextView save;
 
     @OnClick(R.id.back)
     public void back() {
@@ -149,6 +154,9 @@ public class AccountDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_detail);
         ButterKnife.bind(this);
+
+        back.setTypeface(MyApplication.iconTypeFace);
+        save.setTypeface(MyApplication.iconTypeFace);
 
 
         List<String> dataset = new LinkedList<>(Arrays.asList(

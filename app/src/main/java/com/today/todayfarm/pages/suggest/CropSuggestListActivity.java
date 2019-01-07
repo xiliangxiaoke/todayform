@@ -21,6 +21,7 @@ import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
@@ -40,6 +41,8 @@ import butterknife.OnClick;
 public class CropSuggestListActivity extends BaseActivity {
 
 
+    @BindView(R.id.back)
+    TextView back;
     @BindView(R.id.springview)
     SpringView springView;
     @BindView(R.id.recyclerView)
@@ -58,6 +61,8 @@ public class CropSuggestListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_suggest_list);
         ButterKnife.bind(this);
+
+        back.setTypeface(MyApplication.iconTypeFace);
 
         String cropinfojson = getIntent().getStringExtra("cropinfo_json");
         try {
@@ -132,14 +137,17 @@ public class CropSuggestListActivity extends BaseActivity {
 
         @NonNull
         @Override
-        public RecyclerviewAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = null;
             if (viewType == VIEW_TYPE_TITLE) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_stage_title,parent,false);
+                return new ViewholderTitle(view);
             } else if (viewType == VIEW_TYPE_IMG) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_stage_img,parent,false);
+                return new ViewholderImg(view);
             } else if (viewType == VIEW_TYPE_ITEM) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_stage_item,parent,false);
+                return new Viewholder(view);
             }
 
             return new RecyclerviewAdapter.Viewholder(view);

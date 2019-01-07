@@ -2,6 +2,7 @@ package com.today.todayfarm.pages.account;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.ResultObj;
@@ -40,6 +43,8 @@ public class AccountManageActivity extends BaseActivity {
     SpringView springView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.back)
+            TextView back;
 
     List<User> datalist = new ArrayList<>();
     RecyclerviewAdapter adapter = null;
@@ -47,10 +52,14 @@ public class AccountManageActivity extends BaseActivity {
     @OnClick(R.id.add)
     public void add() {
         // 添加新账户
+        Intent intent = new Intent(AccountManageActivity.this,AccountDetailActivity.class);
+        intent.putExtra("fromtype","add");
+
+        AccountManageActivity.this.startActivity(intent);
     }
 
     @OnClick(R.id.back)
-    public void back() {
+    public void setback() {
         this.finish();
     }
 
@@ -62,6 +71,8 @@ public class AccountManageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_manage);
         ButterKnife.bind(this);
+
+        back.setTypeface(MyApplication.iconTypeFace);
 
 
         springView.setHeader(new DefaultHeader(this));
@@ -159,7 +170,10 @@ springView.onFinishFreshAndLoad();
                 @Override
                 public void onClick(View v) {
                     // todo 打开账户详情页
-
+                    Intent intent = new Intent(AccountManageActivity.this,AccountDetailActivity.class);
+                    intent.putExtra("fromtype","edit");
+                    intent.putExtra("user_json",new Gson().toJson(user));
+                    AccountManageActivity.this.startActivity(intent);
                 }
             });
 

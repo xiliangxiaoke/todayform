@@ -19,6 +19,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
+import com.today.todayfarm.WeatherSearchActivity;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
@@ -111,6 +112,11 @@ public class TabActivity extends BaseActivity {
         } else if ("menu_setting".equals(event.type)) {
             fragmentContainerHelper.handlePageSelected(4,false);
             switchPages(4);
+        } else if("menu_weather".equals(event.type)){
+            Intent intent = new Intent();
+            intent.setClass(this,WeatherSearchActivity.class);
+            intent.putExtra("city","北京");
+            startActivity(intent);
         }
     }
 
