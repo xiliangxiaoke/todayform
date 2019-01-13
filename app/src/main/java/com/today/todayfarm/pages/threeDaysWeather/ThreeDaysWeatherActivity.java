@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class ThreeDaysWeatherActivity extends BaseActivity {
             TextView back;
 
     String fieldid = null;
+    private boolean firstloaded = false;
 
 
     @OnClick(R.id.back)
@@ -178,6 +180,18 @@ public class ThreeDaysWeatherActivity extends BaseActivity {
             }
         }),"androidjs");
 
+        webView.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && firstloaded == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    firstloaded = true;
+                    showTemp();
+                }
+            }
+        });
 
         webView.loadUrl("file:///android_asset/echart.html");
     }

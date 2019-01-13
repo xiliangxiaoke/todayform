@@ -49,7 +49,7 @@ import java.util.List;
  * 农田列表
  */
 public class FarmlandFragment extends Fragment {
-    private TextView btmenu;
+//    private TextView btmenu;
     private Button btaddfarm;
     private SpringView springView;
     private RecyclerView recyclerView;
@@ -64,8 +64,8 @@ public class FarmlandFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.mainpage_farmland_fragment,container,false);
-        btmenu = view.findViewById(R.id.menu);
-        btmenu.setTypeface(MyApplication.iconTypeFace);
+//        btmenu = view.findViewById(R.id.menu);
+//        btmenu.setTypeface(MyApplication.iconTypeFace);
         btaddfarm = view.findViewById(R.id.addfarm);
         btaddfarm.setTypeface(MyApplication.iconTypeFace);
         springView= view.findViewById(R.id.springview);
@@ -159,12 +159,12 @@ public class FarmlandFragment extends Fragment {
             }
         });
 
-        btmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
-            }
-        });
+//        btmenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+//            }
+//        });
     }
 
 

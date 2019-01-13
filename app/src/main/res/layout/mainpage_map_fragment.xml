@@ -5,43 +5,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- title -->
-    <RelativeLayout
-        android:background="#46A05A"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/titleheight">
+    <!--<RelativeLayout-->
+        <!--android:background="#46A05A"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/titleheight">-->
 
-        <TextView
-            android:text="首页"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/title_text_size"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+        <!--<TextView-->
+            <!--android:text="首页"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="@dimen/title_text_size"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent" />-->
 
-        <TextView
-            android:id="@+id/menu"
-            android:textColor="#ffffff"
-            android:text="@string/icon_menu"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:layout_width="@dimen/titleheight"
-            android:layout_height="@dimen/titleheight" />
+        <!--<TextView-->
+            <!--android:id="@+id/menu"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:text="@string/icon_menu"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="18dp"-->
+            <!--android:layout_width="@dimen/titleheight"-->
+            <!--android:layout_height="@dimen/titleheight" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 
     <!--地图 -->
     <WebView
         android:id="@+id/map"
-        android:layout_marginTop="@dimen/titleheight"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <!-- 影像数据选择 -->
     <org.angmarch.views.NiceSpinner
         android:id="@+id/niceSpinner"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="50dp"
         app:arrowDrawable="@mipmap/sort"
@@ -80,7 +80,7 @@
             android:layout_height="30dp" />
 
         <View
-            android:background="@drawable/map_crop_state_legend"
+            android:background="@mipmap/map_crop_state_legend"
             android:layout_width="10dp"
             android:layout_height="140dp"/>
 

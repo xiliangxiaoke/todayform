@@ -8,4 +8,22 @@
     tools:context=".pages.tabs.DrawerTabActivity"
     tools:showIn="@layout/app_bar_drawer_tab">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_marginBottom="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>

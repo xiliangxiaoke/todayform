@@ -21,6 +21,7 @@ import com.today.todayfarm.pages.login.LoginActivity;
 import com.today.todayfarm.pages.main.MainPageGalleryPagerAdapter;
 import com.today.todayfarm.pages.main.ext.ScaleCircleNavigator;
 import com.today.todayfarm.pages.regist.RegistActivity;
+import com.today.todayfarm.pages.tabs.DrawerTabActivity;
 import com.today.todayfarm.pages.tabs.TabActivity;
 import com.today.todayfarm.restapi.Doapi;
 import com.today.todayfarm.restapi.MyApiService;
@@ -100,7 +101,7 @@ public class MainActivity extends BaseActivity {
         String token = Hawk.get(HawkKey.TOKEN);
         if (token !=null && token.length()>0){
             Intent intent = new Intent();
-            intent.setClass(this, TabActivity.class);
+            intent.setClass(this, DrawerTabActivity.class);
             this.startActivity(intent);
         }
 

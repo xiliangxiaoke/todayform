@@ -1,6 +1,8 @@
 package com.today.todayfarm.pages.chart;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.JS2AndroidParam;
@@ -42,6 +45,11 @@ public class FullChartActivity extends BaseActivity {
     @BindView(R.id.allyear)TextView allyear;
     @BindView(R.id.webview)
     WebView webView;
+
+    @BindView(R.id.back)
+    TextView back;
+
+    private boolean firstloaded = false;
 
     @OnClick(R.id.back)
     public void back(){
@@ -165,6 +173,8 @@ public class FullChartActivity extends BaseActivity {
         setContentView(R.layout.activity_full_chart);
         ButterKnife.bind(this);
 
+        back.setTypeface(MyApplication.iconTypeFace);
+
         charttype = getIntent().getStringExtra("charttype");
         datatype = getIntent().getStringExtra("datatype");
         fieldId = getIntent().getStringExtra("fieldId");
@@ -173,14 +183,15 @@ public class FullChartActivity extends BaseActivity {
         initwebview();
 
 
-        getData();
+
     }
 
 
     public void showChart(String fun,List<NameValuePair> data){
         JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
-        jsParamInfo.setType("threeDaysHumidChart");
+        jsParamInfo.setType(fun);
         jsParamInfo.setList(data);
+        Log.v("jsParamInfo",new Gson().toJson(jsParamInfo));
         WebUtil.callJS(webView,new Gson().toJson(jsParamInfo));
     }
 
@@ -199,7 +210,18 @@ public class FullChartActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        webView.setWebChromeClient(new WebChromeClient(){
 
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && firstloaded == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    firstloaded = true;
+                    getData();
+                }
+            }
+        });
 
         webView.loadUrl("file:///android_asset/echart.html");
     }

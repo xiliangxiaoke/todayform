@@ -563,6 +563,7 @@ public class API {
         call.enqueue(new Callback<ResultObj<E>>() {
             @Override
             public void onResponse(Call<ResultObj<E>> call, Response<ResultObj<E>> response) {
+                Log.v("=====>>>onResponse:","--------------------------------------------------------");
 
                 Log.v("=====>>>onResponse:",new Gson().toJson(response));
                 if (response.isSuccessful()) {
@@ -574,6 +575,8 @@ public class API {
 
             @Override
             public void onFailure(Call<ResultObj<E>> call, Throwable t) {
+                Log.v("=====>>>onResponse:","--------------------------------------------------------");
+                Log.v("=====>>>onFailure:","fffff");
                 callBack.onError(RESPONSE_ON_FAILURE);
             }
         });

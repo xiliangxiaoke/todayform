@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -55,6 +56,12 @@ public class RainDetailActivity extends BaseActivity {
     NiceSpinner niceSpinner;
     private List<CropInfo> croplist = new ArrayList<>();
     private CropInfo cropInfo = null;
+
+
+    JSParamInfo<NameValuePair> jsParamInfo_total = null;
+    JSParamInfo<NameValuePair> jsParamInfo_everyDay = null;
+    boolean webview_total_load_finished = false;
+    boolean webview_everyday_load_finished = false;
 
 
     @OnClick(R.id.back)
@@ -133,6 +140,21 @@ public class RainDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        totalChartWebview.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && webview_total_load_finished ==false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    webview_total_load_finished = true;
+                    if (jsParamInfo_total != null) {
+                        Log.v("加载图表 total: ",new Gson().toJson(jsParamInfo_total));
+                        WebUtil.callJS(totalChartWebview, new Gson().toJson(jsParamInfo_total));
+                    }
+                }
+            }
+        });
         totalChartWebview.loadUrl("file:///android_asset/echart.html");
 
 
@@ -150,6 +172,21 @@ public class RainDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        everydayChartWebview.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && webview_everyday_load_finished==false){
+                    Log.v("webview","everydayChartWebview 加载完成");
+                    webview_everyday_load_finished = true;
+                    if (jsParamInfo_everyDay != null) {
+                        Log.v("加载图表 everyday: ",new Gson().toJson(jsParamInfo_everyDay));
+                        WebUtil.callJS(everydayChartWebview, new Gson().toJson(jsParamInfo_everyDay));
+                    }
+                }
+            }
+        });
         everydayChartWebview.loadUrl("file:///android_asset/echart.html");
 
     }
@@ -160,6 +197,8 @@ public class RainDetailActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                  cropInfo = croplist.get(position);
+                webview_total_load_finished = false;
+                webview_everyday_load_finished = false;
 
 
                 // TODO 根据选择的作物更新图表数据
@@ -229,8 +268,9 @@ public class RainDetailActivity extends BaseActivity {
                 new ApiCallBack<NameValuePair>() {
                     @Override
                     public void onResponse(ResultObj<NameValuePair> resultObj) {
+                        JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
                         if (resultObj.getCode() == 0) {
-                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+
                             if (type == 1) {
                                 //自种植以来数据
                                 jsParamInfo.setType("rainTotalByCrop");
@@ -239,10 +279,13 @@ public class RainDetailActivity extends BaseActivity {
                                 jsParamInfo.setType("rainTotalYearByField");
                             }
                             jsParamInfo.setList(resultObj.getList());
-                            WebUtil.callJS(totalChartWebview, new Gson().toJson(jsParamInfo));
+                            Log.v("webview","调用 callJS 1");
+
+
+
                         } else {
                             // 显示空数据
-                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+
                             if (type == 1){
                                 //自种植以来数据
                                 jsParamInfo.setType("rainTotalByCrop");
@@ -251,8 +294,13 @@ public class RainDetailActivity extends BaseActivity {
                                 jsParamInfo.setType("rainTotalYearByField");
                             }
                             jsParamInfo.setList(getEmptylist());
-                            Log.v("calljsdata:",new Gson().toJson(jsParamInfo));
-                            WebUtil.callJS(totalChartWebview,new Gson().toJson(jsParamInfo));
+                            Log.v("webview","调用 callJS 2");
+
+                        }
+                        jsParamInfo_total = jsParamInfo;
+                        Log.v("jsParamInfo_total",new Gson().toJson(jsParamInfo_total));
+                        if (webview_total_load_finished == true) {
+                            WebUtil.callJS(totalChartWebview, new Gson().toJson(jsParamInfo));
                         }
                     }
 
@@ -283,8 +331,9 @@ public class RainDetailActivity extends BaseActivity {
                 new ApiCallBack<NameValuePair>() {
                     @Override
                     public void onResponse(ResultObj<NameValuePair> resultObj) {
+                        JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
                         if (resultObj.getCode() == 0) {
-                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+
                             if (type == 1) {
                                 //自种植以来数据
                                 jsParamInfo.setType("rainEveryDayByCrop");
@@ -293,10 +342,11 @@ public class RainDetailActivity extends BaseActivity {
                                 jsParamInfo.setType("rainEveryDayYearByField");
                             }
                             jsParamInfo.setList(resultObj.getList());
-                            WebUtil.callJS(everydayChartWebview, new Gson().toJson(jsParamInfo));
+                            Log.v("webview","调用 callJS 3");
+
                         } else {
                             // 显示空数据
-                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+
                             if (type == 1){
                                 //自种植以来数据
                                 jsParamInfo.setType("rainEveryDayByCrop");
@@ -305,7 +355,14 @@ public class RainDetailActivity extends BaseActivity {
                                 jsParamInfo.setType("rainEveryDayYearByField");
                             }
                             jsParamInfo.setList(getEmptylist());
-                            WebUtil.callJS(everydayChartWebview,new Gson().toJson(jsParamInfo));
+                            Log.v("webview","调用 callJS 4");
+
+                        }
+
+                        jsParamInfo_everyDay = jsParamInfo;
+                        Log.v("jsParamInfo_everyDay",new Gson().toJson(jsParamInfo_everyDay));
+                        if (webview_everyday_load_finished == true) {
+                            WebUtil.callJS(everydayChartWebview, new Gson().toJson(jsParamInfo));
                         }
                     }
 

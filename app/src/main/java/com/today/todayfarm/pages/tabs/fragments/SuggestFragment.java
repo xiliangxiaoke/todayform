@@ -45,7 +45,7 @@ import java.util.List;
 
 public class SuggestFragment extends Fragment {
 
-    private TextView btmenu;
+//    private TextView btmenu;
     SpringView springView;
     RecyclerView recyclerView;
 
@@ -60,8 +60,8 @@ public class SuggestFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.mainpage_suggest_fragment,container,false);
-        btmenu = view.findViewById(R.id.menu);
-        btmenu.setTypeface(MyApplication.iconTypeFace);
+//        btmenu = view.findViewById(R.id.menu);
+//        btmenu.setTypeface(MyApplication.iconTypeFace);
         springView = view.findViewById(R.id.springview);
         recyclerView = view.findViewById(R.id.recyclerView);
 
@@ -110,13 +110,13 @@ public class SuggestFragment extends Fragment {
     }
 
     private void initlistener() {
-        btmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
-
-            }
-        });
+//        btmenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+//
+//            }
+//        });
 
         springView.setListener(new SpringView.OnFreshListener() {
             @Override

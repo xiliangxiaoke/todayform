@@ -2,7 +2,9 @@ package com.today.todayfarm.pages.chart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -54,6 +56,12 @@ public class TempDetailActivity extends BaseActivity {
     NiceSpinner niceSpinner;
     private List<CropInfo> croplist = new ArrayList<>();
     CropInfo cropInfo = null;
+
+
+    JSParamInfo<NameValuePair> jsParamInfo_total = null;
+    JSParamInfo<NameValuePair> jsParamInfo_everyday = null;
+    boolean webview_total_load_finished = false;
+    boolean webview_everyday_load_finished = false;
 
 
     @OnClick(R.id.back)
@@ -129,6 +137,21 @@ public class TempDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        totalChartWebview.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && webview_total_load_finished == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    webview_total_load_finished = true;
+                    if (jsParamInfo_total != null) {
+                        Log.v("加载图表 total: ",new Gson().toJson(jsParamInfo_total));
+                        WebUtil.callJS(totalChartWebview, new Gson().toJson(jsParamInfo_total));
+                    }
+                }
+            }
+        });
         totalChartWebview.loadUrl("file:///android_asset/echart.html");
 
 
@@ -146,6 +169,21 @@ public class TempDetailActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+        everydayChartWebview.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && webview_everyday_load_finished == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    webview_everyday_load_finished = true;
+                    if (jsParamInfo_everyday != null) {
+                        Log.v("加载图表 total: ",new Gson().toJson(jsParamInfo_everyday));
+                        WebUtil.callJS(everydayChartWebview, new Gson().toJson(jsParamInfo_everyday));
+                    }
+                }
+            }
+        });
         everydayChartWebview.loadUrl("file:///android_asset/echart.html");
 
     }
@@ -156,6 +194,8 @@ public class TempDetailActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 cropInfo = croplist.get(position);
+                webview_total_load_finished = false;
+                webview_everyday_load_finished = false;
 
                 // TODO 根据选择的作物更新图表数据
                 initchartdata(cropInfo,1);
@@ -219,12 +259,13 @@ public class TempDetailActivity extends BaseActivity {
                 Hawk.get(HawkKey.TOKEN),
                 fieldId,
                 cropInfo!=null ? cropInfo.getCropId():null,
-                type, "totalRain",
+                type, "totalTemperature",
                 new ApiCallBack<NameValuePair>() {
                     @Override
                     public void onResponse(ResultObj<NameValuePair> resultObj) {
+                        JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
                         if (resultObj.getCode() == 0) {
-                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+
                             if (type == 1){
                                 //自种植以来数据
                                 jsParamInfo.setType("tempTotalByCrop");
@@ -234,7 +275,25 @@ public class TempDetailActivity extends BaseActivity {
                             }
 
                             jsParamInfo.setList(resultObj.getList());
-                            WebUtil.callJS(totalChartWebview,new Gson().toJson(jsParamInfo));
+
+                        }else {
+                            // 显示空数据
+
+                            if (type == 1){
+                                //自种植以来数据
+                                jsParamInfo.setType("tempTotalByCrop");
+                            }else{
+                                // 全年数据
+                                jsParamInfo.setType("tempTotalYearByField");
+                            }
+                            jsParamInfo.setList(getEmptylist());
+                            Log.v("webview","调用 callJS 2");
+
+                        }
+                        jsParamInfo_total = jsParamInfo;
+
+                        if (webview_total_load_finished == true) {
+                            WebUtil.callJS(totalChartWebview, new Gson().toJson(jsParamInfo));
                         }
                     }
 
@@ -242,20 +301,32 @@ public class TempDetailActivity extends BaseActivity {
                     public void onError(int code) {
 
                     }
+
+                    private List<NameValuePair> getEmptylist() {
+                        List<NameValuePair> list = new ArrayList<NameValuePair>();
+                        for (int i=1;i<10;i++) {
+                            NameValuePair pair = new NameValuePair();
+                            pair.setName(""+i);
+                            pair.setValue(0);
+                            list.add(pair);
+                        }
+                        return list;
+                    }
                 }
         );
 
         // 获取每日数据
-        API.findRainDatas(
+        API.findTemperatureDatas(
                 Hawk.get(HawkKey.TOKEN),
                 fieldId,
                 cropInfo!=null ? cropInfo.getCropId():null,
-                type, "rain",
+                type, "temperature",
                 new ApiCallBack<NameValuePair>() {
                     @Override
                     public void onResponse(ResultObj<NameValuePair> resultObj) {
+                        JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
                         if (resultObj.getCode() == 0) {
-                            JSParamInfo<NameValuePair> jsParamInfo = new JSParamInfo<>();
+
                             if (type == 1){
                                 //自种植以来数据
                                 jsParamInfo.setType("tempEveryDayByCrop");
@@ -264,13 +335,42 @@ public class TempDetailActivity extends BaseActivity {
                                 jsParamInfo.setType("tempEveryDayYearByField");
                             }
                             jsParamInfo.setList(resultObj.getList());
-                            WebUtil.callJS(everydayChartWebview,new Gson().toJson(jsParamInfo));
+
+                        }else {
+                            // 显示空数据
+
+                            if (type == 1){
+                                //自种植以来数据
+                                jsParamInfo.setType("tempEveryDayByCrop");
+                            }else{
+                                // 全年数据
+                                jsParamInfo.setType("tempEveryDayYearByField");
+                            }
+                            jsParamInfo.setList(getEmptylist());
+                            Log.v("webview","调用 callJS 2");
+
+                        }
+                        jsParamInfo_everyday = jsParamInfo;
+
+                        if (webview_everyday_load_finished == true) {
+                            WebUtil.callJS(everydayChartWebview, new Gson().toJson(jsParamInfo));
                         }
                     }
 
                     @Override
                     public void onError(int code) {
 
+                    }
+
+                    private List<NameValuePair> getEmptylist() {
+                        List<NameValuePair> list = new ArrayList<NameValuePair>();
+                        for (int i=1;i<10;i++) {
+                            NameValuePair pair = new NameValuePair();
+                            pair.setName(""+i);
+                            pair.setValue(0);
+                            list.add(pair);
+                        }
+                        return list;
                     }
                 }
         );

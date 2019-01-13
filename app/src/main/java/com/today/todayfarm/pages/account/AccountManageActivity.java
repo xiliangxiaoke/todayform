@@ -115,6 +115,7 @@ public class AccountManageActivity extends BaseActivity {
                             if (resultObj.getList() != null) {
                                 if (currentPage == 1) {
                                     datalist.clear();
+                                    datalist.addAll(resultObj.getList());
                                 } else {
                                     datalist.addAll(resultObj.getList());
                                 }
@@ -146,17 +147,17 @@ springView.onFinishFreshAndLoad();
 
         @NonNull
         @Override
-        public RecyclerviewAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = null;
             view = LayoutInflater.from(context).inflate(R.layout.item_account_item, parent, false);
 
 
-            return new RecyclerviewAdapter.Viewholder(view);
+            return new Viewholder(view);
 
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerviewAdapter.Viewholder holder, int position) {
+        public void onBindViewHolder(@NonNull Viewholder holder, int position) {
             User user = datalist.get(position);
             holder.index.setText(""+position);
             holder.name.setText(user.getAliasName());

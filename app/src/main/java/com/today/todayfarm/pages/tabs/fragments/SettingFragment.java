@@ -38,7 +38,7 @@ import okhttp3.RequestBody;
 
 public class SettingFragment extends Fragment {
 
-    private TextView btmenu;
+//    private TextView btmenu;
     private SimpleDraweeView pic;
     TextView name;
     TextView phone;
@@ -62,7 +62,7 @@ public class SettingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.mainpage_setting_fragment,container,false);
-        btmenu = view.findViewById(R.id.menu);
+//        btmenu = view.findViewById(R.id.menu);
         pic = view.findViewById(R.id.pic);
         name = view.findViewById(R.id.name);
         phone = view.findViewById(R.id.phone);
@@ -75,7 +75,7 @@ public class SettingFragment extends Fragment {
         addressicon = view.findViewById(R.id.addressicon);
 
 
-        btmenu.setTypeface(MyApplication.iconTypeFace);
+//        btmenu.setTypeface(MyApplication.iconTypeFace);
         nameicon.setTypeface(MyApplication.iconTypeFace);
         phoneicon.setTypeface(MyApplication.iconTypeFace);
         companyicon.setTypeface(MyApplication.iconTypeFace);
@@ -123,12 +123,12 @@ public class SettingFragment extends Fragment {
     }
 
     private void initlistener() {
-        btmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
-            }
-        });
+//        btmenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+//            }
+//        });
 
         pic.setOnClickListener(new View.OnClickListener() {
             @Override

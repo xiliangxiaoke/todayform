@@ -80,12 +80,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".WebMapActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".base.BaseActivity" />
         <activity
@@ -171,11 +166,16 @@
         <activity
             android:name=".pages.tabs.DrawerTabActivity"
             android:label="@string/title_activity_drawer_tab"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            >
+
+        </activity>
         <activity android:name=".pages.suggest.CropSuggestListActivity" />
         <activity android:name=".pages.suggest.StageDetailActivity" />
         <activity android:name=".pages.account.AccountManageActivity" />
-        <activity android:name=".pages.account.AccountDetailActivity"></activity>
+        <activity android:name=".pages.account.AccountDetailActivity">
+
+        </activity>
     </application>
 
 </manifest>

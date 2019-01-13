@@ -17,6 +17,7 @@ import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.PhoneCode;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.pages.tabs.DrawerTabActivity;
 import com.today.todayfarm.pages.tabs.TabActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
@@ -117,7 +118,7 @@ public class LoginActivity extends BaseActivity {
                     //保存token
                     Hawk.put(HawkKey.TOKEN,resultObj.token);
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this, TabActivity.class);
+                    intent.setClass(LoginActivity.this, DrawerTabActivity.class);
                     LoginActivity.this.startActivity(intent);
                 }else {
                     new SweetAlertDialog(LoginActivity.this)

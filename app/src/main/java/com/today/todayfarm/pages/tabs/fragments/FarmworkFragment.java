@@ -47,7 +47,7 @@ import java.util.List;
  * 农事记录
  */
 public class FarmworkFragment extends Fragment {
-    private TextView btmenu;
+//    private TextView btmenu;
     private Button addfarmthing;
 
     private SpringView springView;
@@ -64,8 +64,8 @@ public class FarmworkFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.mainpage_farmwork_fragment,container,false);
-        btmenu = view.findViewById(R.id.menu);
-        btmenu.setTypeface(MyApplication.iconTypeFace);
+//        btmenu = view.findViewById(R.id.menu);
+//        btmenu.setTypeface(MyApplication.iconTypeFace);
         addfarmthing = view.findViewById(R.id.addfarmthing);
         addfarmthing.setTypeface(MyApplication.iconTypeFace);
         springView= view.findViewById(R.id.springview);
@@ -112,12 +112,12 @@ public class FarmworkFragment extends Fragment {
         });
 
 
-        btmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
-            }
-        });
+//        btmenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+//            }
+//        });
     }
 
     @Override

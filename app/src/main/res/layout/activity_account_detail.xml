@@ -99,6 +99,7 @@
     <Button
         android:text="删除"
         android:gravity="center"
+        android:layout_alignParentBottom="true"
         android:textColor="#ffffff"
         android:background="@drawable/button_login_bg"
         android:id="@+id/delete"

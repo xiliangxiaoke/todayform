@@ -5,33 +5,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- title -->
-    <RelativeLayout
-        android:background="#46A05A"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/titleheight">
+    <!--<RelativeLayout-->
+        <!--android:background="#46A05A"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/titleheight">-->
 
-        <TextView
-            android:text="设置"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/title_text_size"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+        <!--<TextView-->
+            <!--android:text="设置"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="@dimen/title_text_size"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent" />-->
 
-        <TextView
-            android:id="@+id/menu"
-            android:textColor="#ffffff"
-            android:text="@string/icon_menu"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:layout_width="@dimen/titleheight"
-            android:layout_height="@dimen/titleheight" />
+        <!--<TextView-->
+            <!--android:id="@+id/menu"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:text="@string/icon_menu"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="18dp"-->
+            <!--android:layout_width="@dimen/titleheight"-->
+            <!--android:layout_height="@dimen/titleheight" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
     <LinearLayout
-        android:layout_marginTop="@dimen/titleheight"
+
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

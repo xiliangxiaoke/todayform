@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -129,6 +130,12 @@ public class FarmDetailActivity extends Activity {
     @BindView(R.id.farmcropdatatab)
     RelativeLayout farmcropdatatab;
 
+
+
+    private boolean firstloaded = false;
+    String boundary2map = null;
+
+
     @OnClick(R.id.back)
     public void back() {
         this.finish();
@@ -207,7 +214,11 @@ public class FarmDetailActivity extends Activity {
                             fieldInfo = resultObj.getObject();
                             // 向地图 中加载农田边界
 
-                            showfieldboundary(fieldInfo.getFieldBoundary());
+                            boundary2map = fieldInfo.getFieldBoundary();
+                            if (firstloaded){
+                                showfieldboundary(fieldInfo.getFieldBoundary());
+                            }
+
 
                             // 显示名称
                             farmname.setText(fieldInfo.getFieldName());
@@ -413,20 +424,20 @@ public class FarmDetailActivity extends Activity {
         }
 
         jsParamInfo.setParams(boundaryInfo2Js);
+        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
 
 
-
-        //Log.v("jsParamInfo:",new Gson().toJson(jsParamInfo));
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                /**
-                 *要执行的操作
-                 */
-                WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
-            }
-        }, 1000);//3秒后执行Runnable中的run方法
+//        //Log.v("jsParamInfo:",new Gson().toJson(jsParamInfo));
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                /**
+//                 *要执行的操作
+//                 */
+//
+//            }
+//        }, 1000);//3秒后执行Runnable中的run方法
     }
 
     private void shownocroptip() {
@@ -447,6 +458,21 @@ public class FarmDetailActivity extends Activity {
         WebSettings webSettings = map.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
+        map.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && firstloaded == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    firstloaded = true;
+                    if (boundary2map != null) {
+                        showfieldboundary(boundary2map);
+                    }
+                }
+            }
+        });
 
         map.loadUrl("file:///android_asset/index.html");
     }

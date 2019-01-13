@@ -23,6 +23,7 @@ import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.MapDrawActionInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.AddFarmMap.AddFarm2MapActivity;
+import com.today.todayfarm.pages.tabs.DrawerTabActivity;
 import com.today.todayfarm.pages.tabs.TabActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
@@ -94,7 +95,7 @@ public class CreateFarmActivity extends BaseActivity {
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                                             Hawk.put(HawkKey.MAIN_PAGE_INDEX_TO_SHOW,1);
                                             Intent intent = new Intent();
-                                            intent.setClass(CreateFarmActivity.this, TabActivity.class);
+                                            intent.setClass(CreateFarmActivity.this, DrawerTabActivity.class);
                                             CreateFarmActivity.this.startActivity(intent);
                                         }
                                     })

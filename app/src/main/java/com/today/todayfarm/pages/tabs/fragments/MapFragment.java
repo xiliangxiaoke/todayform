@@ -73,7 +73,7 @@ import butterknife.Unbinder;
 public class MapFragment extends Fragment implements AMapLocationListener{
 
 
-    private TextView btmenu;
+//    private TextView btmenu;
     private WebView map;
 
     private ImageView geolocation;
@@ -101,8 +101,8 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 //        return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.mainpage_map_fragment,container,false);
 
-        btmenu = view.findViewById(R.id.menu);
-        btmenu.setTypeface(MyApplication.iconTypeFace);
+//        btmenu = view.findViewById(R.id.menu);
+//        btmenu.setTypeface(MyApplication.iconTypeFace);
         map = view.findViewById(R.id.map);
         geolocation = view.findViewById(R.id.geolocation);
         datetv = view.findViewById(R.id.date);
@@ -161,12 +161,12 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         });
 
 
-        btmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
-            }
-        });
+//        btmenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
+//            }
+//        });
 
         niceSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
