@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
@@ -175,6 +177,25 @@ public class DrawerTabActivity extends BaseActivity
 
     }
 
+        // 用来计算返回键的点击间隔时间
+     private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                       && event.getAction() == KeyEvent.ACTION_DOWN) {
+                         if ((System.currentTimeMillis() - exitTime) > 2000) {
+                                 //弹出提示，可以有多种方式
+                             Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                                 exitTime = System.currentTimeMillis();
+                             } else {
+                                this.finish();
+                             }
+                         return true;
+                     }
+
+        return super.onKeyDown(keyCode, event);
+    }
 
     private void switchPages(int index) {
 
