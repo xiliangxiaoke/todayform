@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="添加新作物"
+            android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff" />
 
         <!--return-->

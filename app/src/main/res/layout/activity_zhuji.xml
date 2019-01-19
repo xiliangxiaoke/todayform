@@ -13,6 +13,7 @@
 
         <TextView
             android:text="注记"
+            android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff"
             android:gravity="center"
             android:layout_centerInParent="true"

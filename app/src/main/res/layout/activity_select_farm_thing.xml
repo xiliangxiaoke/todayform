@@ -13,6 +13,7 @@
 
         <TextView
             android:text="选择农事"
+            android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"

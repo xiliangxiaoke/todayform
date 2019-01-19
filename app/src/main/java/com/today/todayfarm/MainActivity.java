@@ -75,9 +75,11 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.register) void doRegister() {
         //open register page
+
         Intent intent = new Intent();
         intent.setClass(this,RegistActivity.class);
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -87,6 +89,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setClass(this,LoginActivity.class);
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -103,6 +106,7 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.setClass(this, DrawerTabActivity.class);
             this.startActivity(intent);
+            this.finish();
         }
 
 

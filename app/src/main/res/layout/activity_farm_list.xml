@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="@dimen/titleheight">
         <ImageView
             android:id="@+id/back"
             android:src="@mipmap/back"
@@ -17,6 +17,7 @@
             android:layout_height="60dp"/>
         <TextView
             android:text="农场列表"
+            android:textSize="@dimen/title_text_size"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"

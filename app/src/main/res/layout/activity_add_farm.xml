@@ -18,6 +18,7 @@
         <TextView
             android:text="增加新农场"
             android:gravity="center"
+            android:textSize="@dimen/title_text_size"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />

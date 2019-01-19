@@ -21,6 +21,7 @@
 
         <TextView
             android:text="未来三天预测数据"
+            android:textSize="@dimen/title_text_size"
             android:layout_marginLeft="@dimen/titleheight"
             android:gravity="center_vertical"
             android:layout_width="wrap_content"

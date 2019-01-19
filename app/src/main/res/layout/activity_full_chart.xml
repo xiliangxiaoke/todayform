@@ -21,6 +21,7 @@
 
         <TextView
             android:text="图表数据"
+            android:textSize="@dimen/title_text_size"
             android:layout_marginLeft="@dimen/titleheight"
             android:gravity="center_vertical"
             android:layout_width="wrap_content"

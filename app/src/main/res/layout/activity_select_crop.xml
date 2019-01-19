@@ -11,6 +11,7 @@
 
         <TextView
             android:text="选择作物"
+            android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
