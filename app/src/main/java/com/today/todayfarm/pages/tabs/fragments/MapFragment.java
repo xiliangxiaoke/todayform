@@ -19,6 +19,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -83,6 +84,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
     TextView datetv;
 
+    LinearLayout maplegend;
 
 
     private RecyclerviewAdapter adapter;
@@ -106,6 +108,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         map = view.findViewById(R.id.map);
         geolocation = view.findViewById(R.id.geolocation);
         datetv = view.findViewById(R.id.date);
+        maplegend = view.findViewById(R.id.maplegend);
 
         adapter = new RecyclerviewAdapter(this.getContext());
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -174,16 +177,19 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
                 if (position == 0) {
                     //  获取健康监测数据
+                    maplegend.setVisibility(View.VISIBLE);
                     datatype = 1;
                     showHealthData();
                     recyclerView.setVisibility(View.VISIBLE);
                 } else if (position == 1) {
                     // TODO 获取卫星影像数据
+                    maplegend.setVisibility(View.INVISIBLE);
                     datatype = 2;
                     showStaliteData();
                     recyclerView.setVisibility(View.VISIBLE);
                 } else if (position == 2) {
                     // 获取作物区划图
+                    maplegend.setVisibility(View.INVISIBLE);
                     datatype = 3;
                     timeregion.clear();
                     showBlock();

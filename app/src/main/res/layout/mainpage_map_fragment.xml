@@ -64,6 +64,7 @@
     
     <!-- 图例-->
     <LinearLayout
+        android:id="@+id/maplegend"
         android:orientation="vertical"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
