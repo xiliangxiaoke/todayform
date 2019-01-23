@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -55,6 +56,7 @@ public class FieldListActivity extends Activity {
         setContentView(R.layout.activity_field_list);
 
         ButterKnife.bind(this);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

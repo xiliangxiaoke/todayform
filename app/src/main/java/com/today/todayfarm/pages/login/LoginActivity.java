@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.base.BaseActivity;
@@ -143,6 +144,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         //限制输入手机号
         etphone.setInputType(InputType.TYPE_CLASS_NUMBER);

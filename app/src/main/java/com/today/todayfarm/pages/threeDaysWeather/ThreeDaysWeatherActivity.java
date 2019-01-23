@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
@@ -155,6 +156,9 @@ public class ThreeDaysWeatherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_days_weather);
         ButterKnife.bind(this);
+
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         back.setTypeface(MyApplication.iconTypeFace);
         fieldid = getIntent().getStringExtra("fieldid");

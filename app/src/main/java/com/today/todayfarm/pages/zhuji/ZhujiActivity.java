@@ -15,17 +15,19 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.ResultObj;
-import com.today.todayfarm.pages.menu.MenuActivity;
+//import com.today.todayfarm.pages.menu.MenuActivity;
 import com.today.todayfarm.pages.note.EditNoteActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
@@ -45,16 +47,15 @@ public class ZhujiActivity extends BaseActivity {
     @BindView(R.id.springview)
     SpringView springView;
 
+    @BindView(R.id.back)
+    TextView back;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    @OnClick(R.id.menu)
-    public void menuclick() {
-        Intent intent = new Intent();
-        intent.setClass(this, MenuActivity.class);
-        this.startActivity(intent);
-        this.overridePendingTransition(0,0);
-        //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
+    @OnClick(R.id.back)
+    public void backclick() {
+        this.finish();
     }
 
     @OnClick(R.id.addnote)
@@ -81,6 +82,11 @@ public class ZhujiActivity extends BaseActivity {
         setContentView(R.layout.activity_zhuji);
         ButterKnife.bind(this);
 
+
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
+
+        back.setTypeface(MyApplication.iconTypeFace);
 
         springView.setHeader(new DefaultHeader(this));
         springView.setFooter(new DefaultFooter(this));

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
@@ -186,6 +187,7 @@ public class EditFarmthingShougeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_farmthing_shouge);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         ButterKnife.bind(this);
 

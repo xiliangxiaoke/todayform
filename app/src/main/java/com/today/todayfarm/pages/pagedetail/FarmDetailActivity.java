@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.AddNewCrop.AddNewCropActivity;
 import com.today.todayfarm.dom.BoundaryInfo2Js;
@@ -191,6 +192,7 @@ public class FarmDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farm_detail);
         ButterKnife.bind(this);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         Intent intent = getIntent();
         fieldid = intent.getStringExtra("fieldid");

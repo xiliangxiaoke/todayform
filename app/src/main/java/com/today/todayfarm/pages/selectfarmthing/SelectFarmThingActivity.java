@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
@@ -88,6 +89,9 @@ public class SelectFarmThingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_farm_thing);
         ButterKnife.bind(this);
+
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         back.setTypeface(MyApplication.iconTypeFace);
 

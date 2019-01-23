@@ -20,6 +20,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -82,7 +83,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
     private RecyclerView recyclerView;
 
-    TextView datetv;
+    //TextView datetv;
 
     LinearLayout maplegend;
 
@@ -107,7 +108,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 //        btmenu.setTypeface(MyApplication.iconTypeFace);
         map = view.findViewById(R.id.map);
         geolocation = view.findViewById(R.id.geolocation);
-        datetv = view.findViewById(R.id.date);
+//        datetv = view.findViewById(R.id.date);
         maplegend = view.findViewById(R.id.maplegend);
 
         adapter = new RecyclerviewAdapter(this.getContext());
@@ -181,14 +182,14 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     datatype = 1;
                     showHealthData();
                     recyclerView.setVisibility(View.VISIBLE);
-                    datetv.setVisibility(View.VISIBLE);
+//                    datetv.setVisibility(View.VISIBLE);
                 } else if (position == 1) {
                     // TODO 获取卫星影像数据
                     maplegend.setVisibility(View.INVISIBLE);
                     datatype = 2;
                     showStaliteData();
                     recyclerView.setVisibility(View.VISIBLE);
-                    datetv.setVisibility(View.VISIBLE);
+//                    datetv.setVisibility(View.VISIBLE);
                 } else if (position == 2) {
                     // 获取作物区划图
                     maplegend.setVisibility(View.INVISIBLE);
@@ -196,7 +197,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     timeregion.clear();
                     showBlock();
                     recyclerView.setVisibility(View.GONE);
-                    datetv.setVisibility(View.INVISIBLE);
+//                    datetv.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -278,15 +279,30 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                                 info.setTimestamp(calendar.getTimeInMillis());
 
                                 info.setDateText(calendar.get(Calendar.DATE));
-                                info.setMonthText(calendar.get(Calendar.MONTH)+1);
+//                                info.setMonthText(calendar.get(Calendar.MONTH)+1);
+//                                info.setYear(calendar.get(Calendar.YEAR));
+                                info.setSelected(false);
                                 timeregion.add(info);
                             }
 
+                            for (int j = 0;j<timeregion.size();j++) {
+                                if (timeregion.get(j).getDateText() == 1) {
+
+                                    timeregion.get(j).setMonthText(calendar.get(Calendar.MONTH)+1);
+
+                                    if (j > 0) {
+
+                                        timeregion.get(j-1).setYear(calendar.get(Calendar.YEAR));
+                                    }
+
+                                }
+                            }
+
                             // 显示日期描述
-                            datetv.setText(
-                                    calendar.get(Calendar.YEAR)+"年"+
-                                            (calendar.get(Calendar.MONTH)+1)+"月"
-                            );
+//                            datetv.setText(
+//                                    calendar.get(Calendar.YEAR)+"年"+
+//                                            (calendar.get(Calendar.MONTH)+1)+"月"
+//                            );
 
                             // 往里插实际的影像数据
                             if (resultObj.getList() != null && resultObj.getList().size() > 0) {
@@ -367,14 +383,30 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                                 info.setTimestamp(calendar.getTimeInMillis());
 
                                 info.setDateText(calendar.get(Calendar.DATE));
-                                info.setMonthText(calendar.get(Calendar.MONTH)+1);
+
+
+                                info.setSelected(false);
                                 timeregion.add(info);
                             }
+
+                            for (int j = 0;j<timeregion.size();j++) {
+                                if (timeregion.get(j).getDateText() == 1) {
+
+                                    timeregion.get(j).setMonthText(calendar.get(Calendar.MONTH)+1);
+
+                                    if (j > 0) {
+
+                                        timeregion.get(j-1).setYear(calendar.get(Calendar.YEAR));
+                                    }
+
+                                }
+                            }
+
                             // 显示日期描述
-                            datetv.setText(
-                                    calendar.get(Calendar.YEAR)+"年"+
-                                            (calendar.get(Calendar.MONTH)+1)+"月"
-                            );
+//                            datetv.setText(
+//                                    calendar.get(Calendar.YEAR)+"年"+
+//                                            (calendar.get(Calendar.MONTH)+1)+"月"
+//                            );
 
                             // 往里插实际的影像数据
                             if (resultObj.getList() != null && resultObj.getList().size() > 0) {
@@ -542,11 +574,34 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                 holder.datablock.setVisibility(View.GONE);
             }
 
+            holder.label.setText(""+info.getDateText());
             // 如果是1号显示日期
             if (info.getDateText() == 1) {
-                holder.label.setText(info.getMonthText()+"-"+info.getDateText());
+                //holder.label.setText(info.getMonthText()+"-"+info.getDateText());
+                holder.yeardevide.setVisibility(View.VISIBLE);
+
             }else{
-                holder.label.setText(""+info.getDateText());
+                //holder.label.setText(""+info.getDateText());
+                holder.yeardevide.setVisibility(View.GONE);
+
+            }
+
+            if (info.getMonthText() > 0) {
+                holder.month.setText("年"+info.getMonthText()+"月");
+            }else{
+                holder.month.setText("");
+            }
+
+            if (info.getYear() > 0) {
+                holder.year.setText(""+info.getYear());
+            }else{
+                holder.year.setText("");
+            }
+
+            if (info.isSelected()){
+                holder.selectdatablock.setVisibility(View.VISIBLE);
+            }else{
+                holder.selectdatablock.setVisibility(View.GONE);
             }
 
             holder.panel.setOnClickListener(new View.OnClickListener() {
@@ -560,6 +615,14 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                             jsParamInfo.setType("showhealthimg");
                             jsParamInfo.setList(info.getHealthImgInfos());
                             WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+
+                            // 更新选中样式
+                            for (int i=0;i<timeregion.size();i++) {
+                                timeregion.get(i).setSelected(false);
+                            }
+                            info.setSelected(true);
+                            notifyDataSetChanged();
+
                         } else {
                             ToastUtil.show(MapFragment.this.getContext(),"该日无影像数据！");
                         }
@@ -570,6 +633,16 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                             jsParamInfo.setType("showrsimg");
                             jsParamInfo.setList(info.getSatellateImgInfos());
                             WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+
+
+                            // 更新选中样式
+                            for (int i=0;i<timeregion.size();i++) {
+                                timeregion.get(i).setSelected(false);
+                            }
+                            info.setSelected(true);
+                            notifyDataSetChanged();
+
+
                         } else {
                             ToastUtil.show(MapFragment.this.getContext(),"该日无影像数据！");
                         }
@@ -578,6 +651,9 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     }
                 }
             });
+
+
+
         }
 
         @Override
@@ -592,6 +668,11 @@ public class MapFragment extends Fragment implements AMapLocationListener{
             View datablock;
             TextView label;
 
+            RelativeLayout selectdatablock;
+            View yeardevide;
+            TextView year;
+            TextView month;
+
 
             public Viewholder(View itemView) {
                 super(itemView);
@@ -600,6 +681,10 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
                 datablock = itemView.findViewById(R.id.datablock);
                 label = itemView.findViewById(R.id.label);
+                selectdatablock = itemView.findViewById(R.id.selectDataBlock);
+                yeardevide = itemView.findViewById(R.id.yeardevide);
+                year = itemView.findViewById(R.id.year);
+                month = itemView.findViewById(R.id.month);
 
             }
         }

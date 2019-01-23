@@ -3,42 +3,67 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/panel"
 
-    android:layout_width="50dp"
+    android:layout_width="40dp"
     android:layout_height="50dp">
 
 
     <!--横线-->
     <View
-        android:background="#ffffff"
+        android:background="#FAFAFA"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
 
     <!--竖线-->
     <View
-        android:background="#ffffff"
+        android:background="#FAFAFA"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:layout_width="1dp"
-        android:layout_height="4dp"/>
+        android:layout_height="5dp"/>
+
+    <!--年分割线 默认不显示-->
+    <View
+        android:id="@+id/yeardevide"
+        android:background="#FFFFFF"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_width="1dp"
+        android:layout_height="25dp"/>
 
     <!--数据提示块-->
     <View
         android:id="@+id/datablock"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/time_block"
         android:visibility="gone"
-        android:layout_width="6dp"
-        android:layout_height="6dp"/>
+        android:layout_width="8dp"
+        android:layout_height="8dp"/>
 
     <!-- 选中的点显示 -->
     <RelativeLayout
         android:id="@+id/selectDataBlock"
-        android:layout_width="10dp"
-        android:layout_height="10dp">
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_width="12dp"
+        android:layout_height="12dp">
 
+        <View
+            android:layout_centerHorizontal="true"
 
+            android:background="@drawable/time_block_selected"
+            android:layout_centerInParent="true"
+            android:layout_width="8dp"
+            android:layout_height="8dp"/>
+
+        <View
+            android:layout_centerHorizontal="true"
+
+            android:background="@drawable/time_block_selected_big"
+            android:layout_centerInParent="true"
+            android:layout_width="12dp"
+            android:layout_height="12dp"/>
 
     </RelativeLayout>
 
@@ -46,8 +71,26 @@
         android:id="@+id/label"
         android:gravity="center_horizontal"
         android:textColor="#ffffff"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <!-- 两个文本控件组合显示年月   如2019  年12月-->
+    <TextView
+        android:id="@+id/year"
+        android:textColor="#ffffff"
+        android:textSize="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/month"
+        android:textColor="#ffffff"
+        android:textSize="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

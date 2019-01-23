@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.widget.EditText;
 
+import com.jaeger.library.StatusBarUtil;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.dom.FarmInfo;
 import com.today.todayfarm.dom.ResultObj;
@@ -79,5 +80,7 @@ public class AddFarmActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_farm);
         ButterKnife.bind(this);
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
     }
 }

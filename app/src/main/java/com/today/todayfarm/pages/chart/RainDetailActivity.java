@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
@@ -104,6 +105,7 @@ public class RainDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rain_detail);
         ButterKnife.bind(this);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         fieldId = getIntent().getStringExtra("fieldId");
         fieldName = getIntent().getStringExtra("fieldName");

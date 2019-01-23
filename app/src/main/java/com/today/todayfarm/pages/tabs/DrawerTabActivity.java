@@ -33,7 +33,7 @@ import com.today.todayfarm.WeatherSearchActivity;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
-import com.today.todayfarm.pages.menu.MenuActivity;
+//import com.today.todayfarm.pages.menu.MenuActivity;
 import com.today.todayfarm.pages.tabs.fragments.FarmlandFragment;
 import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
 import com.today.todayfarm.pages.tabs.fragments.MapFragment;
@@ -73,14 +73,21 @@ public class DrawerTabActivity extends BaseActivity
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
 
+    @BindView(R.id.maintitle)
+            TextView maintitle;
+
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_tab);
+
+        ButterKnife.bind(this);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("首页");
+        toolbar.setTitle("");
+        maintitle.setText("首页");
         toolbar.setBackgroundColor(getResources().getColor(R.color.mainTitleColor));
         setSupportActionBar(toolbar);
 
@@ -103,6 +110,8 @@ public class DrawerTabActivity extends BaseActivity
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
+        StatusBarUtil.setColorForDrawerLayout(this,drawer,getResources().getColor(R.color.mainTitleColor));
+        //StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
 
         // 业务代码
@@ -110,7 +119,7 @@ public class DrawerTabActivity extends BaseActivity
 
 
         StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
-        ButterKnife.bind(this);
+
 
         initfragments();
         initmagicindicator();
@@ -126,34 +135,34 @@ public class DrawerTabActivity extends BaseActivity
     public void onEvent(MessageEvent event){
         if ("openMenuActivity".equals(event.type)){
             //打开侧边菜单栏页面
-            try{
-                Intent intent = new Intent();
-                intent.setClass(this, MenuActivity.class);
-                this.startActivity(intent);
-                this.overridePendingTransition(0,0);
-                //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
-            }catch (Exception e){
-                Log.e("ERROR",e.getMessage());
-            }
+//            try{
+//                Intent intent = new Intent();
+//                intent.setClass(this, MenuActivity.class);
+//                this.startActivity(intent);
+//                this.overridePendingTransition(0,0);
+//                //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
+//            }catch (Exception e){
+//                Log.e("ERROR",e.getMessage());
+//            }
 
         } else if ("menu_mainpage".equals(event.type)) {
-            getSupportActionBar().setTitle("首页");
+            maintitle.setText("首页");
             fragmentContainerHelper.handlePageSelected(0,false);
             switchPages(0);
         } else if ("menu_field".equals(event.type)) {
-            getSupportActionBar().setTitle("农田列表");
+            maintitle.setText("农田列表");
             fragmentContainerHelper.handlePageSelected(1,false);
             switchPages(1);
         } else if ("menu_suggest".equals(event.type)) {
-            getSupportActionBar().setTitle("农艺咨询");
+            maintitle.setText("农艺咨询");
             fragmentContainerHelper.handlePageSelected(2,false);
             switchPages(2);
         } else if ("menu_farmthing".equals(event.type)) {
-            getSupportActionBar().setTitle("农事记录");
+            maintitle.setText("农事记录");
             fragmentContainerHelper.handlePageSelected(3,false);
             switchPages(3);
         } else if ("menu_setting".equals(event.type)) {
-            getSupportActionBar().setTitle("设置");
+            maintitle.setText("设置");
             fragmentContainerHelper.handlePageSelected(4,false);
             switchPages(4);
         } else if("menu_weather".equals(event.type)){
@@ -203,19 +212,19 @@ public class DrawerTabActivity extends BaseActivity
 
         switch (index) {
             case 0:
-                getSupportActionBar().setTitle("首页");
+                maintitle.setText("首页");
                 break;
             case 1:
-                getSupportActionBar().setTitle("农田列表");
+                maintitle.setText("农田列表");
                 break;
             case 2:
-                getSupportActionBar().setTitle("农艺咨询");
+                maintitle.setText("农艺咨询");
                 break;
             case 3:
-                getSupportActionBar().setTitle("农事记录");
+                maintitle.setText("农事记录");
                 break;
             case 4:
-                getSupportActionBar().setTitle("设置");
+                maintitle.setText("设置");
                 break;
 
         }

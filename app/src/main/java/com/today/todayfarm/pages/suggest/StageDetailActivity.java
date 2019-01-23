@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -63,6 +64,8 @@ public class StageDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_detail);
         ButterKnife.bind(this);
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         String stageInfoJson = getIntent().getStringExtra("stageinfo_json");
         cropName = getIntent().getStringExtra("cropname");

@@ -8,6 +8,7 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.today.todayfarm.Eventbus.MessageEvent;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
@@ -90,6 +91,7 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(R.layout.activity_menu);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         ButterKnife.bind(this);
 

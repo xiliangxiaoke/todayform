@@ -9,8 +9,28 @@ public class TimeAxisItemInfo {
     long timestamp; //时间戳
     int dateText; // 在时间轴上显示的日期
     int monthText; // 月份
+    int year;
     List<HealthImgInfo> healthImgInfos; // 当天的健康监测影像信息
     List<SatellateImgInfo> satellateImgInfos; //当天的卫星影像信息
+
+    boolean selected;
+
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public List<SatellateImgInfo> getSatellateImgInfos() {
         return satellateImgInfos;

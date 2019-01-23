@@ -23,7 +23,7 @@ import com.today.todayfarm.WeatherSearchActivity;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
-import com.today.todayfarm.pages.menu.MenuActivity;
+//import com.today.todayfarm.pages.menu.MenuActivity;
 import com.today.todayfarm.pages.tabs.fragments.FarmlandFragment;
 import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
 import com.today.todayfarm.pages.tabs.fragments.MapFragment;
@@ -87,15 +87,15 @@ public class TabActivity extends BaseActivity {
     public void onEvent(MessageEvent event){
         if ("openMenuActivity".equals(event.type)){
             //打开侧边菜单栏页面
-            try{
-                Intent intent = new Intent();
-                intent.setClass(this, MenuActivity.class);
-                this.startActivity(intent);
-                this.overridePendingTransition(0,0);
-                //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
-            }catch (Exception e){
-                Log.e("ERROR",e.getMessage());
-            }
+//            try{
+//                Intent intent = new Intent();
+//                intent.setClass(this, MenuActivity.class);
+//                this.startActivity(intent);
+//                this.overridePendingTransition(0,0);
+//                //overridePendingTransition(R.anim.in_from_left,R.anim.out_to_left);
+//            }catch (Exception e){
+//                Log.e("ERROR",e.getMessage());
+//            }
 
         } else if ("menu_mainpage".equals(event.type)) {
             fragmentContainerHelper.handlePageSelected(0,false);

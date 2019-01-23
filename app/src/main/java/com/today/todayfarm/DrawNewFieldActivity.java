@@ -12,6 +12,7 @@ import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Polygon;
 import com.amap.api.maps2d.model.PolygonOptions;
+import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +54,8 @@ public class DrawNewFieldActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_new_field);
         ButterKnife.bind(this);
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
 
         mapView.onCreate(savedInstanceState);

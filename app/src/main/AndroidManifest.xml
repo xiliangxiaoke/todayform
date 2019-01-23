@@ -141,10 +141,7 @@
         <activity
             android:name=".pages.farmThingList.FarmThingListActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.menu.MenuActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/translucent" />
+
         <activity
             android:name=".pages.zhuji.ZhujiActivity"
             android:screenOrientation="portrait" />

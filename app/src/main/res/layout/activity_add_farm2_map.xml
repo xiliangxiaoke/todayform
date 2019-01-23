@@ -17,9 +17,9 @@
     <Button
         android:id="@+id/exit"
         android:text="@string/icon_txt_exit"
-        android:background="@drawable/button_login_bg"
+        android:background="@drawable/button_white_bg"
         android:layout_margin="10dp"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:gravity="center"
         android:layout_width="80dp"
         android:layout_height="40dp" />
@@ -41,13 +41,13 @@
         android:id="@+id/changeshape"
         android:text="@string/icon_change_shape_circle"
         android:gravity="center"
-        android:textColor="#8BC34A"
-        android:textSize="70dp"
+        android:textColor="#ffffff"
+        android:textSize="40dp"
         android:layout_marginTop="80dp"
         android:layout_alignParentRight="true"
         android:paddingRight="10dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
     <RelativeLayout

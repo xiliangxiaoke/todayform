@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -68,6 +69,8 @@ public class SelectFarmActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_farm);
         ButterKnife.bind(this);
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         back.setTypeface(MyApplication.iconTypeFace);
 

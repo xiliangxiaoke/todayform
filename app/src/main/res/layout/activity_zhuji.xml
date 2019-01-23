@@ -15,15 +15,16 @@
             android:text="注记"
             android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff"
+
             android:gravity="center"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/menu"
+            android:id="@+id/back"
             android:textColor="#ffffff"
-            android:text="@string/icon_menu"
+            android:text="@string/icon_back"
             android:gravity="center"
             android:textSize="18dp"
             android:layout_width="@dimen/titleheight"

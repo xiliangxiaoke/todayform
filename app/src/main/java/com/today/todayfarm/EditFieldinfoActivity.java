@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 
+import com.jaeger.library.StatusBarUtil;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
@@ -142,6 +143,8 @@ public class EditFieldinfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_fieldinfo);
         ButterKnife.bind(this);
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

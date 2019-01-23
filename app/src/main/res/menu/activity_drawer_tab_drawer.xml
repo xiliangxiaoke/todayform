@@ -20,22 +20,23 @@
             android:id="@+id/meun_farm_thing"
             android:icon="@mipmap/icon_farmthing"
             android:title="农事" />
+        <item
+            android:id="@+id/meun_note"
+            android:icon="@mipmap/icon_note"
+            android:title="注记" />
+        <item
+            android:id="@+id/meun_weather"
+            android:icon="@mipmap/icon_weather"
+            android:title="天气" />
+        <item
+            android:id="@+id/meun_setting"
+            android:icon="@mipmap/icon_setting"
+            android:title="设置" />
     </group>
 
     <item android:title="">
         <menu>
-            <item
-                android:id="@+id/meun_note"
-                android:icon="@mipmap/icon_note"
-                android:title="注记" />
-            <item
-                android:id="@+id/meun_weather"
-                android:icon="@mipmap/icon_weather"
-                android:title="天气" />
-            <item
-                android:id="@+id/meun_setting"
-                android:icon="@mipmap/icon_setting"
-                android:title="设置" />
+
         </menu>
     </item>
 

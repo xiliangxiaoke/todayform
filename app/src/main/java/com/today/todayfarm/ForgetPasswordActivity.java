@@ -3,6 +3,8 @@ package com.today.todayfarm;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.jaeger.library.StatusBarUtil;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,5 +23,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         ButterKnife.bind(this);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
     }
 }

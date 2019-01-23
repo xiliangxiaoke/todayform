@@ -16,6 +16,7 @@ import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Polygon;
 import com.amap.api.maps2d.model.PolygonOptions;
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.dom.CustomGeometry;
 import com.today.todayfarm.dom.Custompoint;
@@ -172,6 +173,8 @@ public class AddNewFieldActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_field);
         ButterKnife.bind(this);
+
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
 
         mapView.onCreate(savedInstanceState);
 
