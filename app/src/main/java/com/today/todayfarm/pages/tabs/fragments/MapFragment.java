@@ -181,12 +181,14 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     datatype = 1;
                     showHealthData();
                     recyclerView.setVisibility(View.VISIBLE);
+                    datetv.setVisibility(View.VISIBLE);
                 } else if (position == 1) {
                     // TODO 获取卫星影像数据
                     maplegend.setVisibility(View.INVISIBLE);
                     datatype = 2;
                     showStaliteData();
                     recyclerView.setVisibility(View.VISIBLE);
+                    datetv.setVisibility(View.VISIBLE);
                 } else if (position == 2) {
                     // 获取作物区划图
                     maplegend.setVisibility(View.INVISIBLE);
@@ -194,6 +196,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     timeregion.clear();
                     showBlock();
                     recyclerView.setVisibility(View.GONE);
+                    datetv.setVisibility(View.INVISIBLE);
                 }
             }
         });

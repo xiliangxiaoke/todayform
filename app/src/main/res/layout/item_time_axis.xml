@@ -2,39 +2,50 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/panel"
-    android:background="#64ffffff"
+
     android:layout_width="50dp"
     android:layout_height="50dp">
 
 
     <!--横线-->
     <View
-        android:background="#183bc7"
+        android:background="#ffffff"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
 
     <!--竖线-->
     <View
-        android:background="#183bc7"
+        android:background="#ffffff"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:layout_width="2dp"
-        android:layout_height="10dp"/>
+        android:layout_width="1dp"
+        android:layout_height="4dp"/>
 
     <!--数据提示块-->
     <View
         android:id="@+id/datablock"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:background="@drawable/time_block"
         android:visibility="gone"
+        android:layout_width="6dp"
+        android:layout_height="6dp"/>
+
+    <!-- 选中的点显示 -->
+    <RelativeLayout
+        android:id="@+id/selectDataBlock"
         android:layout_width="10dp"
-        android:layout_height="5dp"/>
+        android:layout_height="10dp">
+
+
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/label"
         android:gravity="center_horizontal"
+        android:textColor="#ffffff"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
