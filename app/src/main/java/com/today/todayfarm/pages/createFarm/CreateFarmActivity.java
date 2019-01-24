@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
@@ -19,6 +24,7 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.BoundaryInfo2Js;
+import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.MapDrawActionInfo;
@@ -30,6 +36,9 @@ import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.Android2JS;
 import com.today.todayfarm.util.WebUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,8 +60,13 @@ public class CreateFarmActivity extends BaseActivity {
     @BindView(R.id.editfarmname)
     EditText editfarmname;
 
-    @BindView(R.id.editcropname)
-    EditText editcropname;
+//    @BindView(R.id.editcropname)
+//    EditText editcropname;
+    private boolean firstloaded = false;
+
+    @BindView(R.id.spinner)
+    Spinner spinner;
+    private String selectedCropName = "";
 
     @OnClick(R.id.close)
     public void close(){
@@ -63,14 +77,14 @@ public class CreateFarmActivity extends BaseActivity {
     public void save(){
         // 保存农田
         String farmname = editfarmname.getText().toString();
-        String cropname = editcropname.getText().toString();
+//        String cropname = editcropname.getText().toString();
         if (farmname==null){
             new SweetAlertDialog(this)
                     .setTitleText("农田名称为空")
                     .show();
             return;
         }
-        if (cropname == null) {
+        if (selectedCropName == null) {
             new SweetAlertDialog(this)
                     .setTitleText("作物名称为空")
                     .show();
@@ -81,7 +95,7 @@ public class CreateFarmActivity extends BaseActivity {
                 farmname,
                 Hawk.get(HawkKey.TEMP_GEOJSON_AREA),
                 geojson,
-                cropname,
+                selectedCropName,
                 new ApiCallBack<Object>() {
                     @Override
                     public void onResponse(ResultObj<Object> resultObj) {
@@ -131,6 +145,87 @@ public class CreateFarmActivity extends BaseActivity {
         // 设置
 //        MapDrawActionInfo mapDrawActionInfo = new MapDrawActionInfo();
 //        mapDrawActionInfo.setAction("getgeojson");
+
+
+        // set spinner
+
+        API.findCropsNames(
+                Hawk.get(HawkKey.TOKEN),
+                "100",
+                new ApiCallBack<CropInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<CropInfo> resultObj) {
+                        if (resultObj.getCode() == 0) {
+                            if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                List<String> spinnerdata = new ArrayList<>();
+                                for (int i=0;i<resultObj.getList().size();i++) {
+                                    spinnerdata.add(resultObj.getList().get(i).getCropName());
+                                }
+                                selectedCropName = spinnerdata.get(0);
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                                        CreateFarmActivity.this,R.layout.spinner_item,
+                                        spinnerdata
+                                );
+
+                                spinner.setAdapter(adapter);
+                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                        selectedCropName = spinnerdata.get(i);
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
+
+
+
+
+    }
+
+    private List<String> getSpinnerData() {
+
+        return null;
+    }
+
+
+    private void loadmap() {
+        WebSettings webSettings = map.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
+
+        map.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && firstloaded == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    firstloaded = true;
+                    showBoundary();
+                }
+            }
+        });
+
+
+        map.loadUrl("file:///android_asset/index.html");
+    }
+
+    private void showBoundary() {
         JSParamInfo<BoundaryInfo2Js> jsParamInfo = new JSParamInfo<>();
         jsParamInfo.setType("showgeo");
         BoundaryInfo2Js boundaryInfo2Js =null;
@@ -145,31 +240,8 @@ public class CreateFarmActivity extends BaseActivity {
         jsParamInfo.setParams(boundaryInfo2Js);
 
 
+        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
 
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                /**
-                 *要执行的操作
-                 */
-                WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
-            }
-        }, 300);//3秒后执行Runnable中的run方法
-
-
-
-    }
-
-
-    private void loadmap() {
-        WebSettings webSettings = map.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-
-
-
-        map.loadUrl("file:///android_asset/index.html");
     }
 }

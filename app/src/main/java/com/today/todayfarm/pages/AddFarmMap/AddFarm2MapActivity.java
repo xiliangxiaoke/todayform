@@ -47,8 +47,8 @@ public class AddFarm2MapActivity extends Activity {
 
     @BindView(R.id.back) Button drawback;
 
-    @OnClick(R.id.back)
-    public void back(){
+    @OnClick(R.id.exit)
+    public void setExit(){
         this.finish();
 
     }

@@ -145,6 +145,7 @@ public class FarmDetailActivity extends Activity {
     @OnClick(R.id.edit)
     public void edit() {
         // TODO
+
     }
 
     @OnClick(R.id.raindetail)

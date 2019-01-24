@@ -25,6 +25,8 @@ import com.today.todayfarm.dom.User;
 
 import org.json.JSONArray;
 
+import javax.xml.transform.Result;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -91,6 +93,25 @@ public interface MyApiService {
         @Query("fieldArea") Double fieldArea,
         @Query("fieldBoundary") String fieldBoundary,
         @Query("cropName") String cropName
+    );
+
+    /**
+     * 创建或更新农田
+     * @param token
+     * @param fieldName
+     * @param fieldArea
+     * @param fieldBoundary
+     * @param cropName
+     * @return
+     */
+    @GET("app/field/saveOrUpdate")
+    Call<ResultObj<Object>> updateField(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId,
+            @Query("fieldName") String fieldName,
+            @Query("fieldArea") Double fieldArea,
+            @Query("fieldBoundary") String fieldBoundary,
+            @Query("cropName") String cropName
     );
 
 
@@ -753,6 +774,20 @@ public interface MyApiService {
             @Query("token") String token,
             @Query("associateUserId") String id
     );
+
+
+    @GET("app/Agronomy/findCropsNames")
+    Call<ResultObj<CropInfo>> findCropsNames(
+            @Query("token") String token,
+            @Query("pageSize") String pageSize
+    );
+
+
+
+
+
+
+
 
 
 

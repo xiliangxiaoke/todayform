@@ -78,10 +78,7 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".WebMapActivity">
-
-
-        </activity>
+        <activity android:name=".WebMapActivity"></activity>
         <activity android:name=".base.BaseActivity" />
         <activity
             android:name=".pages.regist.RegistActivity"
@@ -141,7 +138,6 @@
         <activity
             android:name=".pages.farmThingList.FarmThingListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".pages.zhuji.ZhujiActivity"
             android:screenOrientation="portrait" />
@@ -163,16 +159,12 @@
         <activity
             android:name=".pages.tabs.DrawerTabActivity"
             android:label="@string/title_activity_drawer_tab"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            >
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
         <activity android:name=".pages.suggest.CropSuggestListActivity" />
         <activity android:name=".pages.suggest.StageDetailActivity" />
         <activity android:name=".pages.account.AccountManageActivity" />
-        <activity android:name=".pages.account.AccountDetailActivity">
-
-        </activity>
+        <activity android:name=".pages.account.AccountDetailActivity"></activity>
+        <activity android:name=".pages.createFarm.EditFarmActivity"></activity>
     </application>
 
 </manifest>

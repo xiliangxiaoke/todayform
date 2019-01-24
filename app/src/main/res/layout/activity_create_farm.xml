@@ -60,13 +60,33 @@
         android:layout_height="60dp" />
 
     <!--输入当前种植作物-->
-    <EditText
-        android:id="@+id/editcropname"
-        android:hint="请输入当前种植作物"
+    <!--<EditText-->
+        <!--android:id="@+id/editcropname"-->
+        <!--android:hint="请输入当前种植作物"-->
+        <!--android:layout_below="@id/editfarmname"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp" />-->
+    <TextView
+        android:id="@+id/spinnertip"
+        android:text="请选择种植作物："
         android:layout_below="@id/editfarmname"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp" />
+    <View
+        android:layout_below="@id/spinnertip"
+        android:background="@drawable/boxbg"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_below="@id/spinnertip"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 
 </RelativeLayout>

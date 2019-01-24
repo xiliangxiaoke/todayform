@@ -87,6 +87,12 @@ public class API {
         callenqueue(call,callBack);
     }
 
+    public static void updateField(String token, String fieldid,String fieldName, Double fieldArea, String fieldBoundary,String cropName,ApiCallBack<Object> callBack) {
+
+        Call<ResultObj<Object>> call = Doapi.instance().updateField(token,fieldid, fieldName, fieldArea, fieldBoundary,cropName);
+        callenqueue(call,callBack);
+    }
+
 
     public static void findMyFields(String token,int currentpage,int pagesize,ApiCallBack<FieldInfo> callBack){
         Call<ResultObj<FieldInfo>> call = Doapi.instance().findMyFields(token,currentpage,pagesize);
@@ -546,6 +552,12 @@ public class API {
     public static void delUser(String token, String id, ApiCallBack<Object> callBack) {
         Call<ResultObj<Object>> call = Doapi.instance()
                 .delUser(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void findCropsNames(String token , String pagesize, ApiCallBack<CropInfo> callBack){
+        Call<ResultObj<CropInfo>> call = Doapi.instance()
+                .findCropsNames(token,pagesize);
         callenqueue(call,callBack);
     }
 
