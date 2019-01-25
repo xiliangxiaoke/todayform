@@ -562,6 +562,13 @@ public class API {
     }
 
 
+    public static void deleteFieldById(String token, String fieldid, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteFieldById(token,fieldid);
+        callenqueue(call,callBack);
+    }
+
+
     //==========================================================
 
 

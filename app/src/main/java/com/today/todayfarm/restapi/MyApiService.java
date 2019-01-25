@@ -784,6 +784,11 @@ public interface MyApiService {
 
 
 
+    @GET("app/field/deleteById")
+    Call<ResultObj<Object>> deleteFieldById(
+            @Query("token") String token,
+            @Query("fieldId") String fieldId
+    );
 
 
 

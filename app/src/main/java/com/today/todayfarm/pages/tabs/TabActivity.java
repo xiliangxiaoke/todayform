@@ -115,7 +115,7 @@ public class TabActivity extends BaseActivity {
         } else if("menu_weather".equals(event.type)){
             Intent intent = new Intent();
             intent.setClass(this,WeatherSearchActivity.class);
-            intent.putExtra("city","北京");
+            intent.putExtra("city",""+Hawk.get(HawkKey.CITY));
             startActivity(intent);
         }
     }

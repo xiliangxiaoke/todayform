@@ -1,118 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical"
     android:background="#548ED4">
-    <TextView
-        android:id="@+id/city"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:gravity="center_horizontal"
-        android:textColor="#FFFFFF"/>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/weather_live"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"/>
-        <TextView
-            android:id="@+id/reporttime1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textSize="14sp"
-            android:text="@string/report_time"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="20dp">
-        <TextView
-            android:id="@+id/weather"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_weight="1"
-            android:textSize="30sp"
-            android:textColor="#FFFFFF"/>
-        <TextView
-            android:id="@+id/temp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:textSize="30sp"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:paddingLeft="55dp">
-        <TextView
-            android:id="@+id/wind"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"/>
-        <TextView
-            android:id="@+id/humidity"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/weather_forecast"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"/>
-        <TextView
-            android:id="@+id/reporttime2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textSize="14sp"
-            android:text="@string/report_time"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/forecast"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="40dp"
-        android:textSize="14sp"
-        android:textColor="#FFFFFF"/>
 
 
-</LinearLayout>
+    <!--title-->
+    <RelativeLayout
+        android:background="@color/mainTitleColor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:id="@+id/title"
+            android:text="天气预报"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--return-->
+        <TextView
+            android:id="@+id/back"
+            android:gravity="center"
+            android:text="@string/icon_back"
+            android:textColor="#ffffff"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+    </RelativeLayout>
+
+
+
+    <ScrollView
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--实时天气数据-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+                <!--temp and icon-->
+               <LinearLayout
+                   android:id="@+id/realTempAndIcon"
+                   android:orientation="horizontal"
+                   android:layout_centerHorizontal="true"
+                   android:layout_marginTop="20dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="50dp">
+                   <TextView
+                       android:id="@+id/realTemp"
+                       android:textSize="48dp"
+                       android:gravity="center"
+                       android:layout_width="wrap_content"
+                       android:layout_height="50dp" />
+                   <com.facebook.drawee.view.SimpleDraweeView
+                       android:id="@+id/realicon"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp" />
+
+               </LinearLayout>
+                <TextView
+                    android:id="@+id/realweathername"
+                    android:textSize="30dp"
+                    android:layout_toRightOf="@id/realTempAndIcon"
+                    android:layout_alignBottom="@id/realTempAndIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/devideline"
+                    android:layout_width="1px"
+                    android:layout_height="30dp"/>
+                <LinearLayout
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/realLeftInfo"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                    <TextView
+                        android:id="@+id/realRightInfo"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <View
+                android:background="@color/devideline"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="10px"/>
+            <!--未来几天-->
+            <!--未来第一天-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/firstdate"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/firsticon"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/firstweather"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/firsttemp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </LinearLayout>
+            <!--未来第二天-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/seconddate"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/secondicon"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/secondweather"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/secondtemp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </LinearLayout>
+            <!--未来第三天-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/thirddate"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/thirdicon"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/thirdweather"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/thirdtemp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </LinearLayout>
+
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="10px"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

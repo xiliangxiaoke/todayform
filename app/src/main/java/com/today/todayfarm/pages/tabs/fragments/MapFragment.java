@@ -144,6 +144,16 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         // 默认显示健康监测数据
         showHealthData();
 
+
+        // 默认定位一次
+        //location do once
+        if(null != mlocationClient){
+            mlocationClient.setLocationOption(option);
+            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            mlocationClient.stopLocation();
+            mlocationClient.startLocation();
+        }
+
         return view;
     }
 
@@ -524,6 +534,12 @@ public class MapFragment extends Fragment implements AMapLocationListener{
             if (aMapLocation.getErrorCode() == 0) {
                 double longitude = aMapLocation.getLongitude();
                 double latitude = aMapLocation.getLatitude();
+
+                String city = aMapLocation.getCity();
+                if (city != null) {
+                    Hawk.put(HawkKey.CITY,city);
+                }
+
 
                 Gson gson = new Gson();
                 GeoPoint geoPoint = new GeoPoint();

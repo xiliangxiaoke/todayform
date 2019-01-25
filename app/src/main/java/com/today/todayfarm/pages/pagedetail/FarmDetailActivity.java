@@ -29,6 +29,7 @@ import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.TotalRainAndTemp;
+import com.today.todayfarm.pages.AddFarmMap.AddFarm2MapActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingBozhongActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingGuangaiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShifeiActivity;
@@ -36,11 +37,13 @@ import com.today.todayfarm.pages.EditFarmThing.EditFarmthingShougeActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhengdiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhibaoActivity;
 import com.today.todayfarm.pages.chart.TempDetailActivity;
+import com.today.todayfarm.pages.createFarm.CreateFarmActivity;
 import com.today.todayfarm.pages.createcrop.CreateCropActivity;
 import com.today.todayfarm.pages.farmThingList.FarmThingListActivity;
 import com.today.todayfarm.pages.chart.RainDetailActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
+import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
 import com.today.todayfarm.pages.threeDaysWeather.ThreeDaysWeatherActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
@@ -146,6 +149,14 @@ public class FarmDetailActivity extends Activity {
     public void edit() {
         // TODO
 
+
+
+
+
+        Intent intent = new Intent();
+        intent.setClass(FarmDetailActivity.this, CreateFarmActivity.class);
+        intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
+        FarmDetailActivity.this.startActivity(intent);
     }
 
     @OnClick(R.id.raindetail)
@@ -399,7 +410,8 @@ public class FarmDetailActivity extends Activity {
                                 public void onClick(View view) {
                                     //TODO 跳转到添加新农事页面
                                     Intent intent = new Intent();
-                                    intent.setClass(FarmDetailActivity.this, SelectFarmActivity.class);
+                                    intent.setClass(FarmDetailActivity.this, SelectFarmThingActivity.class);
+                                    intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
                                     FarmDetailActivity.this.startActivity(intent);
                                 }
                             });

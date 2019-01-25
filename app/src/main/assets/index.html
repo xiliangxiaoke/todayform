@@ -36,6 +36,7 @@
     var drawtype = "circle"; // circle polygon
     var cacheFeatures = []; // 用来存储已经加载的要素，供删除用
     var clicktype = "normal";
+    var editgeometry = null;
 
     var map = L.map('map', {
         center: [31.59, 120.29],
@@ -111,6 +112,8 @@
         6 首页显示影像图 {type:"showrsimg",list:[]}
         7 显示注记位置 {type:"notelocation",params:{lon:"",lat:""}}
         8 设置注记位置 {type:"setnoteloc"}
+        9 编辑边界 {type:"editgeo",params:{自定义的geogson，包含circle 和 polygon}}
+                获取边界时复用draw中的getgeojson
     */
     function callJS(paraminfo){
 
@@ -133,6 +136,8 @@
                 showNoteLocation(paramobj.params);
             }else if ("setnoteloc" == paramobj.type) {
                 setnoteloc();
+            }else if ("editgeo" == paramobj.type){
+                editgeo(paramobj.params);
             }
         }catch(e){
             var param = {
@@ -280,6 +285,22 @@
         }
     }
 
+    function editgeo(para){
+        if(para.geotype==='circle'){
+
+            drawtype = 'circle';
+            editgeometry = L.circle(para.center, {radius: para.radius}).addTo(map);
+            map.fitBounds(editgeometry.getBounds());
+            editgeometry.enableEdit();
+        }else if(para.geotype==='polygon'){
+            drawtype = 'polygon';
+            editgeometry = L.polygon([para.coordinates], {color: 'red'}).addTo(map);
+            // zoom the map to the polygon
+            map.fitBounds(editgeometry.getBounds());
+            editgeometry.enableEdit();
+        }
+    }
+
     // 进行绘制操作
     /**
         drawcircle 绘制圆形
@@ -327,6 +348,38 @@
                         coordinates:coors
                     }
                     area = turf.area(farmlanddraw.toGeoJSON().geometry);
+                }
+
+                var param = {
+                    type:"returngeojson",
+                    value:""+JSON.stringify(geovalue),
+                    farmarea:area
+                }
+                androidjs.call(JSON.stringify(param));
+            }else if(editgeometry){
+                // js 调用android 传到前台 区分circle和polygon的结构  Geojson不直接支持circle，所以在外面又包了一层
+                var geovalue;
+                var area;
+                if(drawtype == "circle"){
+                    geovalue = {
+                        geotype:"circle",
+                        center: [editgeometry.getBounds().getCenter().lat,editgeometry.getBounds().getCenter().lng],
+                        radius:editgeometry.getRadius()
+                    };
+                    area = getCircleArea(editgeometry.getRadius());
+                }else if(drawtype == "polygon"){
+
+                    var coors = [];
+                    editgeometry.getLatLngs()[0].forEach(function (ll){
+                        coors.push([ll.lat,ll.lng]);
+                    });
+
+                    geovalue = {
+                        geotype:"polygon",
+                        //geojson:editgeometry.toGeoJSON()
+                        coordinates:coors
+                    }
+                    area = turf.area(editgeometry.toGeoJSON().geometry);
                 }
 
                 var param = {
