@@ -7,7 +7,7 @@ public class FieldInfo {
 
 	String fieldId;
 	String fieldName;
-	String fieldArea;
+	String fieldArea;// 保存的是平方米 ，
 	String fieldBoundary;
 	String userId;
 	String fieldcrop;

@@ -1,6 +1,7 @@
 package com.today.todayfarm;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -15,12 +16,14 @@ import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearch.OnWeatherSearchListener;
 import com.amap.api.services.weather.WeatherSearchQuery;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.util.ToastUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class WeatherSearchActivity extends BaseActivity implements OnWeatherSearchListener {
@@ -64,7 +67,12 @@ public class WeatherSearchActivity extends BaseActivity implements OnWeatherSear
     @BindView(R.id.thirdtemp)
     TextView thirdtemp;
 
+    @BindView(R.id.city)
+    TextView city;
 
+
+    @BindView(R.id.back)
+    TextView back;
     @OnClick(R.id.back)
     public void setback() {
         this.finish();
@@ -81,10 +89,14 @@ public class WeatherSearchActivity extends BaseActivity implements OnWeatherSear
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_search);
+        ButterKnife.bind(this);
+        back.setTypeface(MyApplication.iconTypeFace);
 
 
         Intent intent = getIntent();
         cityname = intent.getStringExtra("city");
+
+        city.setText(cityname);
 
         searchliveweather();
         searchforcastsweather();
@@ -117,6 +129,7 @@ public class WeatherSearchActivity extends BaseActivity implements OnWeatherSear
                 realTemp.setText(weatherlive.getTemperature()+"°");
                 realLeftInfo.setText(weatherlive.getWindDirection()+"风     "+weatherlive.getWindPower()+"级");
                 realRightInfo.setText("湿度         "+weatherlive.getHumidity()+"%");
+                realicon.setImageURI(Uri.parse("res://a/"+getWeatherDrawable(weatherlive.getWeather())));
             }else {
                 ToastUtil.show(WeatherSearchActivity.this, R.string.no_result);
             }
@@ -124,6 +137,87 @@ public class WeatherSearchActivity extends BaseActivity implements OnWeatherSear
             ToastUtil.showerror(WeatherSearchActivity.this, rCode);
         }
     }
+
+    private int getWeatherDrawable(String weather) {
+        int drawable = R.mipmap.w99;
+        if ("晴".equals(weather)){
+            drawable = R.mipmap.w0;
+        }else if ("多云".equals(weather)){
+            drawable = R.mipmap.w4;
+        }else if ("阴".equals(weather)){
+            drawable = R.mipmap.w9;
+        }else if ("阵雨".equals(weather)){
+            drawable = R.mipmap.w10;
+        }else if ("雷阵雨".equals(weather)){
+            drawable = R.mipmap.w11;
+        }else if ("雷阵雨并伴有冰雹".equals(weather)){
+            drawable = R.mipmap.w12;
+        }else if ("雨夹雪".equals(weather)){
+            drawable = R.mipmap.w20;
+        }else if ("小雨".equals(weather)){
+            drawable = R.mipmap.w13;
+        }else if ("中雨".equals(weather)){
+            drawable = R.mipmap.w14;
+        }else if ("大雨".equals(weather)){
+            drawable = R.mipmap.w15;
+        }else if ("暴雨".equals(weather)){
+            drawable = R.mipmap.w16;
+        }else if ("大暴雨".equals(weather)){
+            drawable = R.mipmap.w17;
+        }else if ("特大暴雨".equals(weather)){
+            drawable = R.mipmap.w18;
+        }else if ("阵雪".equals(weather)){
+            drawable = R.mipmap.w21;
+        }else if ("小雪".equals(weather)){
+            drawable = R.mipmap.w22;
+        }else if ("中雪".equals(weather)){
+            drawable = R.mipmap.w23;
+        }else if ("大雪".equals(weather)){
+            drawable = R.mipmap.w24;
+        }else if ("暴雪".equals(weather)){
+            drawable = R.mipmap.w25;
+        }else if ("雾".equals(weather)){
+            drawable = R.mipmap.w30;
+        }else if ("冻雨".equals(weather)){
+            drawable = R.mipmap.w19;
+        }else if ("沙尘暴".equals(weather)){
+            drawable = R.mipmap.w28;
+        }else if ("小雨-中雨".equals(weather)){
+            drawable = R.mipmap.w14;
+        }else if ("中雨-大雨".equals(weather)){
+            drawable = R.mipmap.w15;
+        }else if ("大雨-暴雨".equals(weather)){
+            drawable = R.mipmap.w16;
+        }else if ("暴雨-大暴雨".equals(weather)){
+            drawable = R.mipmap.w17;
+        }else if ("大暴雨-特大暴雨".equals(weather)){
+            drawable = R.mipmap.w18;
+        }else if ("小雪-中雪".equals(weather)){
+            drawable = R.mipmap.w23;
+        }else if ("中雪-大雪".equals(weather)){
+            drawable = R.mipmap.w24;
+        }else if ("大雪-暴雪".equals(weather)){
+            drawable = R.mipmap.w25;
+        }else if ("浮尘".equals(weather)){
+            drawable = R.mipmap.w26;
+        }else if ("扬沙".equals(weather)){
+            drawable = R.mipmap.w27;
+        }else if ("强沙尘暴".equals(weather)){
+            drawable = R.mipmap.w29;
+        }else if ("飑".equals(weather)){
+            drawable = R.mipmap.w34;
+        }else if ("龙卷风".equals(weather)){
+            drawable = R.mipmap.w36;
+        }else if ("弱高吹雪".equals(weather)){
+            drawable = R.mipmap.w32;
+        }else if ("轻霾".equals(weather)){
+            drawable = R.mipmap.w31;
+        }else if ("霾".equals(weather)){
+            drawable = R.mipmap.w31;
+        }
+        return drawable;
+    }
+
     /**
      * 天气预报查询结果回调
      * */
@@ -152,17 +246,20 @@ public class WeatherSearchActivity extends BaseActivity implements OnWeatherSear
             firstdate.setText(getWeek(forecastlist.get(0)));
             firstweather.setText(forecastlist.get(0).getDayWeather());
             firsttemp.setText(getTemp(forecastlist.get(0)));
+            firsticon.setImageURI(Uri.parse("res://a/"+getWeatherDrawable(forecastlist.get(0).getDayWeather())));
 
 
             // 第二天
             seconddate.setText(getWeek(forecastlist.get(1)));
             secondweather.setText(forecastlist.get(1).getDayWeather());
             secondtemp.setText(getTemp(forecastlist.get(1)));
+            secondicon.setImageURI(Uri.parse("res://a/"+getWeatherDrawable(forecastlist.get(1).getDayWeather())));
 
             // 第三天
             thirddate.setText(getWeek(forecastlist.get(2)));
             thirdweather.setText(forecastlist.get(2).getDayWeather());
             thirdtemp.setText(getTemp(forecastlist.get(2)));
+            thirdicon.setImageURI(Uri.parse("res://a/"+getWeatherDrawable(forecastlist.get(2).getDayWeather())));
         }
 
 //        String forecast="";

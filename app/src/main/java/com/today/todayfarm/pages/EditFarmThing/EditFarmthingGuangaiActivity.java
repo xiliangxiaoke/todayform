@@ -36,6 +36,8 @@ public class EditFarmthingGuangaiActivity extends Activity {
 
     @BindView(R.id.back)
     TextView back;
+    @BindView(R.id.title)
+    TextView title;
 
     @BindView(R.id.edit)
     TextView edit;
@@ -125,16 +127,16 @@ public class EditFarmthingGuangaiActivity extends Activity {
             return;
         }
 
-        if (fieldInfo==null){
-            new SweetAlertDialog(this)
-                    .setTitleText("缺少农田信息")
-                    .show();
-            return;
-        }
+//        if (fieldInfo==null){
+//            new SweetAlertDialog(this)
+//                    .setTitleText("缺少农田信息")
+//                    .show();
+//            return;
+//        }
 
         API.irrigatingSaveOrUpdate(
                 Hawk.get(HawkKey.TOKEN),
-                fieldInfo.getFieldId(),
+                fieldInfo==null?irrigatingInfo.getFieldId():fieldInfo.getFieldId(),
                 irrigatingId,
                 cropInfo.getCropId(),
 
@@ -171,12 +173,14 @@ public class EditFarmthingGuangaiActivity extends Activity {
     public void setTvcropinfo() {
         Intent intent = new Intent(this, SelectCropActivity.class);
         intent.putExtra("fieldinfo_json",fieldinfo_json);
+        intent.putExtra("fieldid",fieldInfo==null?irrigatingInfo.getFieldId():fieldInfo.getFieldId());
         this.startActivityForResult(intent,SelectCropActivity.REQUEST_CODE_SELECT_CROP_ACTIVITY);
     }
 
 
     FieldInfo fieldInfo = null;
     CropInfo cropInfo = null;
+    IrrigatingInfo irrigatingInfo = null;
     String fieldinfo_json;
     String irrigatingId = null;
     String fieldname = null;
@@ -199,15 +203,15 @@ public class EditFarmthingGuangaiActivity extends Activity {
         fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
-        if (fieldInfo != null) {
-            tvfieldname.setText(fieldInfo.getFieldName()+"  灌溉");
-        }
 
-        if (fieldname != null) {
-            tvfieldname.setText(fieldname+"  灌溉");
-        }
+
+
 
         if (irrigatingId != null && irrigatingId.length()>0) {
+            if (fieldname != null) {
+                tvfieldname.setText(fieldname+"  灌溉");
+            }
+            title.setText("编辑农事记录");
             // TODO: get sowing detail
             API.getIrrigatingById(
                     Hawk.get(HawkKey.TOKEN),
@@ -217,6 +221,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
                         public void onResponse(ResultObj<IrrigatingInfo> resultObj) {
                             if (resultObj.getCode()==0){
                                 IrrigatingInfo info = resultObj.getObject();
+                                irrigatingInfo = info;
                                 tvstarttime.setText(info.getIrrigatingStartTime());
                                 etwaterpress.setText(info.getWaterPressure());
                                 etepress.setText(info.getVoltage());
@@ -254,6 +259,10 @@ public class EditFarmthingGuangaiActivity extends Activity {
                     }
             );
         } else {
+            if (fieldInfo != null) {
+                tvfieldname.setText(fieldInfo.getFieldName()+"  灌溉");
+            }
+            title.setText("新建农事记录");
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));
         }
@@ -270,7 +279,10 @@ public class EditFarmthingGuangaiActivity extends Activity {
                 String cropjson =  data.getStringExtra("cropinfo_json");
                 cropInfo = new Gson().fromJson(cropjson, CropInfo.class);
 
-                tvcropinfo.setText(cropInfo.getCropName()+"  "+cropInfo.getPlantYear());
+                if (cropInfo!=null){
+                    tvcropinfo.setText(cropInfo.getCropName()+"  "+cropInfo.getPlantYear());
+                }
+
             }
         }
     }

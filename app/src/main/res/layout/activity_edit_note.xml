@@ -41,128 +41,146 @@
     </RelativeLayout>
 
 
-    <!--web view-->
-    <WebView
-        android:id="@+id/webview"
-        android:layout_marginTop="@dimen/titleheight"
+    <RelativeLayout
+        android:id="@+id/mappanel"
         android:layout_width="match_parent"
-        android:layout_height="180dp"/>
+        android:layout_height="180dp">
+        <!--web view-->
+        <WebView
+            android:id="@+id/webview"
 
-    <!--map edit-->
-    <ImageView
-        android:id="@+id/setmaploc"
-        android:src="@mipmap/maps"
-        android:layout_alignBottom="@id/webview"
-        android:layout_margin="20dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--note name-->
-        <EditText
-            android:id="@+id/notename"
-            android:hint="请输入注记信息"
-
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="180dp"/>
 
-        <View
-            android:background="@color/devideline"
-            android:layout_width="match_parent"
-            android:layout_height="1px"/>
-        <!--pics-->
-        <TextView
-
-            android:text="现场图片"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:layout_width="match_parent"
+        <!--map edit-->
+        <ImageView
+            android:id="@+id/setmaploc"
+            android:src="@mipmap/maps"
+            android:padding="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            android:layout_width="40dp"
             android:layout_height="40dp" />
+    </RelativeLayout>
 
-        <com.today.todayfarm.customView.PicHorizentalList
-            android:id="@+id/picsview"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
 
-        <View
-            android:background="@color/devideline"
+    <ScrollView
+        android:layout_below="@id/mappanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="1px"/>
-        <!--fieldname-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <TextView
-                android:text="@string/icon_add"
-                android:paddingRight="10dp"
-                android:gravity="center_vertical"
-                android:layout_width="80dp"
-                android:layout_height="50dp" />
-            <TextView
-                android:id="@+id/fieldname"
+            android:layout_height="wrap_content">
+
+            <!--note name-->
+            <EditText
+                android:id="@+id/notename"
+                android:hint="请输入注记信息"
+
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:layout_marginLeft="80dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
-        </RelativeLayout>
-        <!--crop-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
+                android:layout_height="60dp" />
+
+            <View
+                android:background="@color/devideline"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <!--pics-->
             <TextView
-                android:text="@string/icon_add"
-                android:paddingRight="10dp"
-                android:gravity="center_vertical"
-                android:layout_width="80dp"
-                android:layout_height="50dp" />
-            <TextView
-                android:id="@+id/cropname"
+
+                android:text="现场图片"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:layout_marginLeft="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <com.today.todayfarm.customView.PicHorizentalList
+                android:id="@+id/picsview"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+
+            <View
+                android:background="@color/devideline"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <!--fieldname-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:id="@+id/iconblock"
+                    android:text="@string/icon_block"
+                    android:paddingRight="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/fieldname"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+            </RelativeLayout>
+            <!--crop-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:id="@+id/iconcrop"
+                    android:text="@string/icon_crop"
+                    android:paddingRight="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/cropname"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+            </RelativeLayout>
+            <!--time-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:id="@+id/icontime"
+                    android:text="@string/icon_date"
+                    android:paddingRight="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/notetime"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+            </RelativeLayout>
+            <View
+                android:background="@color/devideline"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <!--delete-->
+            <TextView
+                android:id="@+id/delete"
+                android:gravity="center"
+                android:text="删除"
+                android:textSize="@dimen/delete_btn_txt_size"
+                android:textColor="#be0202"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
-        </RelativeLayout>
-        <!--time-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <TextView
-                android:text="@string/icon_add"
-                android:paddingRight="10dp"
-                android:gravity="center_vertical"
-                android:layout_width="80dp"
-                android:layout_height="50dp" />
-            <TextView
-                android:id="@+id/notetime"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-        </RelativeLayout>
-        <View
-            android:background="@color/devideline"
-            android:layout_width="match_parent"
-            android:layout_height="1px"/>
-        <!--delete-->
-        <TextView
-            android:id="@+id/delete"
-            android:gravity="center"
-            android:text="删除"
-            android:textSize="@dimen/delete_btn_txt_size"
-            android:textColor="#be0202"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 
 

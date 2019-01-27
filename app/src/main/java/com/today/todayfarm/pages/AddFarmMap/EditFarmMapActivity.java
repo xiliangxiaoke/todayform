@@ -99,7 +99,7 @@ public class EditFarmMapActivity extends BaseActivity {
                                 Intent intent = new Intent();
                                 intent.setClass(EditFarmMapActivity.this, CreateFarmActivity.class);
                                 intent.putExtra("geojson",geojson);
-                                intent.putExtra("area",js2AndroidParam.getFarmarea());
+                                intent.putExtra("area",js2AndroidParam.getFarmarea()+"");
                                 EditFarmMapActivity.this.setResult(RESULTCODE_EditFarmMapActivity,intent);
                                 EditFarmMapActivity.this.finish();
 

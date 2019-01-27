@@ -11,6 +11,8 @@
         android:layout_height="@dimen/titleheight">
 
         <TextView
+
+            android:id="@+id/title"
             android:text="编辑农事记录"
             android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff"

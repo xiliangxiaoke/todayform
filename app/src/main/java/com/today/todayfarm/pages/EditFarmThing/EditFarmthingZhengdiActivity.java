@@ -36,6 +36,9 @@ public class EditFarmthingZhengdiActivity extends Activity {
 
     @BindView(R.id.back)
     TextView back;
+    @BindView(R.id.title)
+    TextView title;
+
 
     @BindView(R.id.edit)
     TextView edit;
@@ -126,20 +129,20 @@ public class EditFarmthingZhengdiActivity extends Activity {
             return;
         }
 
-        if (fieldInfo==null){
-            new SweetAlertDialog(this)
-                    .setTitleText("缺少农田信息")
-                    .show();
-            return;
-        }
+//        if (fieldInfo==null){
+//            new SweetAlertDialog(this)
+//                    .setTitleText("缺少农田信息")
+//                    .show();
+//            return;
+//        }
 
 
         API.tillingSaveOrUpdate(
                 Hawk.get(HawkKey.TOKEN),
-                fieldInfo.getFieldId(),
+                fieldInfo==null? tillingInfo.getFieldId():fieldInfo.getFieldId(),
                 cropInfo.getCropId(),
                 tillingActivityId,
-                fieldInfo.getUserId(),// TODO: USERID
+                fieldInfo==null? tillingInfo.getUserId():fieldInfo.getUserId(),// TODO: USERID
                 zhengditype.getText().toString(),
                 carhead.getText().toString(),
                 mechine.getText().toString(),
@@ -180,12 +183,14 @@ public class EditFarmthingZhengdiActivity extends Activity {
     public void setTvcropinfo() {
         Intent intent = new Intent(this, SelectCropActivity.class);
         intent.putExtra("fieldinfo_json",fieldinfo_json);
+        intent.putExtra("fieldid",fieldInfo==null? tillingInfo.getFieldId():fieldInfo.getFieldId());
         this.startActivityForResult(intent,SelectCropActivity.REQUEST_CODE_SELECT_CROP_ACTIVITY);
     }
 
 
     FieldInfo fieldInfo = null;
     CropInfo cropInfo = null;
+    TillingInfo tillingInfo = null;
     String fieldinfo_json;
     String tillingActivityId = null;
     String fieldname = null;
@@ -208,15 +213,17 @@ public class EditFarmthingZhengdiActivity extends Activity {
         fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
-        if (fieldInfo != null) {
-            tvfieldname.setText(fieldInfo.getFieldName()+"  整地");
-        }
 
-        if (fieldname != null) {
-            tvfieldname.setText(fieldname+"  整地");
-        }
+
+
 
         if (tillingActivityId != null && tillingActivityId.length()>0) {
+
+
+            title.setText("编辑农事记录");
+            if (fieldname != null) {
+                tvfieldname.setText(fieldname+"  整地");
+            }
             // TODO: get sowing detail
             API.getTillingById(
                     Hawk.get(HawkKey.TOKEN),
@@ -226,6 +233,7 @@ public class EditFarmthingZhengdiActivity extends Activity {
                         public void onResponse(ResultObj<TillingInfo> resultObj) {
                             if (resultObj.getCode() == 0) {
                                 TillingInfo info = resultObj.getObject();
+                                tillingInfo = info;
                                 zhengditype.setText(info.getTillingType());
                                 carhead.setText(info.getTillingTractor());
                                 mechine.setText(info.getTillingMechanical());
@@ -265,8 +273,13 @@ public class EditFarmthingZhengdiActivity extends Activity {
                     }
             );
         } else {
+            title.setText("新建农事记录");
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));
+
+            if (fieldInfo != null) {
+                tvfieldname.setText(fieldInfo.getFieldName()+"  整地");
+            }
         }
     }
 
@@ -280,7 +293,11 @@ public class EditFarmthingZhengdiActivity extends Activity {
                 String cropjson =  data.getStringExtra("cropinfo_json");
                 cropInfo = new Gson().fromJson(cropjson, CropInfo.class);
 
-                tvcropinfo.setText(cropInfo.getCropName()+"  "+cropInfo.getPlantYear());
+
+                if (cropInfo!=null){
+                    tvcropinfo.setText(cropInfo.getCropName()+"  "+cropInfo.getPlantYear());
+                }
+
             }
         }
     }

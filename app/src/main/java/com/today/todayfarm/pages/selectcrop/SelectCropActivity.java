@@ -131,12 +131,37 @@ public class SelectCropActivity extends BaseActivity {
         });
 
         String fieldInfostr = getIntent().getStringExtra("fieldinfo_json");
+        fieldid = getIntent().getStringExtra("fieldid");
         fieldInfo = new Gson().fromJson(fieldInfostr,FieldInfo.class);
 
 
         if (fieldInfo != null) {
             tvfarminfo.setText(fieldInfo.getFieldName()+"  "+ Common.getAreaStr(fieldInfo.getFieldArea())+"亩");
             fieldid = fieldInfo.getFieldId();
+        }else{
+            //获取fieldinfo
+            API.getFieldById(
+                    Hawk.get(HawkKey.TOKEN),
+                    fieldid,
+                    new ApiCallBack<FieldInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<FieldInfo> resultObj) {
+                            if (resultObj.getCode() == 0) {
+                                FieldInfo f = resultObj.getObject();
+                                if (f != null) {
+                                    fieldInfo = f;
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(int code) {
+
+                        }
+                    }
+            );
         }
 
 

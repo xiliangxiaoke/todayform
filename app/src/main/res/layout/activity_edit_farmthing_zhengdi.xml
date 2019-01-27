@@ -11,6 +11,7 @@
         android:layout_height="@dimen/titleheight">
 
         <TextView
+            android:id="@+id/title"
             android:text="编辑农事记录"
             android:textSize="@dimen/title_text_size"
             android:textColor="#ffffff"
@@ -40,7 +41,7 @@
     </RelativeLayout>
 
     <ScrollView
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/titleheight"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

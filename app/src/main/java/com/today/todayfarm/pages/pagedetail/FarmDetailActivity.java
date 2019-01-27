@@ -38,6 +38,7 @@ import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhengdiActivity;
 import com.today.todayfarm.pages.EditFarmThing.EditFarmthingZhibaoActivity;
 import com.today.todayfarm.pages.chart.TempDetailActivity;
 import com.today.todayfarm.pages.createFarm.CreateFarmActivity;
+import com.today.todayfarm.pages.createFarm.EditFarmActivity;
 import com.today.todayfarm.pages.createcrop.CreateCropActivity;
 import com.today.todayfarm.pages.farmThingList.FarmThingListActivity;
 import com.today.todayfarm.pages.chart.RainDetailActivity;
@@ -138,6 +139,7 @@ public class FarmDetailActivity extends Activity {
 
     private boolean firstloaded = false;
     String boundary2map = null;
+    public int REQUESTCODE_EditFarmActivity=526;
 
 
     @OnClick(R.id.back)
@@ -154,9 +156,9 @@ public class FarmDetailActivity extends Activity {
 
 
         Intent intent = new Intent();
-        intent.setClass(FarmDetailActivity.this, CreateFarmActivity.class);
+        intent.setClass(FarmDetailActivity.this, EditFarmActivity.class);
         intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
-        FarmDetailActivity.this.startActivity(intent);
+        FarmDetailActivity.this.startActivityForResult(intent,REQUESTCODE_EditFarmActivity);
     }
 
     @OnClick(R.id.raindetail)
@@ -500,6 +502,24 @@ public class FarmDetailActivity extends Activity {
         if (requestCode == REQUEST_CODE_CREATE_CROP_ACTIVITY && resultCode == CreateCropActivity.RESULT_CODE_CREATE_CROP) {
             //刚创建完新的作物，刷新列表显示
             updateCropInfo();
+        }
+        if (requestCode == REQUESTCODE_EditFarmActivity && resultCode == EditFarmActivity.RESULTCODE_FarmDetailActivity){
+            // 更新数据
+            String fieldinfojson = data.getStringExtra("fieldinfo_json");
+            fieldInfo = new Gson().fromJson(fieldinfojson,FieldInfo.class);
+            boundary2map = fieldInfo.getFieldBoundary();
+            if (firstloaded){
+                showfieldboundary(fieldInfo.getFieldBoundary());
+            }
+
+
+            // 显示名称
+            farmname.setText(fieldInfo.getFieldName());
+
+            farmarea.setText(Common.getAreaStr(fieldInfo.getFieldArea())+"亩");
+        }
+        if (requestCode == REQUESTCODE_EditFarmActivity && resultCode == EditFarmActivity.RESULTCODE_DELETE_FarmDetailActivity){
+            this.finish();
         }
     }
 

@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+
     android:orientation="vertical"
-    android:background="#548ED4">
+    android:background="#ffffff">
 
 
     <!--title-->
@@ -55,13 +55,13 @@
                    android:layout_centerHorizontal="true"
                    android:layout_marginTop="20dp"
                    android:layout_width="wrap_content"
-                   android:layout_height="50dp">
+                   android:layout_height="wrap_content">
                    <TextView
                        android:id="@+id/realTemp"
                        android:textSize="48dp"
                        android:gravity="center"
                        android:layout_width="wrap_content"
-                       android:layout_height="50dp" />
+                       android:layout_height="wrap_content" />
                    <com.facebook.drawee.view.SimpleDraweeView
                        android:id="@+id/realicon"
                        android:layout_width="30dp"
@@ -69,8 +69,15 @@
 
                </LinearLayout>
                 <TextView
+                    android:id="@+id/city"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_marginTop="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
                     android:id="@+id/realweathername"
-                    android:textSize="30dp"
+                    android:textSize="20dp"
                     android:layout_toRightOf="@id/realTempAndIcon"
                     android:layout_alignBottom="@id/realTempAndIcon"
                     android:layout_width="wrap_content"

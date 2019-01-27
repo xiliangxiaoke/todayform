@@ -5,9 +5,12 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +19,16 @@ import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.pages.createFarm.CreateFarmActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,14 +41,17 @@ public class CreateCropActivity extends Activity {
 
 
     public static final int RESULT_CODE_CREATE_CROP = 3000;
-    @BindView(R.id.cropname)
-    EditText etcropname;
+//    @BindView(R.id.cropname)
+//    EditText etcropname;
+
+    @BindView(R.id.spinner)
+    Spinner spinner;
 
     @BindView(R.id.year)
     TextView tvyear;
 
-    @BindView(R.id.croplistbg)
-    RelativeLayout croplistbg;
+//    @BindView(R.id.croplistbg)
+//    RelativeLayout croplistbg;
 
     @BindView(R.id.back)
             TextView back;
@@ -54,25 +64,25 @@ public class CreateCropActivity extends Activity {
 
     Calendar calendar;
 
-    @OnClick(R.id.selectdefaultcroplist)
-    public void selectdefaultcroplist(View view) {
-        croplistbg.setVisibility(View.VISIBLE);
-    }
-
-    @OnClick(R.id.croplistbg)
-    public void clickcroplistbg() {
-        croplistbg.setVisibility(View.GONE);
-    }
+//    @OnClick(R.id.selectdefaultcroplist)
+//    public void selectdefaultcroplist(View view) {
+//        croplistbg.setVisibility(View.VISIBLE);
+//    }
+//
+//    @OnClick(R.id.croplistbg)
+//    public void clickcroplistbg() {
+//        croplistbg.setVisibility(View.GONE);
+//    }
 
     // 玉米 小麦 大豆 水稻 棉花 向日葵
-    @OnClick({R.id.cropyumi, R.id.cropxiaomai, R.id.cropdadou, R.id.cropshuidao, R.id.cropmianhua, R.id.cropxiangrikui})
-    public void selectcrop(View view) {
-        TextView selectview = (TextView) view;
-        cropname = selectview.getText().toString();
-        etcropname.setText(cropname);
-        Hawk.put(HawkKey.LAST_CROP_SELECTED,cropname);
-        croplistbg.setVisibility(View.GONE);
-    }
+//    @OnClick({R.id.cropyumi, R.id.cropxiaomai, R.id.cropdadou, R.id.cropshuidao, R.id.cropmianhua, R.id.cropxiangrikui})
+//    public void selectcrop(View view) {
+//        TextView selectview = (TextView) view;
+//        cropname = selectview.getText().toString();
+////        etcropname.setText(cropname);
+//        Hawk.put(HawkKey.LAST_CROP_SELECTED,cropname);
+////        croplistbg.setVisibility(View.GONE);
+//    }
 
     @OnClick(R.id.selectyear)
     public void selectyear(){
@@ -100,15 +110,15 @@ public class CreateCropActivity extends Activity {
     @OnClick(R.id.edit)
     public void edit() {
 
-        if (cropname == null || cropname.length() == 0) {
-            ToastUtil.show(this,"农作物未选定");
-            return;
-        }
+//        if (cropname == null || cropname.length() == 0) {
+//            ToastUtil.show(this,"农作物未选定");
+//            return;
+//        }
         // 保存作物
         API.saveOrUpdateCropInfo(
                 Hawk.get(HawkKey.TOKEN),
                 fieldid,
-                cropname,
+                selectedCropName,
                 cropyear + "",
                 new ApiCallBack<Object>() {
                     @Override
@@ -134,6 +144,8 @@ public class CreateCropActivity extends Activity {
 
     }
 
+    private String selectedCropName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,12 +160,12 @@ public class CreateCropActivity extends Activity {
 
         //初始设置作物名称和时间
         cropname = Hawk.get(HawkKey.LAST_CROP_SELECTED);
-        if (cropname != null && cropname.length()>0) {
-            etcropname.setText(cropname);
-        }else{
-            etcropname.setText("玉米");
-            cropname = "玉米";
-        }
+//        if (cropname != null && cropname.length()>0) {
+//            etcropname.setText(cropname);
+//        }else{
+//            etcropname.setText("玉米");
+//            cropname = "玉米";
+//        }
 
 
         fieldid = getIntent().getStringExtra("fieldid");
@@ -162,6 +174,48 @@ public class CreateCropActivity extends Activity {
         tvyear.setText(cropyear+"年");
 
 
+
+        API.findCropsNames(
+                Hawk.get(HawkKey.TOKEN),
+                "100",
+                new ApiCallBack<CropInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<CropInfo> resultObj) {
+                        if (resultObj.getCode() == 0) {
+                            if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                List<String> spinnerdata = new ArrayList<>();
+                                for (int i=0;i<resultObj.getList().size();i++) {
+                                    spinnerdata.add(resultObj.getList().get(i).getCropName());
+                                }
+                                selectedCropName = spinnerdata.get(0);
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                                        CreateCropActivity.this,R.layout.spinner_item,
+                                        spinnerdata
+                                );
+
+                                spinner.setAdapter(adapter);
+                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                        selectedCropName = spinnerdata.get(i);
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
 
     }
 }

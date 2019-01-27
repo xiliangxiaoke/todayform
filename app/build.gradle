@@ -6,7 +6,7 @@ android {
         applicationId "com.today.todayfarm"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 14
+        versionCode 15
         versionName "1.9.1"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

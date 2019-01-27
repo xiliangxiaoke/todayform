@@ -274,12 +274,20 @@
         para: circle 和 polygon的结构体
     */
     function showfarmBoundary(para){
+    // 先删除已有的数据
+
+        cacheFeatures.forEach(function (f){
+            map.removeLayer(f);
+        });
+        cacheFeatures = [];
         if(para.geotype==='circle'){
 
             var circle = L.circle(para.center, {radius: para.radius}).addTo(map);
+            cacheFeatures.push(circle);
             map.fitBounds(circle.getBounds());
         }else if(para.geotype==='polygon'){
             var polygon = L.polygon([para.coordinates], {color: 'red'}).addTo(map);
+            cacheFeatures.push(polygon);
             // zoom the map to the polygon
             map.fitBounds(polygon.getBounds());
         }

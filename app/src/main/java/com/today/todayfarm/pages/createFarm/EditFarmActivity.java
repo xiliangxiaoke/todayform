@@ -25,6 +25,7 @@ import com.today.todayfarm.pages.AddFarmMap.EditFarmMapActivity;
 import com.today.todayfarm.pages.tabs.DrawerTabActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
+import com.today.todayfarm.util.Common;
 import com.today.todayfarm.util.WebUtil;
 
 import butterknife.BindView;
@@ -47,18 +48,24 @@ public class EditFarmActivity extends Activity {
     @BindView(R.id.save)
     TextView tvsave;
 
+    @BindView(R.id.mapedit)
+    TextView mapedit;
+
     @BindView(R.id.editfarmname)
     EditText editfarmname;
 
     @BindView(R.id.editfarmarea)
     EditText editfarmarea;
     private boolean firstloaded=false;
+    public static int RESULTCODE_FarmDetailActivity = 4786;
+    public static  int RESULTCODE_DELETE_FarmDetailActivity = 9987;
 
 
     @OnClick(R.id.mapedit)
     public void mapedit() {
         // todo 打开地图边界 编辑页面
         Intent intent = new Intent();
+        intent.setClass(this,EditFarmMapActivity.class);
         intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
         this.startActivityForResult(intent,REQUESTCODE_EditFarmMapActivity);
     }
@@ -86,11 +93,15 @@ public class EditFarmActivity extends Activity {
 //                    .show();
 //            return;
 //        }
+
+        fieldInfo.setFieldName(editfarmname.getText().toString());
+        fieldInfo.setFieldArea(""+(Double.parseDouble(editfarmarea.getText().toString())*666.666));
+
         API.updateField(
                 Hawk.get(HawkKey.TOKEN),
                 fieldInfo.getFieldId(),
                 editfarmname.getText().toString(),
-                Double.parseDouble(editfarmarea.getText().toString()),
+                Double.parseDouble(editfarmarea.getText().toString())*666.666,
                 fieldInfo.getFieldBoundary(),
                 "",//cropName 要不要填
                 new ApiCallBack<Object>() {
@@ -106,6 +117,9 @@ public class EditFarmActivity extends Activity {
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
 
+                                            Intent intent = new Intent();
+                                            intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
+                                            EditFarmActivity.this.setResult(RESULTCODE_FarmDetailActivity,intent);
                                             EditFarmActivity.this.finish();
 //                                            Hawk.put(HawkKey.MAIN_PAGE_INDEX_TO_SHOW,1);
 //                                            Intent intent = new Intent();
@@ -142,6 +156,7 @@ public class EditFarmActivity extends Activity {
                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
                                     public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        EditFarmActivity.this.setResult(RESULTCODE_DELETE_FarmDetailActivity);
                                         EditFarmActivity.this.finish();
                                     }
                                 })
@@ -166,6 +181,7 @@ public class EditFarmActivity extends Activity {
 
         tvclose.setTypeface(MyApplication.iconTypeFace);
         tvsave.setTypeface(MyApplication.iconTypeFace);
+        mapedit.setTypeface(MyApplication.iconTypeFace);
 
         String fieldinfo_json = getIntent().getStringExtra("fieldinfo_json");
         try {
@@ -176,7 +192,7 @@ public class EditFarmActivity extends Activity {
 
         // 显示名称和面积
         editfarmname.setText(fieldInfo.getFieldName());
-        editfarmarea.setText(fieldInfo.getFieldArea());
+        editfarmarea.setText(Common.getAreaStr(fieldInfo.getFieldArea()));
 
         loadmap();
 
@@ -237,8 +253,9 @@ public class EditFarmActivity extends Activity {
             String area = data.getStringExtra("area");
             fieldInfo.setFieldArea(area);
             fieldInfo.setFieldBoundary(geojson);
+
             showBoundary();
-            editfarmarea.setText(area);
+            editfarmarea.setText(Common.getAreaStr(area));
         }
     }
 }

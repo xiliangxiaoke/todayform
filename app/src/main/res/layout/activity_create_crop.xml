@@ -52,26 +52,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
-                android:hint="请填写作物"
-                android:id="@+id/cropname"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:layout_margin="10dp"
+            <View
+                android:layout_below="@id/spinnertip"
+                android:background="@drawable/boxbg"
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="60dp"/>
+            <Spinner
+                android:id="@+id/spinner"
 
-            <TextView
-                android:id="@+id/selectdefaultcroplist"
-                android:text="常用作物"
-                android:textColor="#ffffff"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/button_login_bg"
-                android:gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="30dp" />
+
+
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
 
         </RelativeLayout>
         <View
@@ -120,84 +112,84 @@
 
 
 
-    <!--default crop: 玉米 小麦 大豆 水稻 棉花 向日葵-->
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/croplistbg"
-        android:background="#33000000"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--&lt;!&ndash;default crop: 玉米 小麦 大豆 水稻 棉花 向日葵&ndash;&gt;-->
+    <!--<RelativeLayout-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/croplistbg"-->
+        <!--android:background="#33000000"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:background="#ffffff"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_centerVertical="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/cropyumi"
-                android:text="玉米"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:background="@color/devideline"
-                android:layout_width="match_parent"
-                android:layout_height="1px"/>
-            <TextView
-                android:id="@+id/cropxiaomai"
-                android:text="小麦"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:background="@color/devideline"
-                android:layout_width="match_parent"
-                android:layout_height="1px"/>
-            <TextView
-                android:text="大豆"
-                android:id="@+id/cropdadou"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:background="@color/devideline"
-                android:layout_width="match_parent"
-                android:layout_height="1px"/>
-            <TextView
-                android:text="水稻"
-                android:id="@+id/cropshuidao"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:background="@color/devideline"
-                android:layout_width="match_parent"
-                android:layout_height="1px"/>
-            <TextView
-                android:text="棉花"
-                android:id="@+id/cropmianhua"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:background="@color/devideline"
-                android:layout_width="match_parent"
-                android:layout_height="1px"/>
-            <TextView
-                android:text="向日葵"
-                android:id="@+id/cropxiangrikui"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:background="#ffffff"-->
+            <!--android:layout_marginLeft="50dp"-->
+            <!--android:layout_marginRight="50dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
 
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/cropyumi"-->
+                <!--android:text="玉米"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp" />-->
+            <!--<View-->
+                <!--android:background="@color/devideline"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/cropxiaomai"-->
+                <!--android:text="小麦"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp" />-->
+            <!--<View-->
+                <!--android:background="@color/devideline"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"/>-->
+            <!--<TextView-->
+                <!--android:text="大豆"-->
+                <!--android:id="@+id/cropdadou"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp" />-->
+            <!--<View-->
+                <!--android:background="@color/devideline"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"/>-->
+            <!--<TextView-->
+                <!--android:text="水稻"-->
+                <!--android:id="@+id/cropshuidao"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp" />-->
+            <!--<View-->
+                <!--android:background="@color/devideline"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"/>-->
+            <!--<TextView-->
+                <!--android:text="棉花"-->
+                <!--android:id="@+id/cropmianhua"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp" />-->
+            <!--<View-->
+                <!--android:background="@color/devideline"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"/>-->
+            <!--<TextView-->
+                <!--android:text="向日葵"-->
+                <!--android:id="@+id/cropxiangrikui"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp" />-->
 
-    </RelativeLayout>
+
+        <!--</LinearLayout>-->
+
+    <!--</RelativeLayout>-->
 
 </RelativeLayout>

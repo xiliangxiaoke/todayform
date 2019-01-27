@@ -36,6 +36,8 @@ public class EditFarmthingShougeActivity extends Activity {
 
     @BindView(R.id.back)
     TextView back;
+    @BindView(R.id.title)
+    TextView title;
 
     @BindView(R.id.edit)
     TextView edit;
@@ -112,17 +114,17 @@ public class EditFarmthingShougeActivity extends Activity {
             return;
         }
 
-        if (fieldInfo==null){
-            new SweetAlertDialog(this)
-                    .setTitleText("缺少农田信息")
-                    .show();
-            return;
-        }
+//        if (fieldInfo==null){
+//            new SweetAlertDialog(this)
+//                    .setTitleText("缺少农田信息")
+//                    .show();
+//            return;
+//        }
 
 
         API.harvestingSaveOrUpdate(
                 Hawk.get(HawkKey.TOKEN),
-                fieldInfo.getFieldId(),
+                fieldInfo==null?harvestingInfo.getFieldId():fieldInfo.getFieldId(),
                 cropInfo.getCropId(),
                 HarvestingActivityId,
                 tvstarttime.getText().toString(),
@@ -135,7 +137,7 @@ public class EditFarmthingShougeActivity extends Activity {
                 priceofunit.getText().toString(),
                 priceall.getText().toString(),
                 beizhu.getText().toString(),
-                fieldInfo.getUserId(),
+                fieldInfo==null? harvestingInfo.getUserId():fieldInfo.getUserId(),
                 pics.geturls(),// todo: img list
                 new ApiCallBack<Object>() {
                     @Override
@@ -171,12 +173,14 @@ public class EditFarmthingShougeActivity extends Activity {
     public void setTvcropinfo() {
         Intent intent = new Intent(this, SelectCropActivity.class);
         intent.putExtra("fieldinfo_json",fieldinfo_json);
+        intent.putExtra("fieldid",fieldInfo==null?harvestingInfo.getFieldId():fieldInfo.getFieldId());
         this.startActivityForResult(intent,SelectCropActivity.REQUEST_CODE_SELECT_CROP_ACTIVITY);
     }
 
 
     FieldInfo fieldInfo = null;
     CropInfo cropInfo = null;
+    HarvestingInfo harvestingInfo = null;
     String fieldinfo_json;
     String HarvestingActivityId = null;
     String fieldname = null;
@@ -201,15 +205,15 @@ public class EditFarmthingShougeActivity extends Activity {
         fieldname = getIntent().getStringExtra("fieldname");
 
         // 显示地块名称
-        if (fieldInfo != null) {
-            tvfieldname.setText(fieldInfo.getFieldName()+"  收割");
-        }
 
-        if (fieldname != null) {
-            tvfieldname.setText(fieldname+"  收割");
-        }
+
+
 
         if (HarvestingActivityId != null && HarvestingActivityId.length()>0) {
+            title.setText("编辑农事记录");
+            if (fieldname != null) {
+                tvfieldname.setText(fieldname+"  收割");
+            }
             // TODO: get sowing detail
             API.getHarvestingById(
                     Hawk.get(HawkKey.TOKEN),
@@ -219,7 +223,7 @@ public class EditFarmthingShougeActivity extends Activity {
                         public void onResponse(ResultObj<HarvestingInfo> resultObj) {
                             if (resultObj.getCode() == 0) {
                                 HarvestingInfo info = resultObj.getObject();
-
+                                harvestingInfo = info;
                                 tvstarttime.setText(info.getHarvestingStartTime());
                                 company.setText(info.getHarvestingUnit());
                                 mechine.setText(info.getHarvestingMachine());
@@ -260,8 +264,12 @@ public class EditFarmthingShougeActivity extends Activity {
                     }
             );
         } else {
+            title.setText("新建农事记录");
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));
+            if (fieldInfo != null) {
+                tvfieldname.setText(fieldInfo.getFieldName()+"  收割");
+            }
         }
     }
 
@@ -275,7 +283,10 @@ public class EditFarmthingShougeActivity extends Activity {
                 String cropjson =  data.getStringExtra("cropinfo_json");
                 cropInfo = new Gson().fromJson(cropjson, CropInfo.class);
 
-                tvcropinfo.setText(cropInfo.getCropName()+"  "+cropInfo.getPlantYear());
+                if (cropInfo!=null){
+                    tvcropinfo.setText(cropInfo.getCropName()+"  "+cropInfo.getPlantYear());
+                }
+
             }
         }
     }

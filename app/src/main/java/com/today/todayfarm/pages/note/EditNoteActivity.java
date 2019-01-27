@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
@@ -54,6 +55,12 @@ public class EditNoteActivity extends BaseActivity {
 
     @BindView(R.id.save)
     TextView save;
+    @BindView(R.id.iconblock)
+    TextView iconblock;
+    @BindView(R.id.iconcrop)
+    TextView iconcrop;
+    @BindView(R.id.icontime)
+    TextView icontime;
 
     @BindView(R.id.title)TextView title;
     @BindView(R.id.notename)EditText notename;
@@ -64,6 +71,7 @@ public class EditNoteActivity extends BaseActivity {
     @BindView(R.id.webview)WebView webView;
     public static int REQUEST_CODE = 1007;
     public static int REQUEST_CODE_CROP = 1008;
+    private boolean firstloaded = false;
 
     @OnClick(R.id.cropname)
     public void selectcrop() {
@@ -84,6 +92,11 @@ public class EditNoteActivity extends BaseActivity {
     @OnClick(R.id.close)
     public void setClose() {
         this.finish();
+    }
+
+    @OnClick(R.id.setmaploc)
+    public void setMaploc() {
+
     }
 
     @OnClick(R.id.save)
@@ -178,6 +191,9 @@ public class EditNoteActivity extends BaseActivity {
 
         close.setTypeface(MyApplication.iconTypeFace);
         save.setTypeface(MyApplication.iconTypeFace);
+        iconblock.setTypeface(MyApplication.iconTypeFace);
+        iconcrop.setTypeface(MyApplication.iconTypeFace);
+        icontime.setTypeface(MyApplication.iconTypeFace);
 
         fieldid = getIntent().getStringExtra("fieldid");
         cropid = getIntent().getStringExtra("cropid");
@@ -252,6 +268,26 @@ public class EditNoteActivity extends BaseActivity {
                 }
             }
         }),"androidjs");
+
+        webView.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && firstloaded == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    firstloaded = true;
+                    showpoint();
+                }
+            }
+        });
+
+        webView.loadUrl("file:///android_asset/index.html");
+    }
+
+    private void showpoint() {
+        // 如果有点的话就先显示出来
+
     }
 
     private void setcropname() {
