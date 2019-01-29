@@ -21,9 +21,9 @@ public class NoteInfo {
     String fieldId;
     String scoutingNoteInfo;
     String scoutingTime;
-    GeoPoint scoutingPosition;
+    String scoutingPosition;
     String userId;
-    String photos;
+//    String photos;
 
 
     public String getScoutingNoteId() {
@@ -66,11 +66,11 @@ public class NoteInfo {
         this.scoutingTime = scoutingTime;
     }
 
-    public GeoPoint getScoutingPosition() {
+    public String getScoutingPosition() {
         return scoutingPosition;
     }
 
-    public void setScoutingPosition(GeoPoint scoutingPosition) {
+    public void setScoutingPosition(String scoutingPosition) {
         this.scoutingPosition = scoutingPosition;
     }
 
@@ -83,10 +83,10 @@ public class NoteInfo {
     }
 
     public String getPhotos() {
-        return photos;
+        return "";//photos;
     }
 
-    public void setPhotos(String photos) {
-        this.photos = photos;
-    }
+//    public void setPhotos(String photos) {
+//        this.photos = photos;
+//    }
 }

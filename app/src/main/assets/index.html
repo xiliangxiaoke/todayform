@@ -25,9 +25,7 @@
 
 <div id="map"></div>
 
-<button onclick="test()">Copy Text</button>
-<button onclick="test1()">Copy Text</button>
-<button onclick="test2()">Copy Text</button>
+
 </body>
 
 <script>
@@ -37,6 +35,7 @@
     var cacheFeatures = []; // 用来存储已经加载的要素，供删除用
     var clicktype = "normal";
     var editgeometry = null;
+    var notepoint = null;
 
     var map = L.map('map', {
         center: [31.59, 120.29],
@@ -114,6 +113,8 @@
         8 设置注记位置 {type:"setnoteloc"}
         9 编辑边界 {type:"editgeo",params:{自定义的geogson，包含circle 和 polygon}}
                 获取边界时复用draw中的getgeojson
+        10 清除注记标记 {type:"clearnoteloc"}
+        11 同时显示边界和注记 {type:"showBoundaryAndNote",params:{boundary:,note:}}
     */
     function callJS(paraminfo){
 
@@ -133,11 +134,22 @@
             }else if("showrsimg" == paramobj.type){
                 showRsImg(paramobj.list);
             }else if("notelocation" == paramobj.type){
+                map.panTo(paramobj.params);
                 showNoteLocation(paramobj.params);
             }else if ("setnoteloc" == paramobj.type) {
                 setnoteloc();
             }else if ("editgeo" == paramobj.type){
                 editgeo(paramobj.params);
+            }else if ("clearnoteloc" == paramobj.type){
+                clearnoteloc();
+            }else if ("showBoundaryAndNote" == paramobj.type){
+                if (paramobj.params.boundary){
+                    showfarmBoundary(paramobj.params.boundary);
+                }
+                if (paramobj.params.note){
+                    showNoteLocation(paramobj.params.note);
+                }
+
             }
         }catch(e){
             var param = {
@@ -151,6 +163,12 @@
 
     };
 
+    function clearnoteloc() {
+        if(notepoint){
+            map.removeLayer(notepoint);
+        }
+    }
+
     function setnoteloc() {
         // body...
         clicktype = "setnoteloc";
@@ -159,12 +177,13 @@
 
     function showNoteLocation(position) {
         // body...
+        clearnoteloc();
         var myIcon = L.icon({
             iconUrl: './pics/loc.png',
             iconSize: [40, 40],
             iconAnchor: [20, 40]
         });
-        L.marker(
+        notepoint = L.marker(
             [position.lat, position.lng],
             {icon: myIcon}
             )

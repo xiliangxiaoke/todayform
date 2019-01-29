@@ -119,6 +119,7 @@ public class PicHorizentalList extends RelativeLayout {
         public PiclistAdapter(Context context){
             this.context = context;
 
+            list.add(defpic);
 
         }
 
@@ -128,7 +129,7 @@ public class PicHorizentalList extends RelativeLayout {
                 List l = Arrays.asList(urlarr);
                 list = new ArrayList<>(l);
             }else{
-
+                list.clear();
             }
 
             list.add(defpic);

@@ -1,6 +1,7 @@
 package com.today.todayfarm.pages.note;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,6 +31,7 @@ import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.pages.createFarm.EditFarmActivity;
 import com.today.todayfarm.pages.pagedetail.FarmDetailActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
@@ -64,7 +67,7 @@ public class EditNoteActivity extends BaseActivity {
 
     @BindView(R.id.title)TextView title;
     @BindView(R.id.notename)EditText notename;
-    @BindView(R.id.picsview)PicHorizentalList picslist;
+    @BindView(R.id.pics)PicHorizentalList pics;
     @BindView(R.id.fieldname)TextView fieldname;
     @BindView(R.id.cropname)TextView cropname;
     @BindView(R.id.notetime)TextView notetime;
@@ -72,15 +75,21 @@ public class EditNoteActivity extends BaseActivity {
     public static int REQUEST_CODE = 1007;
     public static int REQUEST_CODE_CROP = 1008;
     private boolean firstloaded = false;
+    public static int REQUEST_CODE_SetNoteLocActivity = 1009;
 
-    @OnClick(R.id.cropname)
+    @OnClick(R.id.selectcrop)
     public void selectcrop() {
         Intent intent = new Intent();
         intent.setClass(this, SelectCropActivity.class);
         intent.putExtra("from","EditNoteActivity");
+        if (fieldInfo != null) {
+            intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
+            intent.putExtra("fieldid",fieldInfo.getFieldId());
+        }
+
         this.startActivityForResult(intent,REQUEST_CODE_CROP);
     }
-    @OnClick(R.id.fieldname)
+    @OnClick(R.id.selectfieldname)
     public void selectfield() {
         // 打开选择地块 页面 选完后返回地块信息
         Intent intent = new Intent();
@@ -89,13 +98,51 @@ public class EditNoteActivity extends BaseActivity {
         this.startActivityForResult(intent,REQUEST_CODE);
     }
 
+    @OnClick(R.id.selecttime)
+    public void selecttime() {
+
+        new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        notetime.setText(i+"-"+i1+"-"+i2);
+                        calendar.set(Calendar.YEAR,i);
+                        calendar.set(Calendar.MONTH,i1);
+                        calendar.set(Calendar.DATE,i2);
+
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE)
+        ).show();
+    }
+
     @OnClick(R.id.close)
     public void setClose() {
         this.finish();
     }
 
+
+
+
+
     @OnClick(R.id.setmaploc)
     public void setMaploc() {
+
+        Intent intent = new Intent();
+        intent.setClass(this,SetNoteLocActivity.class);
+        if (noteInfo != null) {
+            intent.putExtra("noteinfo_json",new Gson().toJson(noteInfo));
+        }
+        if (fieldInfo != null) {
+            intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
+        }
+
+        if (position != null) {
+            intent.putExtra("position_json",new Gson().toJson(position));
+        }
+        this.startActivityForResult(intent,REQUEST_CODE_SetNoteLocActivity);
 
     }
 
@@ -111,8 +158,8 @@ public class EditNoteActivity extends BaseActivity {
                     noteInfo.getCropId(),
                     notename.getText().toString(),
                     Common.getSimpleDateFormatTime("yyyy-MM-dd", calendar),
-                    new Gson().toJson(noteInfo.getScoutingPosition()),
-                    picslist.geturls(),
+                    new Gson().toJson(position),
+                    pics.geturls(),
                     new ApiCallBack<Object>() {
                         @Override
                         public void onResponse(ResultObj<Object> resultObj) {
@@ -150,13 +197,22 @@ public class EditNoteActivity extends BaseActivity {
                     notename.getText().toString(),
                     Common.getSimpleDateFormatTime("yyyy-MM-dd", calendar),
                     position!=null?new Gson().toJson(position):null,
-                    picslist.geturls(),
+                    pics.geturls(),
                     new ApiCallBack<Object>() {
                         @Override
                         public void onResponse(ResultObj<Object> resultObj) {
                             // 保存成功
                             new SweetAlertDialog(EditNoteActivity.this)
                                     .setTitleText("添加成功")
+                                    .showConfirmButton(true)
+                                    .setConfirmText("好的")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                            EditNoteActivity.this.finish();
+                                        }
+                                    })
                                     .show();
                         }
 
@@ -178,6 +234,7 @@ public class EditNoteActivity extends BaseActivity {
     GeoPoint position = null;
     String fieldid = null;
     String cropid = null;
+    FieldInfo fieldInfo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,9 +271,8 @@ public class EditNoteActivity extends BaseActivity {
 
 
             notename.setText(noteInfo.getScoutingNoteInfo());
-            picslist.initdata(noteInfo.getPhotos());
-            // set fieldname and webview info
-            setfieldnameAndWebviewinfo();
+            pics.initdata(noteInfo.getPhotos());
+
             // set cropname
             setcropname();
             // set note date yyyy-MM-dd
@@ -275,9 +331,15 @@ public class EditNoteActivity extends BaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100 && firstloaded == false){
-                    Log.v("webview","totalChartWebview 加载完成");
+//                    Log.v("webview","totalChartWebview 加载完成");
+
                     firstloaded = true;
-                    showpoint();
+                    if (noteInfo != null) {
+                        // set fieldname and webview info
+                        setfieldnameAndWebviewinfo();
+                        showpoint();
+                    }
+
                 }
             }
         });
@@ -287,6 +349,12 @@ public class EditNoteActivity extends BaseActivity {
 
     private void showpoint() {
         // 如果有点的话就先显示出来
+        JSParamInfo<GeoPoint> jsParamInfo = new JSParamInfo<>();
+        jsParamInfo.setType("notelocation");
+
+
+        jsParamInfo.setParams(new Gson().fromJson(noteInfo.getScoutingPosition(),GeoPoint.class)  );
+        WebUtil.callJS(webView,new Gson().toJson(jsParamInfo));
 
     }
 
@@ -322,7 +390,7 @@ public class EditNoteActivity extends BaseActivity {
                     @Override
                     public void onResponse(ResultObj<FieldInfo> resultObj) {
                         if (resultObj.getCode() == 0) {
-                            FieldInfo fieldInfo = resultObj.getObject();
+                            fieldInfo = resultObj.getObject();
                             if (fieldInfo != null) {
                                 // 设置农田名称
                                 fieldname.setText(fieldInfo.getFieldName());
@@ -362,21 +430,21 @@ public class EditNoteActivity extends BaseActivity {
         }
 
         jsParamInfo.setParams(boundaryInfo2Js);
-
+        WebUtil.callJS(webView,new Gson().toJson(jsParamInfo));
 
 
         //Log.v("jsParamInfo:",new Gson().toJson(jsParamInfo));
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                /**
-                 *要执行的操作
-                 */
-                WebUtil.callJS(webView,new Gson().toJson(jsParamInfo));
-                showNoteLocation(noteInfo.getScoutingPosition());
-            }
-        }, 1000);//3秒后执行Runnable中的run方法
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                /**
+//                 *要执行的操作
+//                 */
+//
+//                //showNoteLocation(noteInfo.getScoutingPosition());
+//            }
+//        }, 1000);//3秒后执行Runnable中的run方法
     }
 
 
@@ -385,7 +453,7 @@ public class EditNoteActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             String json = data.getStringExtra("data");
-            FieldInfo fieldInfo = null;
+            fieldInfo = null;
             try {
                 fieldInfo = new Gson().fromJson(json,FieldInfo.class);
             } catch (Exception e) {
@@ -403,11 +471,33 @@ public class EditNoteActivity extends BaseActivity {
             CropInfo cropInfo = null;
             try {
                 cropInfo = new Gson().fromJson(cropjson,CropInfo.class);
+                cropid = cropInfo.getCropId();
+                cropname.setText(cropInfo.getCropName());
             } catch (Exception e) {
 
             }
-            cropid = cropInfo.getCropId();
-            cropname.setText(cropInfo.getCropName());
+
+        } else if (requestCode == REQUEST_CODE_SetNoteLocActivity && resultCode == SetNoteLocActivity.RESULTCODE_SetNoteLocActivity) {
+            String geopoint_json = data.getStringExtra("geopoint_json");
+            if (geopoint_json != null && geopoint_json.length() > 0) {
+                GeoPoint geoPoint = new Gson().fromJson(geopoint_json,GeoPoint.class);
+                if (geoPoint != null) {
+                    if (noteInfo != null) {
+                        noteInfo.setScoutingPosition(new Gson().toJson(geoPoint));
+                    }
+
+                    position = geoPoint;
+
+                    // 如果有点的话就先显示出来
+                    JSParamInfo<GeoPoint> jsParamInfo = new JSParamInfo<>();
+                    jsParamInfo.setType("notelocation");
+
+
+                    jsParamInfo.setParams(geoPoint);
+                    WebUtil.callJS(webView,new Gson().toJson(jsParamInfo));
+                }
+
+            }
         }
     }
 

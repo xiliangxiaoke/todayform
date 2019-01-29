@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pages.note.SetNoteLocActivity">
+
+    <!-- title -->
+    <RelativeLayout
+        android:background="#46A05A"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight">
+
+        <TextView
+            android:id="@+id/title"
+            android:text="注记位置"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/title_text_size"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/back"
+            android:textColor="#ffffff"
+            android:text="@string/icon_back"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="@dimen/titleheight"
+            android:layout_height="@dimen/titleheight" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:text="点击地图标定位置"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/remove"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:text="移除"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:background="@drawable/boxbg2"
+            android:layout_width="80dp"
+            android:layout_height="40dp" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:text="保存"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:background="@drawable/boxbg2"
+            android:layout_width="80dp"
+            android:layout_height="40dp" />
+
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_marginTop="@dimen/titleheight"
+        android:layout_marginBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

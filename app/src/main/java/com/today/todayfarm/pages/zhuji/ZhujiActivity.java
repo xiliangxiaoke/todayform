@@ -250,7 +250,7 @@ public class ZhujiActivity extends BaseActivity {
                 fieldname = itemView.findViewById(R.id.fieldname);
                 pic = itemView.findViewById(R.id.pic);
                 time =itemView.findViewById(R.id.time);
-                panel = itemView.findViewById(R.id.panel);
+                panel = itemView;
 
             }
         }

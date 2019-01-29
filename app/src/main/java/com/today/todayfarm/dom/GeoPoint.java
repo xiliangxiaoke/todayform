@@ -1,15 +1,15 @@
 package com.today.todayfarm.dom;
 
 public class GeoPoint {
-    double lon;
+    double lng;
     double lat;
 
     public double getLon() {
-        return lon;
+        return lng;
     }
 
     public void setLon(double lon) {
-        this.lon = lon;
+        this.lng = lon;
     }
 
     public double getLat() {
