@@ -22,16 +22,19 @@ import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.SowingInfo;
+import com.today.todayfarm.pages.note.EditNoteActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.ToastUtil;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.shinichi.library.ImagePreview;
 
 public class EditFarmthingBozhongActivity extends BaseActivity {
 
@@ -118,7 +121,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        bozhongstarttime.setText(i+"-"+i1+"-"+i2);
+                        bozhongstarttime.setText(i+"-"+(i1+1)+"-"+i2);
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -135,7 +138,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        bozhongendtime.setText(i+"-"+i1+"-"+i2);
+                        bozhongendtime.setText(i+"-"+(i1+1)+"-"+i2);
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -160,7 +163,7 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
 
                     @Override
                     public void onError(int code) {
-
+                        ToastUtil.show(EditFarmthingBozhongActivity.this,"删除失败");
                     }
                 }
         );
@@ -339,6 +342,22 @@ public class EditFarmthingBozhongActivity extends BaseActivity {
                 tvfieldname.setText(fieldInfo.getFieldName()+"  播种");
             }
         }
+
+
+        pics.setPicClickListener(new PicHorizentalList.PicOnclickEventListener() {
+            @Override
+            public void click(int index) {
+                //TODO PIC
+                String[] ss = pics.geturls().split(";");
+
+                ImagePreview
+                        .getInstance()
+                        .setContext(EditFarmthingBozhongActivity.this)
+                        .setIndex(index)
+                        .setImageList(Arrays.asList(ss))
+                        .start();
+            }
+        });
 
     }
 

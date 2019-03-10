@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cazaea.sweetalert.SweetAlertDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.Eventbus.MessageEvent;
@@ -22,6 +23,8 @@ import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.User;
 import com.today.todayfarm.pages.account.AccountManageActivity;
+import com.today.todayfarm.pages.login.LoginActivity;
+import com.today.todayfarm.pages.tabs.EditLoginUserinfoActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 
@@ -50,6 +53,9 @@ public class SettingFragment extends Fragment {
     TextView addressicon;
 
     TextView account;
+    TextView exitaccount;
+
+    View edituserinfo;
 
 
     User user = null;
@@ -73,6 +79,9 @@ public class SettingFragment extends Fragment {
         phoneicon = view.findViewById(R.id.phoneicon);
         companyicon = view.findViewById(R.id.companyicon);
         addressicon = view.findViewById(R.id.addressicon);
+        edituserinfo = view.findViewById(R.id.edituserinfo);
+        exitaccount = view.findViewById(R.id.exitaccount);
+
 
 
 //        btmenu.setTypeface(MyApplication.iconTypeFace);
@@ -89,6 +98,16 @@ public class SettingFragment extends Fragment {
 
 
         initlistener();
+
+
+
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
 
         // 获取用户信息
@@ -118,8 +137,6 @@ public class SettingFragment extends Fragment {
                     }
                 }
         );
-
-        return view;
     }
 
     private void initlistener() {
@@ -129,6 +146,44 @@ public class SettingFragment extends Fragment {
 //                EventBus.getDefault().post(new MessageEvent("openMenuActivity",""));
 //            }
 //        });
+
+        exitaccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 退出登陆
+
+                new SweetAlertDialog(SettingFragment.this.getContext())
+                        .setTitleText("确定退出登录吗？")
+                        .setContentText("退出登陆后将返回登录页面，重新登录。")
+                        .showCancelButton(true)
+                        .showConfirmButton(true)
+                        .setCancelText("取消")
+                        .setConfirmText("确定")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                Hawk.deleteAll();
+                                LoginActivity.afterExitCount = true;
+                                Intent intent = new Intent();
+                                intent.setClass(SettingFragment.this.getContext(), LoginActivity.class);
+                                SettingFragment.this.getContext().startActivity(intent);
+                            }
+                        })
+                        .show();
+
+
+
+            }
+        });
+
+        edituserinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(SettingFragment.this.getActivity(), EditLoginUserinfoActivity.class);
+                SettingFragment.this.startActivity(intent);
+            }
+        });
 
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +219,8 @@ public class SettingFragment extends Fragment {
                                                     // 图片上传成功
                                                     Uri uri = Uri.parse(url);
                                                     pic.setImageURI(uri);
+
+                                                    updateHeadImgurl(url);
                                                 }
                                             }
 
@@ -189,6 +246,28 @@ public class SettingFragment extends Fragment {
 
             }
         });
+    }
+
+    private void updateHeadImgurl(String url) {
+        API.updateLoginUserInfo(
+                Hawk.get(HawkKey.TOKEN),
+                user.getFullName(),
+                user.getOrgName(),
+                user.getOrgAddress(),
+                url,
+                new ApiCallBack<Object>() {
+                    @Override
+                    public void onResponse(ResultObj<Object> resultObj) {
+
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+
+        );
     }
 
 

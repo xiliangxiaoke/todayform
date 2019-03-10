@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.jaeger.library.StatusBarUtil;
@@ -30,6 +32,8 @@ import butterknife.OnClick;
 
 
 public class LoginActivity extends BaseActivity {
+
+    public static boolean afterExitCount = false;// 标记是否是从退出登录界面跳转来的
 
     @BindView(R.id.close)
     ImageView btnclose;
@@ -116,7 +120,10 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(ResultObj<Object> resultObj) {
                 if (resultObj.getCode()==0){
                     // login success !!
+                    etphone.setText("");
+                    etcode.setText("");
                     //保存token
+
                     Hawk.put(HawkKey.TOKEN,resultObj.token);
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, DrawerTabActivity.class);
@@ -187,5 +194,35 @@ public class LoginActivity extends BaseActivity {
                 tvgetcode.setText("获取验证码");
             }
         }.start();
+    }
+
+
+
+    // 用来计算返回键的点击间隔时间
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN
+
+                ) {
+
+            if (afterExitCount){
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    //弹出提示，可以有多种方式
+                    Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    this.finish();
+                }
+            }else {
+                this.finish();
+            }
+
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

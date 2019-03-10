@@ -2,6 +2,7 @@ package com.today.todayfarm.pages.pagedetail;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
@@ -26,6 +28,7 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
+import com.today.todayfarm.dom.NoteInfo;
 import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.dom.SoilInfo;
 import com.today.todayfarm.dom.TotalRainAndTemp;
@@ -42,10 +45,12 @@ import com.today.todayfarm.pages.createFarm.EditFarmActivity;
 import com.today.todayfarm.pages.createcrop.CreateCropActivity;
 import com.today.todayfarm.pages.farmThingList.FarmThingListActivity;
 import com.today.todayfarm.pages.chart.RainDetailActivity;
+import com.today.todayfarm.pages.note.EditNoteActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.pages.selectfarm.SelectFarmActivity;
 import com.today.todayfarm.pages.selectfarmthing.SelectFarmThingActivity;
 import com.today.todayfarm.pages.threeDaysWeather.ThreeDaysWeatherActivity;
+import com.today.todayfarm.pages.zhuji.ZhujiActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.Common;
@@ -95,6 +100,11 @@ public class FarmDetailActivity extends Activity {
     @BindView(R.id.farmthing)
     TextView farmthingname;
 
+    @BindView(R.id.nonotetip)
+    TextView nonotetip;
+    @BindView(R.id.noteitempanel)
+    RelativeLayout noteitempanel;
+
     @BindView(R.id.farmthingdate)
     TextView farmthingdate;
 
@@ -119,6 +129,15 @@ public class FarmDetailActivity extends Activity {
     @BindView(R.id.oilcsecond) TextView oilcsecond;
     @BindView(R.id.oilcthird) TextView oilcthird;
     @BindView(R.id.oilph) TextView oilph;
+
+    @BindView(R.id.farmdiarypic)
+    SimpleDraweeView notepic;
+    @BindView(R.id.farmdiarytitle)
+    TextView notetitle;
+    @BindView(R.id.farmdiarydate)
+    TextView notedate;
+    @BindView(R.id.showallfarmdiary)
+    TextView showallfarmdiary;
 
 
 
@@ -192,6 +211,37 @@ public class FarmDetailActivity extends Activity {
 
     }
 
+    @OnClick(R.id.noteitempanel)
+    public void shownotedetailpanel() {
+        if (noteInfo != null) {
+            //TODO 打開注记详情页
+            Intent intent = new Intent();
+            intent.setClass(this, EditNoteActivity.class);
+            intent.putExtra("noteinfo_json",new Gson().toJson(noteInfo));
+            intent.putExtra("pagetype","edit");
+            this.startActivity(intent);
+        }
+
+    }
+
+    @OnClick(R.id.showallfarmdiary)
+    public void setShowallfarmdiary() {
+        if (noteInfo != null) {
+            // 查看列表
+            Intent intent = new Intent();
+            intent.setClass(this,ZhujiActivity.class);
+            intent.putExtra("fieldinfo_json",new Gson().toJson(fieldInfo));
+            startActivity(intent);
+        }else{
+            // 添加新注记
+            Intent intent = new Intent();
+            intent.setClass(this, EditNoteActivity.class);
+
+            intent.putExtra("pagetype","add");
+            this.startActivity(intent);
+        }
+    }
+
 
 
     public static final int REQUEST_CODE_CREATE_CROP_ACTIVITY = 1001;
@@ -199,6 +249,7 @@ public class FarmDetailActivity extends Activity {
 
     FieldThingInfo fieldThingInfo = null;
     CropInfo cropInfo = null;
+    NoteInfo noteInfo = null;
 
 
     @Override
@@ -327,7 +378,39 @@ public class FarmDetailActivity extends Activity {
     }
 
     private void updateZhuji() {
+        API.findMyScoutingNotesByField(
+                Hawk.get(HawkKey.TOKEN), 1, 1,
+                fieldid,
+                new ApiCallBack<NoteInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<NoteInfo> resultObj) {
+                        if (resultObj.getCode() == 0) {
+                            if (resultObj.getAll() > 0) {
+                                noteInfo = resultObj.getList().get(0);
 
+                                nonotetip.setVisibility(View.GONE);
+                                noteitempanel.setVisibility(View.VISIBLE);
+
+                                if (noteInfo.getImgUrl() != null && noteInfo.getImgUrl().length() > 0) {
+                                    //取第一张图片显示
+                                    String url = noteInfo.getImgUrl().split(";")[0];
+                                    notepic.setImageURI(Uri.parse(url));
+                                }
+                                notetitle.setText(noteInfo.getScoutingNoteInfo());
+                                notedate.setText(noteInfo.getScoutingTime());
+
+                                showallfarmdiary.setText("查看所有注记");
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     private void updateFieldthing() {

@@ -21,16 +21,19 @@ import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FieldInfo;
 import com.today.todayfarm.dom.IrrigatingInfo;
 import com.today.todayfarm.dom.ResultObj;
+import com.today.todayfarm.pages.note.EditNoteActivity;
 import com.today.todayfarm.pages.selectcrop.SelectCropActivity;
 import com.today.todayfarm.restapi.API;
 import com.today.todayfarm.restapi.ApiCallBack;
 import com.today.todayfarm.util.ToastUtil;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.shinichi.library.ImagePreview;
 
 public class EditFarmthingGuangaiActivity extends Activity {
 
@@ -66,7 +69,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        tvstarttime.setText(i+"-"+i1+"-"+i2);
+                        tvstarttime.setText(i+"-"+(i1+1)+"-"+i2);
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -82,7 +85,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        tvendtime.setText(i+"-"+i1+"-"+i2);
+                        tvendtime.setText(i+"-"+(i1+1)+"-"+i2);
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -107,7 +110,7 @@ public class EditFarmthingGuangaiActivity extends Activity {
 
                     @Override
                     public void onError(int code) {
-
+                        ToastUtil.show(EditFarmthingGuangaiActivity.this,"删除失败");
                     }
                 }
         );
@@ -266,6 +269,22 @@ public class EditFarmthingGuangaiActivity extends Activity {
             tvcropinfo.setText("请选择作物");
             tvcropinfo.setTextColor(Color.parseColor("#FF0000"));
         }
+
+
+        pics.setPicClickListener(new PicHorizentalList.PicOnclickEventListener() {
+            @Override
+            public void click(int index) {
+                //TODO PIC
+                String[] ss = pics.geturls().split(";");
+
+                ImagePreview
+                        .getInstance()
+                        .setContext(EditFarmthingGuangaiActivity.this)
+                        .setIndex(index)
+                        .setImageList(Arrays.asList(ss))
+                        .start();
+            }
+        });
 
     }
 

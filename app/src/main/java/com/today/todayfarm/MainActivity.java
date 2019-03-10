@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setClass(this,LoginActivity.class);
         startActivity(intent);
-        this.finish();
+        //this.finish();
 
     }
 

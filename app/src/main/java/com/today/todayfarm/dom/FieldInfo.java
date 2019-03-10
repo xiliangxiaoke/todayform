@@ -12,6 +12,24 @@ public class FieldInfo {
 	String userId;
 	String fieldcrop;
 	String fullName; // 农田主的名字
+	String cropId;
+	String cropName;
+
+	public String getCropId() {
+		return cropId;
+	}
+
+	public void setCropId(String cropId) {
+		this.cropId = cropId;
+	}
+
+	public String getCropName() {
+		return cropName;
+	}
+
+	public void setCropName(String cropName) {
+		this.cropName = cropName;
+	}
 
 	public String getFullName() {
 		return fullName;

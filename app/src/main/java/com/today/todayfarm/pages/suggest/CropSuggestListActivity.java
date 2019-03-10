@@ -162,7 +162,7 @@ public class CropSuggestListActivity extends BaseActivity {
                 ((ViewholderTitle) holder).title.setText(cropInfo.getCropName());
             } else if (holder instanceof ViewholderImg) {
 
-                ((ViewholderImg)holder).img.setImageURI( Uri.parse(cropInfo.getCropLargeImageUrl()));
+                ((ViewholderImg)holder).img.setImageURI( Uri.parse(cropInfo.getCropMediumImageUrl()));
             } else if (holder instanceof Viewholder) {
                 // data
                 StageInfo stageInfo = datalist.get(position-2);
@@ -231,8 +231,8 @@ public class CropSuggestListActivity extends BaseActivity {
 
                 panel = itemView.findViewById(R.id.panel);
 
-                img = itemView.findViewById(R.id.img);
-                name = itemView.findViewById(R.id.name);
+                img = itemView.findViewById(R.id.stageicon);
+                name = itemView.findViewById(R.id.stagename);
 
 
             }

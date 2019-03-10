@@ -3,6 +3,7 @@ package com.today.todayfarm.restapi;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.today.todayfarm.dom.AppVersionInfo;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FertilizingInfo;
 import com.today.todayfarm.dom.FieldInfo;
@@ -434,6 +435,12 @@ public class API {
         callenqueue(call,callBack);
     }
 
+    public static void findMyScoutingNotesByField(String token,int currentpage,int pagesize ,String fieldid,ApiCallBack<NoteInfo> callBack ){
+        Call<ResultObj<NoteInfo>> call = Doapi.instance()
+                .findMyScoutingNotesByField(token,currentpage,pagesize,fieldid);
+        callenqueue(call,callBack);
+    }
+
 
     public static void findMyHealthImgsWeekdays(String token,ApiCallBack<HealthImgInfo> callBack) {
         Call<ResultObj<HealthImgInfo>> call = Doapi.instance()
@@ -565,6 +572,25 @@ public class API {
     public static void deleteFieldById(String token, String fieldid, ApiCallBack<Object> callBack) {
         Call<ResultObj<Object>> call = Doapi.instance()
                 .deleteFieldById(token,fieldid);
+        callenqueue(call,callBack);
+    }
+
+    public static void updateLoginUserInfo(String token, String name, String org, String address, String headimgurl, ApiCallBack<Object> callBack) {
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .updateLoginUserInfo(token,name,org,address,headimgurl);
+        callenqueue(call,callBack);
+    }
+
+
+    public static void deleteScoutingNoteById(String token, String id, ApiCallBack<Object> callBack){
+        Call<ResultObj<Object>> call = Doapi.instance()
+                .deleteScoutingNoteById(token,id);
+        callenqueue(call,callBack);
+    }
+
+    public static void getAppNewVersion(ApiCallBack<AppVersionInfo> callBack){
+        Call<ResultObj<AppVersionInfo>> call = Doapi.instance()
+                .getAppNewVersion();
         callenqueue(call,callBack);
     }
 

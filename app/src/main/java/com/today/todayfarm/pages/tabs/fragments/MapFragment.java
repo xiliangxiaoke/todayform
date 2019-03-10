@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -79,6 +80,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
     private WebView map;
 
     private ImageView geolocation;
+    private ImageView fullmap;
     private NiceSpinner niceSpinner;
 
     private RecyclerView recyclerView;
@@ -96,6 +98,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
 
     int datatype = 1;//1- 健康监测  2-卫星影像  3-区划
+    private boolean firstloaded = false;
 
 
     @Nullable
@@ -108,6 +111,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 //        btmenu.setTypeface(MyApplication.iconTypeFace);
         map = view.findViewById(R.id.map);
         geolocation = view.findViewById(R.id.geolocation);
+        fullmap = view.findViewById(R.id.fullmap);
 //        datetv = view.findViewById(R.id.date);
         maplegend = view.findViewById(R.id.maplegend);
 
@@ -141,18 +145,18 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
         initlistener();
 
-        // 默认显示健康监测数据
-        showHealthData();
+
+        niceSpinner.setSelectedIndex(2);
 
 
         // 默认定位一次
         //location do once
-        if(null != mlocationClient){
-            mlocationClient.setLocationOption(option);
-            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
-            mlocationClient.stopLocation();
-            mlocationClient.startLocation();
-        }
+//        if(null != mlocationClient){
+//            mlocationClient.setLocationOption(option);
+//            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+//            mlocationClient.stopLocation();
+//            mlocationClient.startLocation();
+//        }
 
         return view;
     }
@@ -171,6 +175,14 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     mlocationClient.stopLocation();
                     mlocationClient.startLocation();
                 }
+            }
+        });
+
+        fullmap.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                // todo: 地图内容全图显示
+                fullextent();
             }
         });
 
@@ -215,6 +227,8 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
     private void showBlock() {
 
+        clearmap();
+
         API.findMyFields(
                 Hawk.get(HawkKey.TOKEN),
                 1,
@@ -239,6 +253,8 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                                     BoundaryInfo2Js boundaryInfo2Js =null;
                                     try{
                                         boundaryInfo2Js = new Gson().fromJson(resultObj.getList().get(i).getFieldBoundary(),BoundaryInfo2Js.class);
+                                        boundaryInfo2Js.setMarkertitle(resultObj.getList().get(i).getCropName());
+                                        boundaryInfo2Js.setColor(getCropColor(resultObj.getList().get(i).getCropName()));
                                     }catch (Exception e){
                                         Log.e("boundary err",e.getMessage());
                                     }
@@ -267,7 +283,48 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         );
     }
 
+    private String getCropColor(String cropName) {
+        String color = "#ffffff";
+        if ("小麦".equals(cropName)){
+            color = "#6B8E23";
+        }else if ("玉米".equals(cropName)){
+            color = "#EEB422";
+        }else if ("水稻".equals(cropName)){
+            color = "#F8F8FF";
+        }else if ("棉花".equals(cropName)){
+            color = "#ffffff";
+        }else if ("番茄".equals(cropName)){
+            color = "#FC665C";
+        }else if ("鹰嘴豆".equals(cropName)){
+            color = "#E8A878";
+        }else if ("洋葱".equals(cropName)){
+            color = "#8C2079";
+        }else if ("辣椒".equals(cropName)){
+            color = "#E0010F";
+        }else if ("菜花".equals(cropName)){
+            color = "#F9F3B9";
+        }else if ("卷心菜".equals(cropName)){
+            color = "#6FC164";
+        }else if ("土豆".equals(cropName)){
+            color = "#BF9A50";
+        }else if ("绿豆".equals(cropName)){
+            color = "#517A50";
+        }else if ("向日葵".equals(cropName)){
+            color = "#FACE08";
+        }else if ("大豆".equals(cropName)){
+            color = "#FDE474";
+        }else if ("甘蔗".equals(cropName)){
+            color = "#529435";
+        }else if ("花生".equals(cropName)){
+            color = "#C1B296";
+        }else if ("西瓜".equals(cropName)){
+            color = "#F7A394";
+        }
+        return color;
+    }
+
     private void showStaliteData() {
+        clearmap();
         API.findSatellateImgsWeekdays(
                 Hawk.get(HawkKey.TOKEN),
                 new ApiCallBack<SatellateImgInfo>() {
@@ -278,9 +335,11 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                             // 1 先计算出一个月的时间列表
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
-                            calendar.add(Calendar.MONTH, -1);
+                            //calendar.add(Calendar.MONTH, -1);
 
                             timeregion = new ArrayList<>();
+
+                            calendar.add(Calendar.DATE,-30);
 
                             for (int i =0; i<30;i++){
 
@@ -370,6 +429,7 @@ public class MapFragment extends Fragment implements AMapLocationListener{
 
     // 获取健康数据
     private void showHealthData() {
+        clearmap();
         API.findMyHealthImgsWeekdays(
                 Hawk.get(HawkKey.TOKEN),
                 new ApiCallBack<HealthImgInfo>() {
@@ -380,11 +440,11 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                             // 1 先计算出一个月的时间列表
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
-                            calendar.add(Calendar.MONTH, -1);
-                            // test 先减三个月 为了计算到有数据的时间段
-                            //calendar.add(Calendar.MONTH, -5);
 
-                             timeregion = new ArrayList<>();
+
+                            timeregion = new ArrayList<>();
+
+                            calendar.add(Calendar.DATE,-30);
 
                             for (int i =0; i<30;i++){
 
@@ -494,6 +554,17 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         WebSettings webSettings = map.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        map.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100 && firstloaded == false){
+                    Log.v("webview","totalChartWebview 加载完成");
+                    firstloaded = true;
+                    showBlock();
+                }
+            }
+        });
         map.addJavascriptInterface(new Android2JS(new Android2JS.CallBack() {
             @Override
             public void callback(String json) {
@@ -502,11 +573,11 @@ public class MapFragment extends Fragment implements AMapLocationListener{
                     if (js2AndroidParam!=null){
                         if ("error".equals(js2AndroidParam.getType())){
                             Log.e("ERRORSSSS",js2AndroidParam.getValue());
-                            Log.e("ERRORSSSS",js2AndroidParam.getValue());
-                            new SweetAlertDialog(MapFragment.this.getContext())
-                                    .setTitleText(js2AndroidParam.getType())
-                                    .setContentText(js2AndroidParam.getValue())
-                                    .show();
+//                            Log.e("ERRORSSSS",js2AndroidParam.getValue());
+//                            new SweetAlertDialog(MapFragment.this.getContext())
+//                                    .setTitleText(js2AndroidParam.getType())
+//                                    .setContentText(js2AndroidParam.getValue())
+//                                    .show();
 
                         }
                     }
@@ -518,6 +589,18 @@ public class MapFragment extends Fragment implements AMapLocationListener{
     }
 
 
+    public void clearmap(){
+        JSParamInfo<Object> jsParamInfo = new JSParamInfo<>();
+        jsParamInfo.setType("clearall");
+        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+    }
+
+
+    public void fullextent(){
+        JSParamInfo<Object> jsParamInfo = new JSParamInfo<>();
+        jsParamInfo.setType("fullextent");
+        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+    }
 
     @Override
     public void onDestroyView() {
@@ -584,11 +667,20 @@ public class MapFragment extends Fragment implements AMapLocationListener{
         public void onBindViewHolder(@NonNull Viewholder holder, int position) {
 
             TimeAxisItemInfo info = timeregion.get(position);
-            if (info.getHealthImgInfos() != null && info.getHealthImgInfos().size() > 0) {
-                holder.datablock.setVisibility(View.VISIBLE);
-            }else {
-                holder.datablock.setVisibility(View.GONE);
+            if (datatype == 1){
+                if (info.getHealthImgInfos() != null && info.getHealthImgInfos().size() > 0) {
+                    holder.datablock.setVisibility(View.VISIBLE);
+                }else {
+                    holder.datablock.setVisibility(View.GONE);
+                }
+            }else if (datatype ==2){
+                if (info.getSatellateImgInfos() != null && info.getSatellateImgInfos().size() > 0) {
+                    holder.datablock.setVisibility(View.VISIBLE);
+                }else {
+                    holder.datablock.setVisibility(View.GONE);
+                }
             }
+
 
             holder.label.setText(""+info.getDateText());
             // 如果是1号显示日期

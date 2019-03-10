@@ -12,14 +12,15 @@
             android:id="@+id/meun_farm_land"
             android:icon="@mipmap/icon_farmland"
             android:title="农田" />
-        <item
-            android:id="@+id/meun_suggestion"
-            android:icon="@mipmap/icon_suggestion"
-            android:title="建议" />
+
         <item
             android:id="@+id/meun_farm_thing"
             android:icon="@mipmap/icon_farmthing"
             android:title="农事" />
+        <item
+            android:id="@+id/meun_suggestion"
+            android:icon="@mipmap/icon_suggestion"
+            android:title="农艺" />
         <item
             android:id="@+id/meun_note"
             android:icon="@mipmap/icon_note"

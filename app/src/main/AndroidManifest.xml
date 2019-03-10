@@ -88,6 +88,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".pages.login.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".pages.AddFarmMap.AddFarm2MapActivity"
@@ -159,6 +160,7 @@
         <activity
             android:name=".pages.tabs.DrawerTabActivity"
             android:label="@string/title_activity_drawer_tab"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".pages.suggest.CropSuggestListActivity" />
         <activity android:name=".pages.suggest.StageDetailActivity" />
@@ -166,7 +168,21 @@
         <activity android:name=".pages.account.AccountDetailActivity" />
         <activity android:name=".pages.createFarm.EditFarmActivity" />
         <activity android:name=".pages.AddFarmMap.EditFarmMapActivity" />
-        <activity android:name=".pages.note.SetNoteLocActivity"></activity>
+        <activity android:name=".pages.note.SetNoteLocActivity" />
+        <activity android:name=".pages.tabs.EditLoginUserinfoActivity" />
+        <activity android:name=".pages.suggest.SubstageDetailActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.today.todayfarm"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public" />
+        </provider>
+
+        <activity android:name=".pages.picGallery.PicGalleryActivity"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,11 +25,16 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 //import com.today.todayfarm.pages.menu.MenuActivity;
+import com.today.todayfarm.dom.AppVersionInfo;
+import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.tabs.fragments.FarmlandFragment;
 import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
 import com.today.todayfarm.pages.tabs.fragments.MapFragment;
 import com.today.todayfarm.pages.tabs.fragments.SettingFragment;
 import com.today.todayfarm.pages.tabs.fragments.SuggestFragment;
+import com.today.todayfarm.restapi.API;
+import com.today.todayfarm.restapi.ApiCallBack;
+import com.today.todayfarm.util.ToastUtil;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -54,7 +60,7 @@ import butterknife.ButterKnife;
  */
 public class TabActivity extends BaseActivity {
 
-    private static final String[] CHANNELS = new String[]{"首页","农田","建议","农事","设置"};
+    private static final String[] CHANNELS = new String[]{"首页","农田","农艺","农事","设置"};
     private List<String> mdatalist = Arrays.asList(CHANNELS);
     private List<Fragment> fragments = new ArrayList<Fragment>();
     private FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
@@ -79,6 +85,28 @@ public class TabActivity extends BaseActivity {
 
         fragmentContainerHelper.handlePageSelected(0,false);
         switchPages(0);
+
+
+
+        // 延迟请求获取版本信息
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                API.getAppNewVersion(new ApiCallBack<AppVersionInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<AppVersionInfo> resultObj) {
+                        ToastUtil.show(TabActivity.this,"获取版本："+resultObj.getObject().getVersionName());
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                });
+            }
+        }, 1000);
+
+
 
     }
 
@@ -185,7 +213,7 @@ public class TabActivity extends BaseActivity {
                     titletext.setText("农田");
                 } else if (index == 2) {
                     titleimg.setText(R.string.icon_suggestion);
-                    titletext.setText("建议");
+                    titletext.setText("农艺");
                 } else if (index == 3) {
                     titleimg.setText(R.string.icon_farmwork);
                     titletext.setText("农事");

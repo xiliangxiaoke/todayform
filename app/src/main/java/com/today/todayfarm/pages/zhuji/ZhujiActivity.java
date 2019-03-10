@@ -48,6 +48,9 @@ public class ZhujiActivity extends BaseActivity {
     @BindView(R.id.springview)
     SpringView springView;
 
+    @BindView(R.id.title)
+    TextView title;
+
     @BindView(R.id.back)
     TextView back;
     @BindView(R.id.addnote)
@@ -79,6 +82,8 @@ public class ZhujiActivity extends BaseActivity {
     RecyclerviewAdapter adapter = null;
     List<NoteInfo> listData = new ArrayList<>();
 
+    FieldInfo fieldInfo = null;// 如果不为空，则调用获取指定农田的注记列表
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +103,20 @@ public class ZhujiActivity extends BaseActivity {
         adapter = new RecyclerviewAdapter(this, listData);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        String fieldInfo_json = getIntent().getStringExtra("fieldinfo_json");
+
+        try{
+            fieldInfo = new Gson().fromJson(fieldInfo_json,FieldInfo.class);
+        }catch (Exception e){
+
+        }
+
+
+        if (fieldInfo != null) {
+            title.setText(fieldInfo.getFieldName()+" 的注记信息");
+        }
+
 
 
         springView.setListener(new SpringView.OnFreshListener() {
@@ -121,30 +140,59 @@ public class ZhujiActivity extends BaseActivity {
     }
 
     private void requestlist() {
-        API.findMyScoutingNotes(
-                Hawk.get(HawkKey.TOKEN),
-                pageidx,
-                pagesize,
-                new ApiCallBack<NoteInfo>() {
-                    @Override
-                    public void onResponse(ResultObj<NoteInfo> resultObj) {
-                        if (resultObj.getCode()==0) {
-                            if (resultObj.getList() != null && resultObj.getList().size() > 0) {
-                                listData.addAll(resultObj.getList());
-                                pageidx++;
-                                adapter.notifyDataSetChanged();
+        if (fieldInfo!=null){
+            API.findMyScoutingNotesByField(
+                    Hawk.get(HawkKey.TOKEN),
+                    pageidx,
+                    pagesize,
+                    fieldInfo.getFieldId(),
+                    new ApiCallBack<NoteInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<NoteInfo> resultObj) {
+                            if (resultObj.getCode()==0) {
+                                if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                    listData.addAll(resultObj.getList());
+                                    pageidx++;
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
+
+                            springView.onFinishFreshAndLoad();
                         }
 
-                        springView.onFinishFreshAndLoad();
+                        @Override
+                        public void onError(int code) {
+                            springView.onFinishFreshAndLoad();
+                        }
                     }
+            );
+        }else{
+            API.findMyScoutingNotes(
+                    Hawk.get(HawkKey.TOKEN),
+                    pageidx,
+                    pagesize,
+                    new ApiCallBack<NoteInfo>() {
+                        @Override
+                        public void onResponse(ResultObj<NoteInfo> resultObj) {
+                            if (resultObj.getCode()==0) {
+                                if (resultObj.getList() != null && resultObj.getList().size() > 0) {
+                                    listData.addAll(resultObj.getList());
+                                    pageidx++;
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
 
-                    @Override
-                    public void onError(int code) {
-                        springView.onFinishFreshAndLoad();
+                            springView.onFinishFreshAndLoad();
+                        }
+
+                        @Override
+                        public void onError(int code) {
+                            springView.onFinishFreshAndLoad();
+                        }
                     }
-                }
-        );
+            );
+        }
+
     }
 
 
@@ -170,33 +218,36 @@ public class ZhujiActivity extends BaseActivity {
             NoteInfo info = data.get(position);
 
             holder.zhujiname.setText(info.getScoutingNoteInfo());
-            String fieldid = info.getFieldId();
-            if (fieldid != null) {
-                API.getFieldById(
-                        Hawk.get(HawkKey.TOKEN),
-                        fieldid,
-                        new ApiCallBack<FieldInfo>() {
-                            @Override
-                            public void onResponse(ResultObj<FieldInfo> resultObj) {
-                                if (resultObj.getCode() == 0) {
-                                    FieldInfo fieldInfo = resultObj.getObject();
-                                    if (fieldInfo != null) {
-                                        holder.fieldname.setText(fieldInfo.getFieldName());
+            if (fieldInfo == null) {
+                String fieldid = info.getFieldId();
+                if (fieldid != null) {
+                    API.getFieldById(
+                            Hawk.get(HawkKey.TOKEN),
+                            fieldid,
+                            new ApiCallBack<FieldInfo>() {
+                                @Override
+                                public void onResponse(ResultObj<FieldInfo> resultObj) {
+                                    if (resultObj.getCode() == 0) {
+                                        FieldInfo fieldInfo = resultObj.getObject();
+                                        if (fieldInfo != null) {
+                                            holder.fieldname.setText(fieldInfo.getFieldName());
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onError(int code) {
+                                @Override
+                                public void onError(int code) {
 
+                                }
                             }
-                        }
-                );
+                    );
+                }
             }
 
 
+
             // show pic
-            String urls = info.getPhotos();
+            String urls = info.getImgUrl();//.getPhotos();
             if (urls!=null && urls.length()>0){
                 String[] urlarr =  urls.split(";");
                 List l = Arrays.asList(urlarr);

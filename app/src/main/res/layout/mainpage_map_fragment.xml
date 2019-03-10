@@ -61,11 +61,25 @@
         android:padding="5dp"
         android:layout_width="30dp"
         android:layout_height="30dp" />
+
+    <!--全图按钮-->
+    <ImageView
+        android:id="@+id/fullmap"
+        android:src="@mipmap/fullscreen"
+        android:background="@drawable/geolocation_button_bg"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:padding="8dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
     
     <!-- 图例-->
     <LinearLayout
         android:id="@+id/maplegend"
         android:orientation="vertical"
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"

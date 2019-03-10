@@ -21,6 +21,7 @@ import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
+import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 import com.today.todayfarm.dom.CropInfo;
@@ -41,6 +42,9 @@ public class StageDetailActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TextView title;
+
+    @BindView(R.id.back)
+    TextView back;
 
     @BindView(R.id.springview)
     SpringView springView;
@@ -66,6 +70,8 @@ public class StageDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         StatusBarUtil.setColor(this,getResources().getColor(R.color.mainTitleColor));
+
+        back.setTypeface(MyApplication.iconTypeFace);
 
         String stageInfoJson = getIntent().getStringExtra("stageinfo_json");
         cropName = getIntent().getStringExtra("cropname");
@@ -98,7 +104,7 @@ public class StageDetailActivity extends BaseActivity {
 
             @Override
             public void onLoadmore() {
-
+                springView.onFinishFreshAndLoad();
             }
         });
 
@@ -181,10 +187,22 @@ springView.onFinishFreshAndLoad();
                 ((ViewholderNote) holder).note.setText(stageInfo.getStageDescription());
             } else if (holder instanceof Viewholder) {
                 // data
-                SubStageInfo subStageInfo = datalist.get(position - 3);
-                ((Viewholder) holder).img.setImageURI(Uri.parse(subStageInfo.getContentLargeImageUrl()));
-                ((Viewholder) holder).contenthead.setText(subStageInfo.getContentHeading());
-                ((Viewholder) holder).contentdesc.setText(subStageInfo.getContentDescription());
+                if (position - 3 >= 0 && position - 3 < datalist.size()) {
+                    SubStageInfo subStageInfo = datalist.get(position - 3);
+                    ((Viewholder) holder).img.setImageURI(Uri.parse(subStageInfo.getContentLargeImageUrl()));
+                    ((Viewholder) holder).contenthead.setText(subStageInfo.getContentHeading());
+                    ((Viewholder) holder).contentdesc.setText(subStageInfo.getContentDescription());
+                    ((Viewholder) holder).panel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent();
+                            intent.setClass(StageDetailActivity.this,SubstageDetailActivity.class);
+                            intent.putExtra("substageinfo_json",new Gson().toJson(subStageInfo));
+                            StageDetailActivity.this.startActivity(intent);
+                        }
+                    });
+                }
+
             }
         }
 
@@ -195,7 +213,9 @@ springView.onFinishFreshAndLoad();
                 type = VIEW_TYPE_TITLE;
             } else if (position == 1) {
                 type = VIEW_TYPE_IMG;
-            } else {
+            } else if(position == 2){
+                type = VIEW_TYPE_NOTE;
+            }else{
                 type = VIEW_TYPE_ITEM;
             }
             return type;
@@ -238,6 +258,7 @@ springView.onFinishFreshAndLoad();
             SimpleDraweeView img;
             TextView contenthead;
             TextView contentdesc;
+            View panel;
 
 
 
@@ -250,6 +271,7 @@ springView.onFinishFreshAndLoad();
                 contenthead = itemView.findViewById(R.id.contentHead);
                 contentdesc = itemView.findViewById(R.id.contentDesc);
 
+                panel = itemView;
 
             }
         }

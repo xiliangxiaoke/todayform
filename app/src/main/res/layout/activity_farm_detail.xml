@@ -282,12 +282,20 @@
                         android:background="@color/devideline"
                         android:layout_width="match_parent"
                         android:layout_height="1px"/>
+                    <TextView
+                        android:id="@+id/nonotetip"
+                        android:text="暂无注记"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
                     <RelativeLayout
-
+                        android:id="@+id/noteitempanel"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="120dp">
 
-                        <ImageView
+                        <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/farmdiarypic"
                             android:padding="10dp"
                             android:layout_width="120dp"
@@ -295,13 +303,14 @@
                         <TextView
                             android:id="@+id/farmdiarytitle"
                             android:layout_marginLeft="140dp"
+                            android:layout_marginTop="40dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                         <TextView
                             android:id="@+id/farmdiarydate"
                             android:layout_marginLeft="140dp"
-                            android:layout_marginTop="70dp"
-                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="80dp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </RelativeLayout>
@@ -311,7 +320,7 @@
                         android:layout_height="1px"/>
                     <TextView
                         android:id="@+id/showallfarmdiary"
-                        android:text="查看所有注记"
+                        android:text="添加新注记信息"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:layout_width="match_parent"

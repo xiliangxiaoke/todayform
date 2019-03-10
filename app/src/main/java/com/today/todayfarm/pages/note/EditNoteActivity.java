@@ -12,6 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
@@ -44,12 +45,14 @@ import com.today.todayfarm.util.ToastUtil;
 import com.today.todayfarm.util.WebUtil;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.shinichi.library.ImagePreview;
 
 public class EditNoteActivity extends BaseActivity {
 
@@ -105,7 +108,7 @@ public class EditNoteActivity extends BaseActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        notetime.setText(i+"-"+i1+"-"+i2);
+                        notetime.setText(i+"-"+(i1+1)+"-"+i2);
                         calendar.set(Calendar.YEAR,i);
                         calendar.set(Calendar.MONTH,i1);
                         calendar.set(Calendar.DATE,i2);
@@ -166,6 +169,15 @@ public class EditNoteActivity extends BaseActivity {
                             // 保存成功
                             new SweetAlertDialog(EditNoteActivity.this)
                                     .setTitleText("保存成功")
+                                    .showConfirmButton(true)
+                                    .setConfirmText("好的")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                            EditNoteActivity.this.finish();
+                                        }
+                                    })
                                     .show();
                         }
 
@@ -202,18 +214,20 @@ public class EditNoteActivity extends BaseActivity {
                         @Override
                         public void onResponse(ResultObj<Object> resultObj) {
                             // 保存成功
-                            new SweetAlertDialog(EditNoteActivity.this)
-                                    .setTitleText("添加成功")
-                                    .showConfirmButton(true)
-                                    .setConfirmText("好的")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-
-                                            EditNoteActivity.this.finish();
-                                        }
-                                    })
-                                    .show();
+                            EditNoteActivity.this.finish();
+                            ToastUtil.show(EditNoteActivity.this,"添加成功");
+//                            new SweetAlertDialog(EditNoteActivity.this)
+//                                    .setTitleText("添加成功")
+//                                    .showConfirmButton(true)
+//                                    .setConfirmText("好的")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//
+//                                            EditNoteActivity.this.finish();
+//                                        }
+//                                    })
+//                                    .show();
                         }
 
                         @Override
@@ -225,6 +239,36 @@ public class EditNoteActivity extends BaseActivity {
             );
         }
 
+    }
+
+    @OnClick(R.id.delete)
+            public void setdelete(){
+        API.deleteScoutingNoteById(
+                Hawk.get(HawkKey.TOKEN),
+                noteInfo.getScoutingNoteId(),
+                new ApiCallBack<Object>() {
+                    @Override
+                    public void onResponse(ResultObj<Object> resultObj) {
+                        new SweetAlertDialog(EditNoteActivity.this)
+                                .setTitleText("删除成功")
+                                .showConfirmButton(true)
+                                .setConfirmText("好的")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                        EditNoteActivity.this.finish();
+                                    }
+                                })
+                                .show();
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                }
+        );
     }
 
     NoteInfo noteInfo=null;
@@ -271,7 +315,7 @@ public class EditNoteActivity extends BaseActivity {
 
 
             notename.setText(noteInfo.getScoutingNoteInfo());
-            pics.initdata(noteInfo.getPhotos());
+            pics.initdata(noteInfo.getImgUrl());
 
             // set cropname
             setcropname();
@@ -280,7 +324,7 @@ public class EditNoteActivity extends BaseActivity {
             if (ymd.length > 2) {
                 calendar.set(
                         Integer.parseInt(ymd[0]),
-                        Integer.parseInt(ymd[1]),
+                        Integer.parseInt(ymd[1])-1,
                         Integer.parseInt(ymd[2])
                 );
             }
@@ -296,6 +340,26 @@ public class EditNoteActivity extends BaseActivity {
             title.setText("添加注记");
             calendar.setTime(new Date());
         }
+
+
+
+        pics.setPicClickListener(new PicHorizentalList.PicOnclickEventListener() {
+            @Override
+            public void click(int index) {
+                //TODO PIC
+
+                String[] ss = pics.geturls().split(";");
+
+                ImagePreview
+                        .getInstance()
+                        .setContext(EditNoteActivity.this)
+                        .setIndex(index)
+                        .setImageList(Arrays.asList(ss))
+                        .start();
+
+
+            }
+        });
 
     }
 

@@ -7,6 +7,25 @@ public class BoundaryInfo2Js {
     List<Float> center;
     float radius;
     List<List<Float>> coordinates;
+    String markertitle;
+    String color;
+
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getMarkertitle() {
+        return markertitle;
+    }
+
+    public void setMarkertitle(String markertitle) {
+        this.markertitle = markertitle;
+    }
 
     public String getGeotype() {
         return geotype;

@@ -107,10 +107,10 @@ public class EditFarmMapActivity extends BaseActivity {
                             }
                         }else if ("error".equals(js2AndroidParam.getType())){
                             Log.e("ERRORSSSS",js2AndroidParam.getValue());
-                            new SweetAlertDialog(EditFarmMapActivity.this)
-                                    .setTitleText(js2AndroidParam.getType())
-                                    .setContentText(js2AndroidParam.getValue())
-                                    .show();
+//                            new SweetAlertDialog(EditFarmMapActivity.this)
+//                                    .setTitleText(js2AndroidParam.getType())
+//                                    .setContentText(js2AndroidParam.getValue())
+//                                    .show();
 
                         }
                     }

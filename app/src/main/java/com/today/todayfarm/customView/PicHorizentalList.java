@@ -52,6 +52,8 @@ public class PicHorizentalList extends RelativeLayout {
 
     PiclistAdapter adapter  = new PiclistAdapter(this.getContext());
 
+    PicOnclickEventListener _picOnclickEventListener = null;
+
 
     public PicHorizentalList(Context context) {
         super(context);
@@ -83,6 +85,10 @@ public class PicHorizentalList extends RelativeLayout {
         recyclerView.setAdapter(adapter);
 
 
+    }
+
+    public void setPicClickListener( PicOnclickEventListener listener){
+        _picOnclickEventListener = listener;
     }
 
 
@@ -217,7 +223,10 @@ public class PicHorizentalList extends RelativeLayout {
                                 .openGallery();
 
                     } else {
-
+                        // 打开图片浏览页面。
+                        if (_picOnclickEventListener!=null){
+                            _picOnclickEventListener.click(position);
+                        }
                     }
                 }
             });
@@ -240,6 +249,10 @@ public class PicHorizentalList extends RelativeLayout {
                 pic = itemView.findViewById(R.id.pic);
             }
         }
+    }
+
+    public interface PicOnclickEventListener{
+        public void click(int index);
     }
 
 }

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/panel"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
-    <View
-        android:layout_width="40dp"
+    android:layout_height="70dp">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/stageicon"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@mipmap/stage_list_tipicon"/>
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        app:placeholderImage="@mipmap/stage_list_tipicon"
+        app:placeholderImageScaleType="centerInside"
+        />
     <TextView
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="70dp"
         android:id="@+id/stagename"
-        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <View
@@ -19,5 +24,11 @@
         android:background="@mipmap/right_arrow"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
+
+    <View
+        android:background="@color/devideline"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
 
 </RelativeLayout>

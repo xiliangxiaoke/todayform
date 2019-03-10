@@ -1,5 +1,6 @@
 package com.today.todayfarm.restapi;
 
+import com.today.todayfarm.dom.AppVersionInfo;
 import com.today.todayfarm.dom.CropInfo;
 import com.today.todayfarm.dom.FarmInfo;
 import com.today.todayfarm.dom.FieldInfo;
@@ -593,6 +594,34 @@ public interface MyApiService {
             @Query("pageSize") int pageSize
     );
 
+    /**
+     * 获取指定农田的注记列表
+     * @param token
+     * @param currentpage
+     * @param pageSize
+     * @return
+     */
+    @GET("app/ScoutingNote/findMyScoutingNotes")
+    Call<ResultObj<NoteInfo>> findMyScoutingNotesByField(
+            @Query("token") String token,
+            @Query("currentPage") int currentpage,
+            @Query("pageSize") int pageSize,
+            @Query("fieldId") String fieldId
+    );
+
+
+    /**
+     * 删除注记
+     * @param token
+     * @param scoutingNoteId
+     * @return
+     */
+    @GET("app/ScoutingNote/deleteById")
+    Call<ResultObj<Object>> deleteScoutingNoteById(
+            @Query("token") String token,
+            @Query("scoutingNoteId") String scoutingNoteId
+    );
+
 
     /**
      * 添加注记
@@ -789,6 +818,26 @@ public interface MyApiService {
             @Query("token") String token,
             @Query("fieldId") String fieldId
     );
+
+
+
+    @GET("app/user/updateLoginUserInfo")
+    Call<ResultObj<Object>> updateLoginUserInfo(
+            @Query("token") String token,
+            @Query("fullName")String fullName,
+            @Query("orgName")String orgName,
+            @Query("orgAddress")String orgAddress,
+            //@Query("remark")String remark,
+            @Query("headImgUrl")String headImgUrl
+    );
+
+
+    /**
+     * 获取最新版本信息
+     * @return
+     */
+    @GET("app/static/getAppNewVersion")
+    Call<ResultObj<AppVersionInfo>> getAppNewVersion();
 
 
 

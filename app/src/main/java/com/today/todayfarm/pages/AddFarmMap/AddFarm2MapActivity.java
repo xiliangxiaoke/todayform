@@ -10,6 +10,10 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
@@ -17,6 +21,7 @@ import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.R;
 import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.constValue.HawkKey;
+import com.today.todayfarm.dom.GeoPoint;
 import com.today.todayfarm.dom.JS2AndroidParam;
 import com.today.todayfarm.dom.JSParamInfo;
 import com.today.todayfarm.dom.MapDrawActionInfo;
@@ -28,10 +33,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddFarm2MapActivity extends Activity {
+public class AddFarm2MapActivity extends Activity implements AMapLocationListener {
 
     private int shapetype = 0; // 0-circle 1-polygon
     private int drawbuttonstatus = 0; // 0-draw 1-next
+
+
+    public AMapLocationClient mlocationClient = null;
+    public AMapLocationClientOption option = new AMapLocationClientOption();
 
     @BindView(R.id.addfarmmap)
     WebView map;
@@ -53,13 +62,43 @@ public class AddFarm2MapActivity extends Activity {
 
     }
 
+    @OnClick(R.id.back)
+    public void setback(){
+        MapDrawActionInfo mapDrawActionInfo = new MapDrawActionInfo();
+        mapDrawActionInfo.setAction("back");
+
+        JSParamInfo<MapDrawActionInfo> jsParamInfo = new JSParamInfo<>();
+        jsParamInfo.setType("draw");
+        jsParamInfo.setParams(mapDrawActionInfo);
+        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
+    }
+
+
+    @OnClick(R.id.geolocation)
+    public void setGeolocation(){
+//location do once
+        if(null != mlocationClient){
+            mlocationClient.setLocationOption(option);
+            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            mlocationClient.stopLocation();
+            mlocationClient.startLocation();
+        }
+    }
+
+    @OnClick(R.id.fullmap)
+    public void setfullmap(){
+        // todo: 地图内容全图显示
+        fullextent();
+    }
+
+
     @OnClick(R.id.dodraw)
     public void dodraw(){
 
         if (drawbuttonstatus == 0){
             // 改变UI
             tvchangeshape.setVisibility(View.GONE);
-            drawback.setVisibility(View.VISIBLE);
+
             btdraw.setText("下一步");
             drawbuttonstatus =1 ;
             // 操作地图
@@ -68,6 +107,7 @@ public class AddFarm2MapActivity extends Activity {
                 mapDrawActionInfo.setAction("drawcircle");
             }else{
                 mapDrawActionInfo.setAction("drawpolygon");
+                drawback.setVisibility(View.VISIBLE);
             }
 
             JSParamInfo<MapDrawActionInfo> jsParamInfo = new JSParamInfo<>();
@@ -117,9 +157,30 @@ public class AddFarm2MapActivity extends Activity {
 
 
 
+        mlocationClient = new AMapLocationClient(this);
+        mlocationClient.setLocationListener(this);
+        //定位参数
+        option.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);//定位场景 签到
+        option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);// 定位模式 高精度
+        option.setOnceLocation(true);
+        option.setOnceLocationLatest(true);
+
+
+        if(null != mlocationClient){
+            mlocationClient.setLocationOption(option);
+            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            mlocationClient.stopLocation();
+            mlocationClient.startLocation();
+        }
 
 
 
+    }
+
+    public void fullextent(){
+        JSParamInfo<Object> jsParamInfo = new JSParamInfo<>();
+        jsParamInfo.setType("fullextent");
+        WebUtil.callJS(map,new Gson().toJson(jsParamInfo));
     }
 
 
@@ -154,10 +215,10 @@ public class AddFarm2MapActivity extends Activity {
                             }
                         }else if ("error".equals(js2AndroidParam.getType())){
                             Log.e("ERRORSSSS",js2AndroidParam.getValue());
-                            new SweetAlertDialog(AddFarm2MapActivity.this)
-                                    .setTitleText(js2AndroidParam.getType())
-                                    .setContentText(js2AndroidParam.getValue())
-                                    .show();
+//                            new SweetAlertDialog(AddFarm2MapActivity.this)
+//                                    .setTitleText(js2AndroidParam.getType())
+//                                    .setContentText(js2AndroidParam.getValue())
+//                                    .show();
 
                         }
                     }
@@ -167,5 +228,40 @@ public class AddFarm2MapActivity extends Activity {
 
 
         map.loadUrl("file:///android_asset/index.html");
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            if (aMapLocation.getErrorCode() == 0) {
+                double longitude = aMapLocation.getLongitude();
+                double latitude = aMapLocation.getLatitude();
+
+                String city = aMapLocation.getCity();
+                if (city != null) {
+                    Hawk.put(HawkKey.CITY,city);
+                }
+
+
+                Gson gson = new Gson();
+                GeoPoint geoPoint = new GeoPoint();
+                geoPoint.setLon(longitude);
+                geoPoint.setLat(latitude);
+                JSParamInfo<GeoPoint> jsParamInfo = new JSParamInfo<>();
+                jsParamInfo.setType("location");
+                jsParamInfo.setParams(geoPoint);
+                WebUtil.callJS(map,gson.toJson(jsParamInfo));
+
+//                callJS("loc:"+longitude+latitude);
+
+//                new SweetAlertDialog(MapFragment.this.getContext())
+//                        .setTitleText("定位成功")
+//                        .setConfirmText(""+longitude+latitude)
+//                        .show();
+
+            } else {
+                // 定位失败
+            }
+        }
     }
 }

@@ -22,9 +22,18 @@ public class NoteInfo {
     String scoutingNoteInfo;
     String scoutingTime;
     String scoutingPosition;
+    String imgUrl;
     String userId;
 //    String photos;
 
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     public String getScoutingNoteId() {
         return scoutingNoteId;

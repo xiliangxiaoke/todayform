@@ -20,6 +20,13 @@
         height: 100%;
         width: 100vw;
     }
+    .geotexttip {
+        background: rgba(0,0,0,0.5);
+        border: transparent;
+        color: #ffffff;
+
+
+    }
 </style>
 <body>
 
@@ -104,7 +111,7 @@
     // android 调用js的方法入口
     /***
         1 定位 {type:"location",params:{longitude:117,latitude:36}}
-        2 绘制 {type:"draw",params:{action:"drawcircle|drawpolygon|getgeojson"}}
+        2 绘制 {type:"draw",params:{action:"drawcircle|drawpolygon|back|getgeojson"}}
         3 显示边界 {type:"showgeo",params:{自定义的geogson，包含circle 和 polygon}}
         4 首页显示区划图 {type:"showallboundary",list:[]}
         5 首页显示健康监测图 {type:"showhealthimg",list:[]}
@@ -115,6 +122,8 @@
                 获取边界时复用draw中的getgeojson
         10 清除注记标记 {type:"clearnoteloc"}
         11 同时显示边界和注记 {type:"showBoundaryAndNote",params:{boundary:,note:}}
+        12 清空地图{type:"clearall"}
+        13 全幅显示所有数据 {type:"fullextent"}
     */
     function callJS(paraminfo){
 
@@ -150,6 +159,10 @@
                     showNoteLocation(paramobj.params.note);
                 }
 
+            }else if ("clearall" == paramobj.type){
+                clearall();
+            }else if ("fullextent" == paramobj.type){
+                fullextent();
             }
         }catch(e){
             var param = {
@@ -162,6 +175,13 @@
         }
 
     };
+
+    function fullextent(){
+        if(cacheFeatures.length>0){
+            map.fitBounds(L.featureGroup(cacheFeatures).getBounds());
+        }
+
+    }
 
     function clearnoteloc() {
         if(notepoint){
@@ -207,24 +227,44 @@
 
             para = info;
 
+            var markercenter = [0,0];
+
+            var geo = null;
+
             if(para.geotype==='circle'){
 
-                var circle = L.circle(para.center, {radius: para.radius}).addTo(map);
-                cacheFeatures.push(circle);
+                geo = L.circle(para.center, {radius: para.radius,color:para.color,fillColor:para.color}).addTo(map);
+                //cacheFeatures.push(circle);
+                //markercenter = para.center;
 
             }else if(para.geotype==='polygon'){
-                var polygon = L.polygon([para.coordinates], {color: 'red'}).addTo(map);
-                cacheFeatures.push(polygon);
-                // zoom the map to the polygon
+                geo = L.polygon([para.coordinates], {color:para.color,fillColor:para.color}).addTo(map);
+                //cacheFeatures.push(polygon);
+                //markercenter = polygon.getCenter();
 
             }
+            geo.bindTooltip(para.markertitle,{permanent:true,direction:'center',className:'geotexttip'}).openTooltip();
+            cacheFeatures.push(geo);
+
+            // 显示标注文本
+            //var marker = L.marker(markercenter,{title:'para.markertitle'}).addTo(map);
+            //cacheFeatures.push(marker);
 
         });
 
+
+
         map.fitBounds(L.featureGroup(cacheFeatures).getBounds());
 
+    }
 
+    function clearall(){
 
+        cacheFeatures.forEach(function (f){
+            map.removeLayer(f);
+        });
+
+        cacheFeatures = [];
     }
 
     /**
@@ -342,6 +382,7 @@
             }
             map.editTools.stopDrawing();
             farmlanddraw = map.editTools.startCircle();
+            cacheFeatures.push(farmlanddraw);
         }else if("drawpolygon" == action){
             drawtype = "polygon";
             if(farmlanddraw){
@@ -349,7 +390,17 @@
             }
             map.editTools.stopDrawing();
             farmlanddraw = map.editTools.startPolygon();
-        }else if("getgeojson" == action){
+            cacheFeatures.push(farmlanddraw);
+        }else if("back" == action){
+            if(drawtype == "polygon" && farmlanddraw){
+                if(farmlanddraw.getLatLngs().length>0){
+                    farmlanddraw.editor.pop();
+                }
+
+            }
+
+        }
+        else if("getgeojson" == action){
             if(farmlanddraw){
 
                 // js 调用android 传到前台 区分circle和polygon的结构  Geojson不直接支持circle，所以在外面又包了一层

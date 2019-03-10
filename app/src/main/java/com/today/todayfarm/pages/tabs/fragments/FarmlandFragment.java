@@ -213,11 +213,11 @@ public class FarmlandFragment extends Fragment {
             DecimalFormat df = new DecimalFormat("#.00");
 
             String cropname = "";
-            if (info.getFieldcrop()!=null){
-                cropname = info.getFieldcrop();
+            if (info.getCropName()!=null){
+                cropname = info.getCropName();
             }
 
-            holder.areacrop.setText(df.format(fieldarea)+"亩 " +cropname);
+            holder.areacrop.setText(df.format(fieldarea)+"亩 , " +cropname);
 
             holder.panel.setOnClickListener(new View.OnClickListener() {
                 @Override

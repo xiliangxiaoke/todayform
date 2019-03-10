@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.azhon.appupdate.config.UpdateConfiguration;
+import com.azhon.appupdate.listener.OnButtonClickListener;
+import com.azhon.appupdate.listener.OnDownloadListener;
+import com.azhon.appupdate.manager.DownloadManager;
 import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.hawk.Hawk;
 import com.today.todayfarm.Eventbus.MessageEvent;
@@ -34,12 +39,17 @@ import com.today.todayfarm.application.MyApplication;
 import com.today.todayfarm.base.BaseActivity;
 import com.today.todayfarm.constValue.HawkKey;
 //import com.today.todayfarm.pages.menu.MenuActivity;
+import com.today.todayfarm.dom.AppVersionInfo;
+import com.today.todayfarm.dom.ResultObj;
 import com.today.todayfarm.pages.tabs.fragments.FarmlandFragment;
 import com.today.todayfarm.pages.tabs.fragments.FarmworkFragment;
 import com.today.todayfarm.pages.tabs.fragments.MapFragment;
 import com.today.todayfarm.pages.tabs.fragments.SettingFragment;
 import com.today.todayfarm.pages.tabs.fragments.SuggestFragment;
 import com.today.todayfarm.pages.zhuji.ZhujiActivity;
+import com.today.todayfarm.restapi.API;
+import com.today.todayfarm.restapi.ApiCallBack;
+import com.today.todayfarm.util.ToastUtil;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -53,6 +63,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,10 +72,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DrawerTabActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnButtonClickListener, OnDownloadListener {
 
 
-    private static final String[] CHANNELS = new String[]{"首页","农田","农艺","农事","设置"};
+    private static final String[] CHANNELS = new String[]{"首页","农田","农事","农艺","设置"};
     private List<String> mdatalist = Arrays.asList(CHANNELS);
     private List<Fragment> fragments = new ArrayList<Fragment>();
     private FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
@@ -128,6 +139,85 @@ public class DrawerTabActivity extends BaseActivity
         switchPages(0);
 
 
+
+
+
+        // 延迟请求获取版本信息
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                API.getAppNewVersion(new ApiCallBack<AppVersionInfo>() {
+                    @Override
+                    public void onResponse(ResultObj<AppVersionInfo> resultObj) {
+                        //ToastUtil.show(DrawerTabActivity.this,"获取版本："+resultObj.getObject().getVersionName());
+                        // 判断版本是否最新
+
+                        // 显示更新窗口提示
+//                        DownloadManager manager = DownloadManager.getInstance(DrawerTabActivity.this);
+//                        manager.setApkName("Farmlogs."+resultObj.getObject().getVersionName())
+//                                .setApkUrl(resultObj.getObject().getUrl())
+//                                .setSmallIcon(R.mipmap.ic_launcher)
+//                                .setAuthorities("com.today.todayfarm")
+//                                .download();
+
+
+                        downloadapk(resultObj.getObject());
+
+                    }
+
+                    @Override
+                    public void onError(int code) {
+
+                    }
+                });
+            }
+        }, 1000);
+
+
+    }
+
+    private void downloadapk(AppVersionInfo info) {
+        /*
+         * 整个库允许配置的内容
+         * 非必选
+         */
+        UpdateConfiguration configuration = new UpdateConfiguration()
+                //输出错误日志
+                .setEnableLog(true)
+                //设置自定义的下载
+                //.setHttpManager()
+                //下载完成自动跳动安装页面
+                .setJumpInstallPage(true)
+                //设置对话框背景图片 (图片规范参照demo中的示例图)
+                //.setDialogImage(R.drawable.ic_dialog)
+                //设置按钮的颜色
+                //.setDialogButtonColor(Color.parseColor("#E743DA"))
+                //设置按钮的文字颜色
+                .setDialogButtonTextColor(Color.WHITE)
+                //支持断点下载
+                .setBreakpointDownload(true)
+                //设置是否显示通知栏进度
+                .setShowNotification(true)
+                //设置强制更新
+                .setForcedUpgrade(false)
+                //设置对话框按钮的点击监听
+                .setButtonClickListener(this)
+                //设置下载过程的监听
+                .setOnDownloadListener(this);
+
+        DownloadManager manager = DownloadManager.getInstance(DrawerTabActivity.this);
+        manager.setApkName("Farmlogs."+info.getVersionName()+".apk")
+                .setApkUrl(info.getUrl())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setShowNewerToast(true)
+                .setConfiguration(configuration)
+//                .setDownloadPath(Environment.getExternalStorageDirectory() + "/AppUpdate")
+                .setApkVersionCode(Integer.parseInt(info.getVersionCode()))
+                .setApkVersionName(info.getVersionName())
+                //.setApkSize("20.4")
+                .setAuthorities(getPackageName())
+                .setApkDescription(info.getDescription())
+                .download();
     }
 
 
@@ -218,10 +308,10 @@ public class DrawerTabActivity extends BaseActivity
                 maintitle.setText("农田列表");
                 break;
             case 2:
-                maintitle.setText("农艺咨询");
+                maintitle.setText("农事记录");
                 break;
             case 3:
-                maintitle.setText("农事记录");
+                maintitle.setText("农艺咨询");
                 break;
             case 4:
                 maintitle.setText("设置");
@@ -281,12 +371,12 @@ public class DrawerTabActivity extends BaseActivity
                     titletext.setText("农田");
                 } else if (index == 2) {
 //                    titleimg.setText(R.string.icon_suggestion);
-                    titleimg.setImageResource(R.mipmap.icon_suggestion);
-                    titletext.setText("建议");
-                } else if (index == 3) {
-//                    titleimg.setText(R.string.icon_farmwork);
                     titleimg.setImageResource(R.mipmap.icon_farmthing);
                     titletext.setText("农事");
+                } else if (index == 3) {
+//                    titleimg.setText(R.string.icon_farmwork);
+                    titleimg.setImageResource(R.mipmap.icon_suggestion);
+                    titletext.setText("农艺");
                 } else if (index == 4) {
 //                    titleimg.setText(R.string.icon_setting);
                     titleimg.setImageResource(R.mipmap.icon_setting);
@@ -352,8 +442,8 @@ public class DrawerTabActivity extends BaseActivity
         SettingFragment settingFragment = new SettingFragment();
         fragments.add(mapFragment);
         fragments.add(farmlandFragment);
-        fragments.add(suggestFragment);
         fragments.add(farmworkFragment);
+        fragments.add(suggestFragment);
         fragments.add(settingFragment);
 
     }
@@ -404,10 +494,10 @@ public class DrawerTabActivity extends BaseActivity
         } else if (id == R.id.meun_farm_land) {
             fragmentContainerHelper.handlePageSelected(1,false);
             switchPages(1);
-        } else if (id == R.id.meun_suggestion) {
+        } else if (id == R.id.meun_farm_thing) {
             fragmentContainerHelper.handlePageSelected(2,false);
             switchPages(2);
-        } else if (id == R.id.meun_farm_thing) {
+        } else if (id == R.id.meun_suggestion) {
             fragmentContainerHelper.handlePageSelected(3,false);
             switchPages(3);
         } else if (id == R.id.meun_setting) {
@@ -440,5 +530,35 @@ public class DrawerTabActivity extends BaseActivity
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onButtonClick(int id) {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void downloading(int max, int progress) {
+
+    }
+
+    @Override
+    public void done(File apk) {
+
+    }
+
+    @Override
+    public void cancel() {
+
+    }
+
+    @Override
+    public void error(Exception e) {
+
     }
 }
